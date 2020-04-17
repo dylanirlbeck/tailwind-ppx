@@ -1,0 +1,1 @@
+TailwindPpxTestNativeLib.Setup.cli();

@@ -9,7 +9,8 @@
       "source": { "type": "link-dev", "path": ".", "manifest": "esy.json" },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.6.1@d41d8cd9", "@opam/reason@opam:3.6.0@2da53ff9",
+        "ocaml@4.6.1@d41d8cd9", "@reason-native/rely@3.2.1@d41d8cd9",
+        "@opam/reason@opam:3.6.0@2da53ff9",
         "@opam/ppxlib@opam:0.13.0@65a9c7cc",
         "@opam/ocaml-migrate-parsetree@opam:1.5.0@3e319dbc",
         "@opam/dune@opam:1.11.4@a7ccb7ae", "@opam/base@opam:v0.13.1@7d937ed0"

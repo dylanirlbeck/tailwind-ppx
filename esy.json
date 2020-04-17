@@ -12,6 +12,7 @@
     "@opam/ocaml-migrate-parsetree": "1.5.0",
     "@opam/ppxlib": "*",
     "@opam/reason": "*",
+    "@reason-native/rely": "^3.2.1",
     "ocaml": "4.6.1"
   },
   "devDependencies": {
@@ -23,12 +24,15 @@
     "refmterr": "*"
   },
   "scripts": {
-    "test": "esy dune exec test/test_runner.exe",
-    "doc": "esy dune build @doc",
-    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "test": "esy test_snapshot",
+    "test_snapshot": "dune runtest",
+    "test_snapshot:promote": "dune runtest --auto-promote",
+    "test_native": "esy dune exec test/native/TestRunner.exe",
+    "test_bs": "cd test/bucklescript; yarn test",
+    "all": "esy dune b @all",
+    "clean": "esy dune clean",
     "format": "esy dune build @fmt --auto-promote",
     "watch": "esy dune build -p #{self.name} --watch",
-    "utop": "esy dune utop lib -- -implicit-bindings",
     "release": "./script/release.sh"
   }
 }

@@ -5,10 +5,27 @@ open Parsetree;
 
 let expr = (mapper, e) =>
   switch (e.pexp_desc) {
-  /* If the expression is [%gimme] */
-  | Pexp_extension(({txt: "TW", _}, _payload)) =>
+  /* If the expression is [%tw ""] */
+  | Pexp_extension((
+      {txt: "tw", _},
+      PStr([
+        {
+          pstr_desc:
+            Pstr_eval(
+              {
+                pexp_loc: _loc,
+                pexp_desc: Pexp_constant(Pconst_string(classNames, _delim)),
+                _,
+              },
+              _,
+            ),
+          _,
+        },
+      ]),
+    )) =>
+    print_string(classNames);
     /* Then replace by 42 */
-    Ast_helper.Exp.constant(Pconst_integer("42", None))
+    Ast_helper.Exp.constant(Pconst_integer("42", None));
   | _ => default_mapper.expr(mapper, e)
   };
 

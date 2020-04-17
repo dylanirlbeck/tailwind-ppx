@@ -1,0 +1,8 @@
+
+(executable
+  (name TestRunner)
+  (public_name TailwindPpxTestRunner)
+  (libraries
+    TailwindPpxTestNativeLib
+  )
+)
