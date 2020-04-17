@@ -2,6 +2,7 @@ open Migrate_parsetree;
 open Ast_406;
 open Ast_mapper;
 open Parsetree;
+open TailwindUtils;
 
 let expr = (mapper, e) =>
   switch (e.pexp_desc) {
@@ -13,7 +14,7 @@ let expr = (mapper, e) =>
           pstr_desc:
             Pstr_eval(
               {
-                pexp_loc: _loc,
+                pexp_loc: loc,
                 pexp_desc: Pexp_constant(Pconst_string(classNames, _delim)),
                 _,
               },
@@ -24,6 +25,7 @@ let expr = (mapper, e) =>
       ]),
     )) =>
     print_string(classNames);
+    validate(classNames, loc);
     /* Then replace by 42 */
     Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)
