@@ -26,7 +26,8 @@ let expr = (mapper, e) =>
     )) =>
     print_string(classNames);
     validate(classNames, loc);
-    /* Then replace by 42 */
+
+    // Use the same string provided to the PPX
     Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)
   };

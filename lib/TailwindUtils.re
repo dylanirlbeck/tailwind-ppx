@@ -4,8 +4,6 @@ let splitClassNames = classNames => {
   String.split_on_char(' ', classNames);
 };
 
-exception ClassNameNotFound((string, Location.t));
-
 let rec validateClassNames = (splitClassNames, loc) => {
   let validateClassName = className => {
     List.exists(
