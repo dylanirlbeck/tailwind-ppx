@@ -28,7 +28,7 @@
     "test_snapshot": "dune runtest",
     "test_snapshot:promote": "dune runtest --auto-promote",
     "test_native": "esy dune exec test/native/TestRunner.exe",
-    "test_bs": "cd test/bucklescript; yarn test",
+    "test_bs": "cd test/bucklescript && yarn test",
     "all": "esy dune b @all",
     "clean": "esy dune clean",
     "format": "esy dune build @fmt --auto-promote",

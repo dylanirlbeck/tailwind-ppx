@@ -25,7 +25,7 @@ let expr = (mapper, e) =>
     )) =>
     print_string(classNames);
     /* Then replace by 42 */
-    Ast_helper.Exp.constant(Pconst_integer("42", None));
+    Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)
   };
 
