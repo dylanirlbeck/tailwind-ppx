@@ -1,0 +1,34 @@
+{
+  "name": "tailwind-ppx",
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    "buildDev": "refmterr dune build --root . --only-package #{self.name}",
+    "install": "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
+    "buildEnv": { "ODOC_SYNTAX": "re" }
+  },
+  "dependencies": {
+    "@opam/base": "*",
+    "@opam/dune": "1.11.4",
+    "@opam/ocaml-migrate-parsetree": "1.5.0",
+    "@opam/ppxlib": "*",
+    "@opam/reason": "*",
+    "ocaml": "4.6.1"
+  },
+  "devDependencies": {
+    "@opam/dune-release": "*",
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
+    "@reason-native/rely": "*",
+    "refmterr": "*"
+  },
+  "scripts": {
+    "test": "esy dune exec test/test_runner.exe",
+    "doc": "esy dune build @doc",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "format": "esy dune build @fmt --auto-promote",
+    "watch": "esy dune build -p #{self.name} --watch",
+    "utop": "esy dune utop lib -- -implicit-bindings",
+    "release": "./script/release.sh"
+  }
+}

@@ -1,0 +1,7 @@
+(library
+ (name tailwind_ppx)
+ (public_name tailwind-ppx.lib)
+ (modules (:standard))
+ (libraries base ocaml-migrate-parsetree)
+ (kind ppx_rewriter)
+ )
