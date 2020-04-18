@@ -3,29 +3,42 @@
 [![Actions Status](https://github.com/dylanirlbeck/tailwind-ppx/workflows/CI/badge.svg)](https://github.com/dylanirlbeck/tailwind-ppx/actions)
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
 
-A short, but powerful statement about your project
+Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
+
+```reason
+<Component className=[%tw "flex flex-ro"]> // ERROR: Class name not found: flex-ro
+  ...
+</Component>
+```
 
 ## Features
 
-- Deploy prebuilt binaries to be consumed from Bucklescript projects
+- 0 runtime cost
+- Automatically watches for changes to your `tailwind.css` file (TODO)
 
 ## Installation
 
-### With `opam` on native projects
-
-```bash
-opam install tailwind-ppx
-```
-
-### With `esy` on native projects
-
-```bash
-esy add @opam/tailwind-ppx
-```
+The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript).
 
 ### With `npm` on Bucklescript projects
 
-The recommended way to use PPX libraries in Bucklescript projects is to use `esy`.
+However, if using `esy` bothers you, we also provide a NPM package with prebuilt binaries.
+
+```bash
+yarn add --dev @dylanirlbeck/tailwind-ppx
+# Or
+npm install --dev @dylanirlbeck/tailwind-ppx
+```
+
+And add the PPX in your `bsconfig.json` file:
+
+```json
+{
+  "ppx-flags": [ "@dylanirlbeck/tailwind-ppx"]
+}
+```
+
+You can also use `esy` to install the PPX inside your BuckleScript project.
 
 Create an `esy.json` file with the content:
 
@@ -44,46 +57,34 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": [
-    "ppx-flags": ["esy x tailwind-ppx"]
-  ]
-}
-```
-
-However, if using `esy` bothers you, we also provide a NPM package with prebuilt binaries.
-
-```bash
-yarn global add @dylanirlbeck/tailwind-ppx
-# Or
-npm -g install @dylanirlbeck/tailwind-ppx
-```
-
-And add the PPX in your `bsconfig.json` file:
-
-```json
-{
-  "ppx-flags": [
-    "ppx-flags": ["@dylanirlbeck/tailwind-ppx"]
-  ]
+  "ppx-flags": [ "esy x tailwind-ppx" ]
 }
 ```
 
 ## Usage
 
-`tailwind_ppx` implements a ppx that transforms the `[%tailwind_ppx]` extension into an expression that adds 5 to the integer passed in parameter.
+`tailwind_ppx` implements a ppx that validates your Tailwind CSS classes at compile time.
 
-The code:
+For example, for the following (condensed) `tailwind.css` file:
 
-```ocaml
-[%tailwind_ppx 5]
+```css
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
 ```
 
-Will transform to something like:
+The following ReasonReact code will provide validation for your desired class names
 
-```ocaml
-5 + 5
+```reason
+<Component className=[%tw "flex flex-row]> // This is ok!
+  ...
+</Component>
+
+<Component className=[%tw "flex flex-ro]> // ERROR: Class name not found: flex-ro
+  ...
+</Component>
 ```
-
-## Contributing
-
-Take a look at our [Contributing Guide](CONTRIBUTING.md).
