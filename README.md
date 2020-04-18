@@ -11,18 +11,13 @@ Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 </Component>
 ```
 
-## Features
-
-- 0 runtime cost
-- Automatically watches for changes to your `tailwind.css` file (TODO)
-
 ## Installation
 
 The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript).
 
 ### With `npm` on Bucklescript projects
 
-However, if using `esy` bothers you, we also provide a NPM package with prebuilt binaries.
+Install the PPX with `yarn` or `npm`
 
 ```bash
 yarn add --dev @dylanirlbeck/tailwind-ppx
@@ -34,7 +29,7 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": [ "@dylanirlbeck/tailwind-ppx"]
+  "ppx-flags": ["@dylanirlbeck/tailwind-ppx"]
 }
 ```
 
@@ -87,4 +82,16 @@ The following ReasonReact code will provide validation for your desired class na
 <Component className=[%tw "flex flex-ro]> // ERROR: Class name not found: flex-ro
   ...
 </Component>
+```
+
+## Configuration
+
+### - path (TODO)
+
+By default, `tailwind-ppx` looks for your `tailwind.css` file in the project root. If `tailwind.css` lives elsewhere, you'll need to specify the file path in your `bsconfig.json`.
+
+```json
+"ppx-flags": [
+  ["@dylanirlbeck/tailwind-ppx", "-path ../path/to/tailwind.css",]
+],
 ```
