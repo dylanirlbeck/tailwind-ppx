@@ -72,13 +72,15 @@ For example, for the following (condensed) `tailwind.css` file:
 }
 ```
 
-The following ReasonReact code will provide validation for your desired class names
+The following ReasonReact code will provide validation for your desired class names. See these examples:
 
 ```reason
+// Example 1
 <Component className=[%tw "flex flex-row]> // This is ok!
   ...
 </Component>
 
+// Example 2
 <Component className=[%tw "flex flex-ro]> // ERROR: Class name not found: flex-ro
   ...
 </Component>
