@@ -7,11 +7,14 @@
     "buildEnv": { "ODOC_SYNTAX": "re" }
   },
   "dependencies": {
-    "@opam/base": "*",
     "@opam/dune": "1.11.4",
+    "@opam/fmt": "0.8.8",
+    "@opam/menhir": "20190924",
     "@opam/ocaml-migrate-parsetree": "1.5.0",
+    "@opam/ppx_deriving": "4.4.1",
     "@opam/ppxlib": "*",
     "@opam/reason": "*",
+    "@opam/sedlex": "2.1",
     "@reason-native/rely": "^3.2.1",
     "ocaml": "4.6.1"
   },
@@ -32,7 +35,7 @@
     "all": "esy dune b @all",
     "clean": "esy dune clean",
     "format": "esy dune build @fmt --auto-promote",
-    "watch": "esy dune build -p #{self.name} --watch",
+    "watch": "esy dune build @all -p #{self.name} --watch",
     "release": "./script/release.sh"
   }
 }

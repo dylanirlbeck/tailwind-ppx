@@ -3,7 +3,7 @@ open Expect;
 
 describe("Basic test", () => {
   test("basic", () => {
-    let className = [%tw "mt-2"];
-    expect(className) |> toBe("mt-2");
+    let className = [%tw "hover:bg-mono-100 flex"];
+    expect(className) |> toBe("hover:bg-mono-100 flex");
   })
 });
