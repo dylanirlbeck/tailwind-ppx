@@ -2,5 +2,5 @@
 (library
   (name TailwindPpxTestNativeLib)
   (library_flags (-linkall -g))
-  (libraries rely.lib tailwind-ppx.lib)
+  (libraries fmt rely.lib tailwind-ppx.lib)
 )

@@ -1,4 +1,5 @@
 open Css_types;
+
 // ********************** CSS PARSER HELPERS *************************
 
 // TODO replace this with a File.read or something
@@ -10,6 +11,10 @@ let tailwindCss = {|
 
       .flex-row {
         flex-direction: row;
+      }
+
+      .hover\:bg-mono-100:hover {
+        background-color: #FFF;
       }
 |};
 
@@ -31,12 +36,6 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
   );
 };
 
-[@deriving show]
-type declarationList = list(Declaration_list.kind);
-
-[@deriving show]
-type ast = list(Rule.t);
-
 exception UncaughtPrelude;
 
 let getAcceptableClassNames = css => {
@@ -49,6 +48,13 @@ let getAcceptableClassNames = css => {
       let prelude = fst(styleRule.prelude);
       switch (prelude) {
       | [(Component_value.Delim(_), _), (Component_value.Ident(ident), _)] =>
+        existingClassNames @ [ident]
+      | [
+          (Component_value.Delim(_), _),
+          (Component_value.Ident(ident), _),
+          (Component_value.Delim(_), _),
+          (Component_value.Ident("hover"), _),
+        ] =>
         existingClassNames @ [ident]
       | _ => raise(UncaughtPrelude)
       };
