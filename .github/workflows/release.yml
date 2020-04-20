@@ -85,7 +85,7 @@ jobs:
         with:
           node-version: 12.x
 
-     - name: Make NPM release skeleton
+      - name: Make NPM release skeleton
         run: node script/release-make-skeleton.js
 
       - name: Download linux artifacts
