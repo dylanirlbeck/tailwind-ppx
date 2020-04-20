@@ -61,7 +61,7 @@ let getAcceptableClassNames = css => {
           (Component_value.Ident("hover"), _),
         ] =>
         existingClassNames @ [unescapeIdent(ident)]
-      | _ => raise(UncaughtPrelude)
+      | _ => existingClassNames // TODO add support for other preludes (if nec.)
       };
     | Rule.At_rule(_) => existingClassNames @ ["at_rule"]
     };
