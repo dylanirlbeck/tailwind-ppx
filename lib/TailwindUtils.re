@@ -1,5 +1,10 @@
 open Css_types;
 
+// Remove all the backslashes from identifiers
+let unescapeIdent = ident => {
+  Str.global_replace(Str.regexp({|\\|}), "", ident);
+};
+
 // ********************** CSS PARSER HELPERS *************************
 
 // TODO replace this with a File.read or something
@@ -48,14 +53,14 @@ let getAcceptableClassNames = css => {
       let prelude = fst(styleRule.prelude);
       switch (prelude) {
       | [(Component_value.Delim(_), _), (Component_value.Ident(ident), _)] =>
-        existingClassNames @ [ident]
+        existingClassNames @ [unescapeIdent(ident)]
       | [
           (Component_value.Delim(_), _),
           (Component_value.Ident(ident), _),
           (Component_value.Delim(_), _),
           (Component_value.Ident("hover"), _),
         ] =>
-        existingClassNames @ [ident]
+        existingClassNames @ [unescapeIdent(ident)]
       | _ => raise(UncaughtPrelude)
       };
     | Rule.At_rule(_) => existingClassNames @ ["at_rule"]

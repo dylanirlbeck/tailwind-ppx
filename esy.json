@@ -3,8 +3,7 @@
   "esy": {
     "build": "dune build -p #{self.name}",
     "buildDev": "refmterr dune build --root . --only-package #{self.name}",
-    "install":
-      "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
+    "install": "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
     "buildEnv": { "ODOC_SYNTAX": "re" }
   },
   "dependencies": {

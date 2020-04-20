@@ -149,7 +149,7 @@ describe("Different types of AST nodes", ({test, _}) => {
       }
     |};
 
-    let expectedClassNames = ["hover\:bg-mono-100"];
+    let expectedClassNames = ["hover:bg-mono-100"];
     expect.list(getAcceptableClassNames(tailwindCss)).toEqual(expectedClassNames);
   })
 })
