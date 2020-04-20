@@ -48,6 +48,7 @@ and Declaration: {
   };
 } = Declaration
 and Declaration_list: {
+  [@deriving show]
   type kind =
     | Declaration(Declaration.t)
     | At_rule(At_rule.t);
@@ -61,6 +62,7 @@ and Style_rule: {
   };
 } = Style_rule
 and Rule: {
+  [@deriving show]
   type t =
     | Style_rule(Style_rule.t)
     | At_rule(At_rule.t);
