@@ -3,7 +3,7 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const package = require("../package.json");
+const esy = require("../esy.json");
 
 const filesToCopy = ["LICENSE", "README.md", "CHANGES.md"];
 
@@ -53,30 +53,24 @@ for (const file of filesToTouch) {
 
 const pkgJson = {
   name: "@dylanirlbeck/tailwind-ppx",
-  version: "%%VERSION%%",
-  description: "A short, but powerful statement about your project",
-  author: "Dylan Irlbeck",
-  license: "MIT",
-  homepage: "https://github.com/dylanirlbeck/tailwind-ppx",
-  bugs: {
-    url: "https://github.com/dylanirlbeck/tailwind-ppx/issues"
-  },
-  repository: {
-    type: "git",
-    url: "https://github.com/dylanirlbeck/tailwind-ppx.git"
-  },
+  version: esy.version,
+  description: esy.description,
+  author: esy.author,
+  license: esy.license,
+  homepage: esy.homepage,
+  repository: esy.repository,
   scripts: {
     postinstall: "node postinstall.js"
   },
   bin: {
-    tailwind-ppx: "tailwind-ppx"
+    tailwind-ppx: "tailwind-ppx.exe"
   },
   files: [
     "platform-windows-x64/",
     "platform-linux-x64/",
     "platform-darwin-x64/",
     "postinstall.js",
-    "tailwind-ppx"
+    "tailwind-ppx.exe"
   ]
 };
 
