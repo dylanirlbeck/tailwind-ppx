@@ -1,7 +1,13 @@
+(menhir
+  (modules css_parser)
+  (flags --explain)
+)
+
 (library
  (name tailwind_ppx)
+ (wrapped false)
  (public_name tailwind-ppx.lib)
- (modules (:standard))
- (libraries base ocaml-migrate-parsetree)
  (kind ppx_rewriter)
+ (libraries sedlex menhirLib ocaml-migrate-parsetree)
+ (preprocess (pps sedlex.ppx))
  )

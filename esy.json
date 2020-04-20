@@ -7,11 +7,12 @@
     "buildEnv": { "ODOC_SYNTAX": "re" }
   },
   "dependencies": {
-    "@opam/base": "*",
     "@opam/dune": "1.11.4",
+    "@opam/menhir": "20190924",
     "@opam/ocaml-migrate-parsetree": "1.5.0",
     "@opam/ppxlib": "*",
     "@opam/reason": "*",
+    "@opam/sedlex": "2.1",
     "@reason-native/rely": "^3.2.1",
     "ocaml": "4.6.1"
   },
