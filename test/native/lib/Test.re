@@ -3,19 +3,8 @@ open TailwindUtils;
 open Css_types;
 open TestHelpers;
 
-// Mock CSS file
-let tailwindCss = {|
-      .flex {
-        display: flex;
-      }
-
-      .flex-row {
-        flex-direction: row;
-      }
-|};
-
-describe("Main test ", ({test, _}) => {
-  test("", ({expect, _}) => {
+describe("Main testing module", ({test, _}) => {
+  test("parseStylsheet returns correct AST", ({expect, _}) => {
     let ast = parseStylesheet(tailwindCss);
     let expected_ast = (
       [
@@ -72,5 +61,10 @@ describe("Main test ", ({test, _}) => {
     );
 
     expect.bool(eq_ast(ast, expected_ast)).toBeTrue();
+  });
+
+  test("getAcceptableClassNames returns the correct class names", ({expect, _}) => {
+    let expectedClassNames = ["flex", "flex-row"];
+    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(expectedClassNames);
   })
 });

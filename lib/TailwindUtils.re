@@ -1,18 +1,16 @@
 open Css_types;
 // ********************** CSS PARSER HELPERS *************************
 
+// TODO replace this with a File.read or something
+// Mock CSS file
 let tailwindCss = {|
-  .flex {
-    display: flex;
-  }
+      .flex {
+        display: flex;
+      }
 
-  .flex-row {
-    flex-direction: row;
-  }
-
-  .mt-2 {
-    margin-top: 0.5rem;
-  }
+      .flex-row {
+        flex-direction: row;
+      }
 |};
 
 let parseStylesheet = (~containerLnum=?, ~pos=?, css) => {
@@ -39,10 +37,26 @@ type declarationList = list(Declaration_list.kind);
 [@deriving show]
 type ast = list(Rule.t);
 
+exception UncaughtPrelude;
+
 let getAcceptableClassNames = css => {
   //let stylesheet = parseStylesheet(css);
-  print_string(css);
-  ["flex", "flex-row", "mt-2"];
+  let ast = parseStylesheet(css);
+
+  let gatherClassSelector = (existingClassNames, rule) => {
+    switch (rule) {
+    | Rule.Style_rule(styleRule) =>
+      let prelude = fst(styleRule.prelude);
+      switch (prelude) {
+      | [(Component_value.Delim(_), _), (Component_value.Ident(ident), _)] =>
+        existingClassNames @ [ident]
+      | _ => raise(UncaughtPrelude)
+      };
+    | Rule.At_rule(_) => existingClassNames @ ["at_rule"]
+    };
+  };
+
+  List.fold_left(gatherClassSelector, [], fst(ast));
 };
 
 // **********************************************************************
