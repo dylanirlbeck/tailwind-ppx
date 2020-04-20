@@ -120,17 +120,6 @@ jobs:
           # zip -r ../../tailwind-ppx-windows-x64.zip .
           # cd ../..
         
-      - name: Create Github release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
       - name: Upload tailwind-ppx-darwin-x64.zip to Github release 
         uses: actions/upload-release-asset@v1.0.1
         env:
