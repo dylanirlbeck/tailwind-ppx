@@ -100,6 +100,15 @@ By default, `tailwind-ppx` looks for your `tailwind.css` file in the project roo
 
 ## Developing
 
-TODO
+### Relevant commands
+
+- `esy build` -> Builds the project
+- `esy watch` -> Watches for changes to Reason/OCaml files in the entire project, including in the `/test` directory
+- `esy test_native` -> Runs the native tests (in `test/native`)
+- `esy test_bs` -> Runs the BuckleScript tests (in `test/bucklescript`)
+
+### Releases
+
+Releasing happens through GitHub actions. Once you update the version of the ppx in `esy.json` on `master`, GH actions will automatically publish a new release to `NPM` and `OPAM` once we create a new release on GitHub.
 
 ## Background/Sources
