@@ -1,8 +1,9 @@
 name: Release
 
 on: 
-  release:
-    types: published
+  push:
+    tags:
+      - v*
 
 jobs:
   build:
@@ -11,22 +12,18 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
 
-      - name: Fetch git tags
-        run: git fetch --tags --force
+      - name: Log GitHub reference
+        run: echo "Checking out ${{ github.ref }}"
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
           registry-url: "https://registry.npmjs.org"
-
-      - name: Set macOS deployment target
-        if: matrix.os == 'macos-latest'
-        run: |
-          echo "::set-env name=MACOSX_DEPLOYMENT_TARGET=10.9"
 
       - name: Cache esy dependencies
         uses: actions/cache@v1
@@ -52,14 +49,8 @@ jobs:
       - name: Build
         run: esy build --release
 
-      - name: Substitute watermarks
-        run: esy dune subst
-
-      - name: Build subst changes
-        run: esy dune build
-
-      - name: Run tests
-        run: esy test
+      - name: Run Native tests
+        run: esy test_native
 
       - name: Export dependencies
         run: esy export-dependencies
@@ -90,42 +81,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Fetch git tags
-        run: git fetch --tags --force
-
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
 
-      - name: Cache esy dependencies
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: _export
-          key: ${{ runner.OS }}-build-${{ hashFiles('esy.lock/index.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
-
-      - name: Install esy
-        run: npm install -g esy@latest
-
-      - name: Import dependencies
-        if: steps.cache.outputs.cache-hit == 'true'
-        run: esy import-build _export/*
-
-      - name: Install dependencies
-        run: esy install
-
-      - name: Build
-        run: esy build --release
-
-      - name: Substitute watermarks
-        run: esy dune subst
-
-      - name: Make NPM release skeleton
+     - name: Make NPM release skeleton
         run: node script/release-make-skeleton.js
 
       - name: Download linux artifacts
@@ -140,11 +101,11 @@ jobs:
           name: macos-latest
           path: _release/platform-darwin-x64
 
-      - name: Download windows artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: windows-latest
-          path: _release/platform-windows-x64
+      # - name: Download windows artifacts
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: windows-latest
+      #     path: _release/platform-windows-x64
 
       - name: Create archives for Github release
         run: |
@@ -159,6 +120,17 @@ jobs:
           # cd _release/platform-windows-x64
           # zip -r ../../tailwind-ppx-windows-x64.zip .
           # cd ../..
+        
+      - name: Create Github release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
 
       - name: Upload tailwind-ppx-darwin-x64.zip to Github release 
         uses: actions/upload-release-asset@v1.0.1
@@ -180,20 +152,20 @@ jobs:
           asset_name: tailwind-ppx-linux-x64.zip
           asset_content_type: application/gzip
 
-      - name: Upload tailwind-ppx-windows-x64.zip to Github release 
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: tailwind-ppx-windows-x64.zip
-          asset_name: tailwind-ppx-windows-x64.zip
-          asset_content_type: application/gzip
+      # - name: Upload tailwind-ppx-windows-x64.zip to Github release 
+      #   uses: actions/upload-release-asset@v1.0.1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: tailwind-ppx-windows-x64.zip
+      #     asset_name: tailwind-ppx-windows-x64.zip
+      #     asset_content_type: application/gzip
 
       - name: Publish NPM package
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          npm config set scope "@{{ npm_username }}"
+          npm config set scope "@dylanirlbeck"
           npm config list
           npm publish --access public
         working-directory: ./_release
