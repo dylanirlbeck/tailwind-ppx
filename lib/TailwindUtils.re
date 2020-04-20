@@ -1,3 +1,4 @@
+// TODO programmatically get access to these
 let acceptableClasses = ["mt-2", "flex", "flex-row"];
 
 let splitClassNames = classNames => {
@@ -17,6 +18,7 @@ let rec validateClassNames = (splitClassNames, loc) => {
     if (validateClassName(className)) {
       validateClassNames(remainingClassNames, loc);
     } else {
+      // TODO add a suggested className as part of the error message here
       raise(
         Location.Error(
           Location.error(~loc, "Class name not found: " ++ className),
