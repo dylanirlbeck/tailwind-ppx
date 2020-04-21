@@ -29,7 +29,7 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": ["@dylanirlbeck/tailwind-ppx"]
+  "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
 }
 ```
 
