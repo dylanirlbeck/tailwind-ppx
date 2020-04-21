@@ -2,6 +2,7 @@ open Setup;
 open TailwindUtils;
 open Css_types;
 open TestHelpers;
+open Read_tailwind;
 
 describe("Main testing module", ({test, _}) => {
   test("correct AST for basic selectors", ({expect, _}) => {

@@ -44,7 +44,6 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
 exception UncaughtPrelude;
 
 let getAcceptableClassNames = css => {
-  //let stylesheet = parseStylesheet(css);
   let ast = parseStylesheet(css);
 
   let gatherClassSelector = (existingClassNames, rule) => {
@@ -76,18 +75,18 @@ let splitClassNames = classNames => {
   String.split_on_char(' ', classNames);
 };
 
-let rec validateClassNames = (splitClassNames, loc) => {
+let rec validateClassNames = (splitClassNames, loc, tailwindFile) => {
   let validateClassName = className => {
     List.exists(
       acceptableClassName => acceptableClassName == className,
-      getAcceptableClassNames(tailwindCss),
+      getAcceptableClassNames(tailwindFile),
     );
   };
   switch (splitClassNames) {
   | [] => ()
   | [className, ...remainingClassNames] =>
     if (validateClassName(className)) {
-      validateClassNames(remainingClassNames, loc);
+      validateClassNames(remainingClassNames, loc, tailwindFile);
     } else {
       // TODO add a suggested className as part of the error message here
       raise(
@@ -99,7 +98,7 @@ let rec validateClassNames = (splitClassNames, loc) => {
   };
 };
 
-let validate = (classNames, loc) => {
+let validate = (classNames, loc, tailwindFile) => {
   let splitClasses = splitClassNames(classNames);
-  validateClassNames(splitClasses, loc);
+  validateClassNames(splitClasses, loc, tailwindFile);
 };
