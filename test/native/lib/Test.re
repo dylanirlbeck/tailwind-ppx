@@ -101,8 +101,7 @@ describe("Main testing module", ({test, _}) => {
               Declaration_list.Declaration({
                 Declaration.name: ("background-color", Location.none),
                 value: (
-                  [(Component_value.Hash("FFF"), Location.none),
-                  ],
+                  [(Component_value.Hash("FFF"), Location.none)],
                   Location.none,
                 ),
                 important: (false, Location.none),
@@ -113,15 +112,13 @@ describe("Main testing module", ({test, _}) => {
           ),
           loc: Location.none,
         }),
-     ],
+      ],
       Location.none,
     );
 
     expect.bool(eq_ast(ast, expected_ast)).toBeTrue();
   });
-
 });
-
 
 describe("Different types of AST nodes", ({test, _}) => {
   test("Basic selectors", ({expect, _}) => {
@@ -136,7 +133,9 @@ describe("Different types of AST nodes", ({test, _}) => {
     |};
 
     let expectedClassNames = ["flex", "flex-row"];
-    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(expectedClassNames);
+    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(
+      expectedClassNames,
+    );
   });
 
   test("Hover selector", ({expect, _}) => {
@@ -147,6 +146,8 @@ describe("Different types of AST nodes", ({test, _}) => {
     |};
 
     let expectedClassNames = ["hover:bg-mono-100"];
-    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(expectedClassNames);
-  })
-})
+    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(
+      expectedClassNames,
+    );
+  });
+});
