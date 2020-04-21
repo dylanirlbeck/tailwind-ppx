@@ -107,8 +107,9 @@ By default, `tailwind-ppx` looks for your `tailwind.css` file in the project roo
 - `esy test_native` -> Runs the native tests (in `test/native`)
 - `esy test_bs` -> Runs the BuckleScript tests (in `test/bucklescript`)
 
-### Releases
+### Releasing
 
-Releasing happens through GitHub actions. Once you update the version of the ppx in `esy.json` on `master`, GH actions will automatically publish a new release to `NPM` and `OPAM` once we create a new release on GitHub.
+1. Bump the version of the ppx in `esy.json` on `master`,
+2. Draft and publish a new release through Git/GitHub. Upon publishing the release, GitHub actions will automatically publish a new release to `NPM` and `OPAM` once we create a new release on GitHub.
 
 ## Background/Sources
