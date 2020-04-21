@@ -26,8 +26,6 @@ let expr = (mapper, e) =>
     )) =>
     // TODO pull out `raise` calls into helper
     // Raise an error if there' no `tailwind.css` file available
-    print_endline(Sys.getcwd());
-
     let tailwindFile =
       switch (Lazy.force(Read_tailwind.getTailwind())) {
       | Some(file) => file
