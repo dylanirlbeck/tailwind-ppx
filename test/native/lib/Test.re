@@ -91,7 +91,7 @@ describe("Main testing module", ({test, _}) => {
           Style_rule.prelude: (
             [
               (Component_value.Delim("."), Location.none),
-              (Component_value.Ident("hover\:bg-mono-100"), Location.none),
+              (Component_value.Ident("hover\\:bg-mono-100"), Location.none),
               (Component_value.Delim(":"), Location.none),
               (Component_value.Ident("hover"), Location.none),
             ],
@@ -117,9 +117,6 @@ describe("Main testing module", ({test, _}) => {
      ],
       Location.none,
     );
-
-    
-   //Css_fmt_printer.dump_stylesheet(Format.std_formatter, expected_ast);
 
     expect.bool(eq_ast(ast, expected_ast)).toBeTrue();
   });
