@@ -5,6 +5,8 @@ const fs = require("fs");
 const path = require("path");
 const esy = require("../esy.json");
 
+console.log("Using esy.json:", esy);
+
 const filesToCopy = ["LICENSE", "README.md"];
 
 function exec(cmd) {
