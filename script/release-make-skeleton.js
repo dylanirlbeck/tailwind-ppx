@@ -1,11 +1,11 @@
-// @flow
+#!/usr/bin/env node
 
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const esy = require("../esy.json");
 
-const filesToCopy = ["LICENSE", "README.md", "CHANGES.md"];
+const filesToCopy = ["LICENSE", "README.md"];
 
 function exec(cmd) {
   console.log(`exec: ${cmd}`);
@@ -37,13 +37,11 @@ for (const file of filesToCopy) {
 }
 
 fs.copyFileSync(
-  path.join(src, "scripts", "release-postinstall.js"),
+  path.join(src, "script", "release-postinstall.js"),
   path.join(dst, "postinstall.js")
 );
 
-const filesToTouch = [
-  "tailwind-ppx"
-];
+const filesToTouch = ["tailwind-ppx.exe"];
 
 for (const file of filesToTouch) {
   const p = path.join(dst, file);
@@ -51,27 +49,4 @@ for (const file of filesToTouch) {
   fs.writeFileSync(p, "");
 }
 
-const pkgJson = {
-  name: "@dylanirlbeck/tailwind-ppx",
-  version: esy.version,
-  description: esy.description,
-  author: esy.author,
-  license: esy.license,
-  homepage: esy.homepage,
-  repository: esy.repository,
-  scripts: {
-    postinstall: "node postinstall.js"
-  },
-  bin: {
-    tailwind-ppx: "tailwind-ppx.exe"
-  },
-  files: [
-    "platform-windows-x64/",
-    "platform-linux-x64/",
-    "platform-darwin-x64/",
-    "postinstall.js",
-    "tailwind-ppx.exe"
-  ]
-};
-
-fs.writeFileSync(path.join(dst, "package.json"), JSON.stringify(pkgJson, null, 2));
+fs.writeFileSync(path.join(dst, "package.json"), JSON.stringify(esy, null, 2));

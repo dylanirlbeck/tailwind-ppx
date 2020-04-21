@@ -49,6 +49,7 @@
     "clean": "esy dune clean",
     "format": "esy dune build @fmt --auto-promote",
     "watch": "esy dune build @all -p #{self.name} --watch",
-    "release": "./script/release.sh"
+    "release": "./script/release.sh",
+    "postinstall": "node postinstall.js"
   }
 }
