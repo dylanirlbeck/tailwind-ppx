@@ -49,4 +49,29 @@ for (const file of filesToTouch) {
   fs.writeFileSync(p, "");
 }
 
-fs.writeFileSync(path.join(dst, "package.json"), JSON.stringify(esy, null, 2));
+const pkgJson = {
+  name: "@dylanirlbeck/tailwind-ppx",
+  version: esy.version,
+  description: esy.description,
+  homepage: esy.homepage,
+  license: esy.license,
+  repository: esy.repository,
+  scripts: {
+    postinstall: "node postinstall.js"
+  },
+  bin: {
+    "tailwind-ppx": "tailwind-ppx.exe"
+  },
+  files: [
+    "platform-windows-x64/",
+    "platform-linux-x64/",
+    "platform-darwin-x64/",
+    "postinstall.js",
+    "tailwind-ppx.exe"
+  ]
+};
+
+fs.writeFileSync(
+  path.join(dst, "package.json"),
+  JSON.stringify(pkgJson, null, 2)
+);
