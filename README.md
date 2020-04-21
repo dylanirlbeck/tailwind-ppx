@@ -52,7 +52,7 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": [ "esy x tailwind-ppx" ]
+  "ppx-flags": ["esy x tailwind-ppx"]
 }
 ```
 
@@ -72,7 +72,8 @@ For example, for the following (condensed) `tailwind.css` file:
 }
 ```
 
-The following ReasonReact code will provide validation for your desired class names. See these examples:
+`tailwind-ppx` will provide validation for your desired class names. See these
+examples:
 
 ```reason
 // Example 1
@@ -86,11 +87,24 @@ The following ReasonReact code will provide validation for your desired class na
 </Component>
 ```
 
+Note that this PPX requires a `tailwind.css` file to exist somewhere in the
+project hierarchy. Though not required, it's recommended that you [configure the
+path](#-path) to your `tailwind.css` file (relative to your project root).
+
+### Moving or changing your `tailwind.css` file
+
+If your `tailwind.css` file changes (or you move it) you'll need to rebuild your
+project - for example, `yarn clean && yarn build` if in BuckleScript. At this
+time, `tailwind-ppx` does not automatically watch for changes, though this is on
+the roadmap.
+
 ## Configuration
 
-### - path (TODO)
+### -path
 
-By default, `tailwind-ppx` looks for your `tailwind.css` file in the project root. If `tailwind.css` lives elsewhere, you'll need to specify the file path in your `bsconfig.json`.
+By default, `tailwind-ppx` looks for your `tailwind.css` file in the root
+directory. If `tailwind.css` lives elsewhere, you'll need to specify the file
+path in your `bsconfig.json`.
 
 ```json
 "ppx-flags": [
