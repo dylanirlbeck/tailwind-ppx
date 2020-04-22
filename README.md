@@ -107,6 +107,8 @@ the roadmap.
 * Duplicate class names
 * Redundant class names (like having both flex-row and flex-col)
 * Support for expressions inside the PPX (like `[%tw Cn.make(...)]`) to allow variables and function calls
+* Windows deployment
+* Suggestions for invalid class names (i.e. 'Did you mean X?')
 
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
@@ -145,3 +147,7 @@ path in your `bsconfig.json`.
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub. 
 
 ## Background/Sources
+
+* [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
+* [styled-ppx](https://github.com/davesnx/styled-ppx)
+* [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
