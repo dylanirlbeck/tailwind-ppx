@@ -6,23 +6,6 @@ let unescapeIdent = ident => {
 };
 
 // ********************** CSS PARSER HELPERS *************************
-
-// TODO replace this with a File.read or something
-// Mock CSS file
-let tailwindCss = {|
-      .flex {
-        display: flex;
-      }
-
-      .flex-row {
-        flex-direction: row;
-      }
-
-      .hover\:bg-mono-100:hover {
-        background-color: #FFF;
-      }
-|};
-
 let parseStylesheet = (~containerLnum=?, ~pos=?, css) => {
   Css_lexer.parse_string(
     ~container_lnum=?containerLnum,
@@ -41,32 +24,41 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
   );
 };
 
-exception UncaughtPrelude;
+let acceptableNames = ref(None);
 
 let getAcceptableClassNames = css => {
-  let ast = parseStylesheet(css);
+  switch (acceptableNames^) {
+  | Some(names) => names
+  | None =>
+    let ast = parseStylesheet(css);
 
-  let gatherClassSelector = (existingClassNames, rule) => {
-    switch (rule) {
-    | Rule.Style_rule(styleRule) =>
-      let prelude = fst(styleRule.prelude);
-      switch (prelude) {
-      | [(Component_value.Delim(_), _), (Component_value.Ident(ident), _)] =>
-        existingClassNames @ [unescapeIdent(ident)]
-      | [
-          (Component_value.Delim(_), _),
-          (Component_value.Ident(ident), _),
-          (Component_value.Delim(_), _),
-          (Component_value.Ident("hover"), _),
-        ] =>
-        existingClassNames @ [unescapeIdent(ident)]
-      | _ => existingClassNames // TODO add support for other preludes (if nec.)
+    let gatherClassSelector = (existingClassNames, rule) => {
+      switch (rule) {
+      | Rule.Style_rule(styleRule) =>
+        let prelude = fst(styleRule.prelude);
+        switch (prelude) {
+        | [
+            (Component_value.Delim(_), _),
+            (Component_value.Ident(ident), _),
+          ] =>
+          existingClassNames @ [unescapeIdent(ident)]
+        | [
+            (Component_value.Delim(_), _),
+            (Component_value.Ident(ident), _),
+            (Component_value.Delim(_), _),
+            (Component_value.Ident("hover"), _),
+          ] =>
+          existingClassNames @ [unescapeIdent(ident)]
+        | _ => existingClassNames // TODO add support for other preludes (if nec.)
+        };
+      | Rule.At_rule(_) => existingClassNames
       };
-    | Rule.At_rule(_) => existingClassNames @ ["at_rule"]
     };
-  };
 
-  List.fold_left(gatherClassSelector, [], fst(ast));
+    let names = List.fold_left(gatherClassSelector, [], fst(ast));
+    acceptableNames := Some(names);
+    names;
+  };
 };
 
 // **********************************************************************
