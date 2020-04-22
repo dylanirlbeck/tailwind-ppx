@@ -8,6 +8,6 @@
  (wrapped false)
  (public_name tailwind-ppx.lib)
  (kind ppx_rewriter)
- (preprocess (pps sedlex.ppx ppx_deriving.show))
+ (preprocess (pps sedlex.ppx))
  (libraries str sedlex menhirLib ocaml-migrate-parsetree)
  )
