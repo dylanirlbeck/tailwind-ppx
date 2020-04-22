@@ -20,8 +20,7 @@ let make = () =>
               <span
                 key=tag
                 className=[%tw
-                  "inline-block bg-gray-200 rounded-full px-3 py-1
-                text-sm font-semibold text-gray-700 mr-2 mt-2"
+                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2"
                 ]>
                 {"#" ++ tag |> str}
               </span>
