@@ -98,6 +98,18 @@ project - for example, `yarn clean && yarn build` if in BuckleScript. At this
 time, `tailwind-ppx` does not automatically watch for changes, though this is on
 the roadmap.
 
+## Features
+**Current**
+* Invalid class names
+* Always in-sync with your `tailwind.css` file (just make sure to re-build!)
+
+**Upcoming**
+* Duplicate class names
+* Redundant class names (like having both flex-row and flex-col)
+* Support for expressions inside the PPX (like `[%tw Cn.make(...)]`) to allow variables and function calls
+
+Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
+
 ## Configuration
 
 ### -path
