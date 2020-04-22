@@ -16,8 +16,7 @@ homepage: "https://opam.ocaml.org/"
 bug-reports: "https://github.com/ocaml/opam/issues"
 depends: [
   "ocaml" {>= "4.02.3"}
-  "opam-core" {= "2.0.6"}
-  "opam-file-format" {>= "2.0.0~rc2"}
+  "opam-format" {= version}
   "dune" {>= "1.2.1"}
 ]
 build: [
@@ -26,14 +25,15 @@ build: [
 ]
 dev-repo: "git+https://github.com/ocaml/opam.git"
 url {
-  src: "https://github.com/ocaml/opam/archive/2.0.6.tar.gz"
+  src: "https://github.com/ocaml/opam/archive/2.0.7.tar.gz"
   checksum: [
-    "md5=4412f3af8f0af354dcd8519ba8f30ee5"
-    "sha512=c3dbd315550817d15e3d5dd4b5b030b725e5d65e36450f8ac064555e4710bda90df6fab457c386c7a334689e50d240de19992565ce325bc8a18163f145f09dfd"
+    "md5=798911b81a5359e5f632416e895e7e3e"
+    "sha512=2ade3998a94333a5a838b55e229ab0c707e678481cae892980b986fb86f39163070a9b7d3e0e87879cd57b91a33bf6a3e15f3786c3510a635e59383782218f1d"
   ]
 }
 description:"""
 opam 2.0 development libraries
 
-Definition of opam datastructures and its file interface.
+This library includes repository and remote sources handling, including
+curl/wget, rsync, git, mercurial, darcs backends.
 """
