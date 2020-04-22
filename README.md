@@ -29,7 +29,7 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": ["@dylanirlbeck/tailwind-ppx"]
+  "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
 }
 ```
 
@@ -123,7 +123,13 @@ path in your `bsconfig.json`.
 
 ### Releasing
 
-1. Bump the version of the ppx in `esy.json` on `master`,
-2. Draft and publish a new release through Git/GitHub. Upon publishing the release, GitHub actions will automatically publish a new release to `NPM` and `OPAM` once we create a new release on GitHub.
+1. Bump the version of the ppx in `esy.json` on `master` (we use [semantic versioning](https://semver.org/))
+2. Create and push a new tag
+  ```
+  $ git checkout master
+  $ git tag vx.y.z
+  $ git push origin vx.y.z
+  ```
+3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub. 
 
 ## Background/Sources
