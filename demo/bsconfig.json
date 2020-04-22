@@ -1,0 +1,26 @@
+{
+  "name": "tailwind-starter",
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": {
+    "dir": "src",
+    "subdirs": true
+  },
+  "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
+  "ppx-flags": [
+    ["@dylanirlbeck/tailwind-ppx/tailwind-ppx", "-path src/tailwind.css"]
+  ],
+  "package-specs": [
+    {
+      "module": "commonjs",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": ["reason-react"],
+  "refmt": 3,
+  "warnings": {
+    "error": "+8"
+  }
+}
