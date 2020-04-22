@@ -4,6 +4,14 @@ open Css_types;
 open TestHelpers;
 
 describe("Main testing module", ({test, _}) => {
+  test("Parser works for base tailwind file", ({expect, _}) => {
+    let baseTailwindCss =
+      Read_tailwind.readFile("test/native/lib/tailwind.css");
+    parseStylesheet(baseTailwindCss) |> ignore;
+    // TODO find a better way to make sure an error isn't thrown
+    expect.bool(true).toBeTrue();
+  });
+
   test("correct AST for basic selectors", ({expect, _}) => {
     let tailwindCss = {|
       .flex {
