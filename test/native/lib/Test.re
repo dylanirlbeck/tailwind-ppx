@@ -28,6 +28,17 @@ describe("Main testing module", ({test, _}) => {
     ]);
   });
 
+  test("checkDuplicate throws correctly", ({expect, _}) => {
+    let classNames = ["flex", "flex"];
+
+    expect.fn(() => checkDuplicate(classNames, Location.none)).
+      toThrowException(
+      Location.Error(
+        Location.error(~loc=Location.none, "Duplicate class name: flex"),
+      ),
+    );
+  });
+
   test("correct AST for basic selectors", ({expect, _}) => {
     let tailwindCss = {|
       .flex {

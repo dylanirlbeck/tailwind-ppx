@@ -66,7 +66,7 @@ let getAcceptableClassNames = css => {
 // **********************************************************************
 
 /********************  MAIN VALIDATION METHODS **************************/
-let rec checkDuplicate = (classNames, loc) => {
+let checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);
 
   let isDuplicate = className => {
@@ -82,7 +82,7 @@ let rec checkDuplicate = (classNames, loc) => {
   List.iter(isDuplicate, classNames);
 };
 
-let rec checkAcceptable = (classNames, loc, tailwindFile) => {
+let checkAcceptable = (classNames, loc, tailwindFile) => {
   // TODO add a suggested className as part of the error message here
   let isAcceptable = className => {
     StringSet.mem(className, getAcceptableClassNames(tailwindFile))
