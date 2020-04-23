@@ -59,9 +59,9 @@ jobs:
 
       - name: Run BuckleScript tests
         run: |
-          cd tailwind-ppx/test/BuckleScript
           npm install -g yarn
           yarn install
+          cd test/bucklescript
           yarn test
 
       - name: Export dependencies
