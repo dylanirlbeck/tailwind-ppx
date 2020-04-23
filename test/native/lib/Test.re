@@ -19,6 +19,12 @@ describe("Main testing module", ({test, _}) => {
     expect.bool(true).toBeTrue();
   });
 
+  test("splitClassNames works with whitespace", ({expect, _}) => {
+    let className = " flex-row  flex ";
+
+    expect.list(splitClassNames(className)).toEqual(["flex-row", "flex"]);
+  });
+
   test("correct AST for basic selectors", ({expect, _}) => {
     let tailwindCss = {|
       .flex {
