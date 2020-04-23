@@ -66,7 +66,6 @@ let getAcceptableClassNames = css => {
 // **********************************************************************
 
 /********************  MAIN VALIDATION METHODS **************************/
-
 let rec checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);
 
@@ -87,21 +86,25 @@ let rec checkAcceptable = (classNames, loc, tailwindFile) => {
   // TODO add a suggested className as part of the error message here
   let isAcceptable = className => {
     StringSet.mem(className, getAcceptableClassNames(tailwindFile))
-      ? raise(
+      ? ()
+      : raise(
           Location.Error(
             Location.error(~loc, "Class name not found: " ++ className),
           ),
-        )
-      : ();
+        );
   };
 
   List.iter(isAcceptable, classNames);
 };
 
+let getSplitClassNames = classNames => {
+  List.filter(name => name != "", String.split_on_char(' ', classNames));
+};
+
 let validate = (classNames, loc, tailwindFile) => {
-  let splitClassNames = String.split_on_char(' ', classNames);
+  let splitClassNames = getSplitClassNames(classNames);
   checkAcceptable(splitClassNames, loc, tailwindFile);
-  checkDuplicate(splitClassNames);
+  checkDuplicate(splitClassNames, loc);
 };
 
 // ********************************************************************

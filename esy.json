@@ -1,6 +1,6 @@
 {
   "name": "tailwind-ppx",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Reason PPX that validates your Tailwind classes at compile-time",
   "author": "Dylan Irlbeck <dylanirlbeck@gmail.com>",
   "license": "MIT",
@@ -38,11 +38,8 @@
     "refmterr": "*"
   },
   "scripts": {
-    "test": "esy test_snapshot",
-    "test_snapshot": "dune runtest",
-    "test_snapshot:promote": "dune runtest --auto-promote",
     "test_native": "esy dune exec test/native/TestRunner.exe",
-    "test_bs": "cd test/bucklescript && yarn test",
+    "test_bs": "cd test/bucklescript; esy yarn test",
     "all": "esy dune b @all",
     "clean": "esy dune clean",
     "format": "esy dune build @fmt --auto-promote",
