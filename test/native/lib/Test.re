@@ -1,5 +1,5 @@
 open Setup;
-open TailwindUtils;
+open Tailwind_utils;
 open Css_types;
 open TestHelpers;
 

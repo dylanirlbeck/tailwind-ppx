@@ -2,7 +2,7 @@ open Migrate_parsetree;
 open Ast_406;
 open Ast_mapper;
 open Parsetree;
-open TailwindUtils;
+open Tailwind_utils;
 
 let expr = (mapper, e) =>
   switch (e.pexp_desc) {
