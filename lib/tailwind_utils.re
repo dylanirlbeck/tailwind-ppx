@@ -6,15 +6,25 @@ let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
 };
 
+exception ParseError(string);
+
 // ********************** CSS PARSER HELPERS *************************
-let parseStylesheet = (~containerLnum=?, ~pos=?, css) => {
-  Css_lexer.parse_string(
-    ~container_lnum=?containerLnum,
-    ~pos?,
-    css,
-    Css_parser.stylesheet,
-  );
-};
+let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
+  try(
+    Css_lexer.parse_string(
+      ~container_lnum=?containerLnum,
+      ~pos?,
+      css,
+      Css_parser.stylesheet,
+    )
+  ) {
+  | _ =>
+    raise(
+      ParseError(
+        "Your Tailwind CSS file could not be parsed. Please double-check to make sure it's valid CSS.",
+      ),
+    )
+  };
 
 let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
   Css_lexer.parse_string(
