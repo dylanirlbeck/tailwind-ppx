@@ -39,6 +39,25 @@ describe("Main testing module", ({test, _}) => {
     );
   });
 
+  test("parseStylesheet throws correctly", ({expect, _}) => {
+    let tailwindCss = {|
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+  --asdfa
+}
+    |};
+
+    expect.fn(() => parseStylesheet(tailwindCss)).toThrowException(
+      ParseError(
+        "Your Tailwind CSS file could not be parsed. Please double-check to make sure it's valid CSS.",
+      ),
+    );
+  });
+
   test("correct AST for basic selectors", ({expect, _}) => {
     let tailwindCss = {|
       .flex {
