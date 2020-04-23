@@ -148,7 +148,8 @@ describe("Different types of AST nodes", ({test, _}) => {
     |};
 
     let expectedClassNames = ["flex", "flex-row"];
-    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(
+    expect.list(getAcceptableClassNames(tailwindCss) |> StringSet.elements).
+      toEqual(
       expectedClassNames,
     );
   });
@@ -161,7 +162,8 @@ describe("Different types of AST nodes", ({test, _}) => {
     |};
 
     let expectedClassNames = ["hover:bg-mono-100"];
-    expect.list(getAcceptableClassNames(tailwindCss)).toEqual(
+    expect.list(getAcceptableClassNames(tailwindCss) |> StringSet.elements).
+      toEqual(
       expectedClassNames,
     );
   });
