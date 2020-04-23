@@ -3,7 +3,7 @@ name: CI
 on: 
   push:
     branches:
-      -master
+      - master
     paths:
       - 'lib/**'
       - 'test/**'
@@ -54,9 +54,16 @@ jobs:
       - name: Check formatting
         run: esy format
 
-      - name: Run tests
-        run: esy test
-        
+      - name: Run Native tests
+        run: esy test_native
+
+      - name: Run BuckleScript tests
+        run: |
+          cd test/BuckleScript
+          npm install -g yarn
+          yarn install
+          yarn test
+
       - name: Export dependencies
         run: esy export-dependencies
 

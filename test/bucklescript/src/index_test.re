@@ -8,7 +8,7 @@ describe("Basic test", () => {
   });
 
   test("should ignore spaces arround", () => {
-    let className = [%tw "flex-row flex "];
+    let className = [%tw " flex-row  flex "];
     expect(className) |> toBe(" flex-row flex ");
   });
 });
