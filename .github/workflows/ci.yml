@@ -10,10 +10,7 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - 'lib/**'
-      - 'test/**'
- 
+
 jobs:
   build:
     name: Build and test

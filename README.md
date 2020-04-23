@@ -13,9 +13,9 @@ Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 
 ## Installation
 
-The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript).
+The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript). To get started, we recommend cloning our [demo project](https://github.com/dylanirlbeck/tailwind-ppx/tree/master/demo).
 
-### With `npm` on Bucklescript projects
+### With `yarn` or `npm` on Bucklescript projects
 
 Install the PPX with `yarn` or `npm`
 
@@ -87,7 +87,7 @@ examples:
 </Component>
 ```
 
-Note that this PPX requires a `tailwind.css` file to exist somewhere in the
+Note that this PPX requires your **generated** `tailwind.css` file to exist somewhere in the
 project hierarchy. Though not required, it's recommended that you [configure the
 path](#-path) to your `tailwind.css` file (relative to your project root).
 
@@ -117,8 +117,7 @@ Have feature requests? Feel free to [open an issue](https://github.com/dylanirlb
 ### -path
 
 By default, `tailwind-ppx` looks for your `tailwind.css` file in the root
-directory. If `tailwind.css` lives elsewhere, you'll need to specify the file
-path in your `bsconfig.json`.
+directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS file is different), you'll need to specify the file path in your `bsconfig.json`.
 
 ```json
 "ppx-flags": [
