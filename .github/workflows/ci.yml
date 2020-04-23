@@ -59,7 +59,7 @@ jobs:
 
       - name: Run BuckleScript tests
         run: |
-          cd test/BuckleScript
+          cd tailwind-ppx/tailwind-ppx/test/BuckleScript
           npm install -g yarn
           yarn install
           yarn test
