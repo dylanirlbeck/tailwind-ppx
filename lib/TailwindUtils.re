@@ -25,6 +25,7 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
 };
 
 let acceptableNames = ref(None);
+module StringSet = Set.Make(String);
 
 let getAcceptableClassNames = css => {
   switch (acceptableNames^) {
@@ -51,11 +52,12 @@ let getAcceptableClassNames = css => {
           existingClassNames @ [unescapeIdent(ident)]
         | _ => existingClassNames // TODO add support for other preludes (if nec.)
         };
-      | Rule.At_rule(_) => existingClassNames
+      | Rule.At_rule(_) => existingClassNames // TODO should we be skipping?
       };
     };
 
-    let names = List.fold_left(gatherClassSelector, [], fst(ast));
+    let names =
+      List.fold_left(gatherClassSelector, [], fst(ast)) |> StringSet.of_list;
     acceptableNames := Some(names);
     names;
   };
@@ -69,10 +71,7 @@ let splitClassNames = classNames => {
 
 let rec validateClassNames = (splitClassNames, loc, tailwindFile) => {
   let validateClassName = className => {
-    List.exists(
-      acceptableClassName => acceptableClassName == className,
-      getAcceptableClassNames(tailwindFile),
-    );
+    StringSet.mem(className, getAcceptableClassNames(tailwindFile));
   };
   switch (splitClassNames) {
   | [] => ()
