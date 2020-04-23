@@ -64,7 +64,7 @@ let getAcceptableClassNames = css => {
 // **********************************************************************
 
 let splitClassNames = classNames => {
-  String.split_on_char(' ', classNames);
+  String.split_on_char(' ', String.trim(classNames));
 };
 
 let rec validateClassNames = (splitClassNames, loc, tailwindFile) => {
