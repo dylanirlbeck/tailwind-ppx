@@ -57,10 +57,14 @@ jobs:
       - name: Run Native tests
         run: esy test_native
 
-      - name: Run BuckleScript tests
+      - name: Build BuckleScript tests
         run: |
           npm install -g yarn
-          yarn install
+          cd test/bucklescript
+          yarn && yarn build
+
+      - name: Run BuckleScript tests
+        run: |
           cd test/bucklescript
           yarn test
 
