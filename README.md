@@ -77,12 +77,12 @@ examples:
 
 ```reason
 // Example 1
-<Component className=[%tw "flex flex-row]> // This is ok!
+<Component className=[%tw "flex flex-row"]> // This is ok!
   ...
 </Component>
 
 // Example 2
-<Component className=[%tw "flex flex-ro]> // ERROR: Class name not found: flex-ro
+<Component className=[%tw "flex flex-ro"]> // ERROR: Class name not found: flex-ro
   ...
 </Component>
 ```
@@ -94,8 +94,8 @@ path](#-path) to your `tailwind.css` file (relative to your project root).
 ### Moving or changing your `tailwind.css` file
 
 If your `tailwind.css` file changes (or you move it) you'll need to rebuild your
-project - for example, `yarn clean && yarn build` if in BuckleScript. At this
-time, `tailwind-ppx` does not automatically watch for changes, though this is on
+project - for example, `bsb -clean-world` and `bsb -make-world` if in BuckleScript. 
+At this time, `tailwind-ppx` does not automatically watch for changes, though this is on
 the roadmap.
 
 ## Features
