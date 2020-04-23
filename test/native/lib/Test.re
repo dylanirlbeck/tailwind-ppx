@@ -1,5 +1,5 @@
 open Setup;
-open TailwindUtils;
+open Tailwind_utils;
 open Css_types;
 open TestHelpers;
 
@@ -22,7 +22,21 @@ describe("Main testing module", ({test, _}) => {
   test("splitClassNames works with whitespace", ({expect, _}) => {
     let className = " flex-row  flex ";
 
-    expect.list(splitClassNames(className)).toEqual(["flex-row", "flex"]);
+    expect.list(getSplitClassNames(className)).toEqual([
+      "flex-row",
+      "flex",
+    ]);
+  });
+
+  test("checkDuplicate throws correctly", ({expect, _}) => {
+    let classNames = ["flex", "flex"];
+
+    expect.fn(() => checkDuplicate(classNames, Location.none)).
+      toThrowException(
+      Location.Error(
+        Location.error(~loc=Location.none, "Duplicate class name: flex"),
+      ),
+    );
   });
 
   test("correct AST for basic selectors", ({expect, _}) => {

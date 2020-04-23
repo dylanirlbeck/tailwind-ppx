@@ -1,4 +1,5 @@
 open Css_types;
+module StringSet = Set.Make(String);
 
 // Remove all the backslashes from identifiers
 let unescapeIdent = ident => {
@@ -25,7 +26,6 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
 };
 
 let acceptableNames = ref(None);
-module StringSet = Set.Make(String);
 
 let getAcceptableClassNames = css => {
   switch (acceptableNames^) {
@@ -65,31 +65,46 @@ let getAcceptableClassNames = css => {
 
 // **********************************************************************
 
-let splitClassNames = classNames => {
+/********************  MAIN VALIDATION METHODS **************************/
+let checkDuplicate = (classNames, loc) => {
+  let classNamesSet = ref(StringSet.empty);
+
+  let isDuplicate = className => {
+    StringSet.mem(className, classNamesSet^)
+      ? raise(
+          Location.Error(
+            Location.error(~loc, "Duplicate class name: " ++ className),
+          ),
+        )
+      : classNamesSet := StringSet.add(className, classNamesSet^);
+  };
+
+  List.iter(isDuplicate, classNames);
+};
+
+let checkAcceptable = (classNames, loc, tailwindFile) => {
+  // TODO add a suggested className as part of the error message here
+  let isAcceptable = className => {
+    StringSet.mem(className, getAcceptableClassNames(tailwindFile))
+      ? ()
+      : raise(
+          Location.Error(
+            Location.error(~loc, "Class name not found: " ++ className),
+          ),
+        );
+  };
+
+  List.iter(isAcceptable, classNames);
+};
+
+let getSplitClassNames = classNames => {
   List.filter(name => name != "", String.split_on_char(' ', classNames));
 };
 
-let rec validateClassNames = (splitClassNames, loc, tailwindFile) => {
-  let validateClassName = className => {
-    StringSet.mem(className, getAcceptableClassNames(tailwindFile));
-  };
-  switch (splitClassNames) {
-  | [] => ()
-  | [className, ...remainingClassNames] =>
-    if (validateClassName(className)) {
-      validateClassNames(remainingClassNames, loc, tailwindFile);
-    } else {
-      // TODO add a suggested className as part of the error message here
-      raise(
-        Location.Error(
-          Location.error(~loc, "Class name not found: " ++ className),
-        ),
-      );
-    }
-  };
+let validate = (classNames, loc, tailwindFile) => {
+  let splitClassNames = getSplitClassNames(classNames);
+  checkAcceptable(splitClassNames, loc, tailwindFile);
+  checkDuplicate(splitClassNames, loc);
 };
 
-let validate = (classNames, loc, tailwindFile) => {
-  let splitClasses = splitClassNames(classNames);
-  validateClassNames(splitClasses, loc, tailwindFile);
-};
+// ********************************************************************
