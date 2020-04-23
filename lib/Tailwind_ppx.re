@@ -4,26 +4,19 @@ open Ast_mapper;
 open Parsetree;
 open TailwindUtils;
 
-let expr = (mapper, e) =>
+let expr = (mapper, e) => {
+  let loc = e.pexp_loc;
   switch (e.pexp_desc) {
-  /* If the expression is [%tw ""] */
-  | Pexp_extension((
-      {txt: "tw", _},
-      PStr([
-        {
-          pstr_desc:
-            Pstr_eval(
-              {
-                pexp_loc: loc,
-                pexp_desc: Pexp_constant(Pconst_string(classNames, _delim)),
-                _,
-              },
-              _,
-            ),
-          _,
-        },
-      ]),
-    )) =>
+  /* Match all the functions with the first labeled argument being className */
+  | Pexp_apply(
+      _expression,
+      [
+        (
+          Labelled("className"),
+          {pexp_desc: Pexp_constant(Pconst_string(classNames, _delim))},
+        ),
+      ],
+    ) =>
     // TODO pull out `raise` calls into helper
     // Raise an error if there' no `tailwind.css` file available
     let tailwindFile =
@@ -47,6 +40,7 @@ let expr = (mapper, e) =>
     Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)
   };
+};
 
 // Default configuration
 let () =
