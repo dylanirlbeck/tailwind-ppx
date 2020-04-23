@@ -3,6 +3,13 @@ open TailwindUtils;
 open Css_types;
 open TestHelpers;
 
+let {describe, describeSkip, describeOnly} =
+  describeConfig
+  |> withLifecycle(testLifecycle
+       // Reset acceptable names before each run
+       => testLifecycle |> beforeEach(() => acceptableNames := None))
+  |> build;
+
 describe("Main testing module", ({test, _}) => {
   test("Parser works for base tailwind file", ({expect, _}) => {
     let baseTailwindCss =
