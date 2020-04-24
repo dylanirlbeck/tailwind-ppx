@@ -15,6 +15,7 @@
   "esy": {
     "build": "dune build -p #{self.name}",
     "buildEnv": { "ODOC_SYNTAX": "re" },
+    "buildsInSource": "_build",
     "release": {
       "bin": ["Bin"]
     }
@@ -29,7 +30,7 @@
     "@reason-native/rely": "^3.2.1"
   },
   "devDependencies": {
-    "ocaml": "4.6.1",
+    "ocaml": "~4.6.0",
     "@opam/dune-release": "*",
     "@opam/merlin": "*",
     "@opam/odoc": "*",
@@ -38,7 +39,7 @@
     "refmterr": "*"
   },
   "scripts": {
-    "test_native": "esy dune exec test/native/TestRunner.exe",
+    "test_native": "esy #{os == 'windows' ? 'b' : ''} dune exec test/native/TestRunner.exe",
     "test_bs": "cd test/bucklescript; esy yarn test",
     "all": "esy dune b @all",
     "clean": "esy dune clean",
