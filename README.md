@@ -97,6 +97,41 @@ project - for example, `bsb -clean-world` and `bsb -make-world` if in BuckleScri
 At this time, `tailwind-ppx` does not automatically watch for changes, though this is on
 the roadmap.
 
+Alternatively, you can add the following rules to you bsconfig.json to re-trigger builds
+
+```json
+{
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true,
+      "generators": [
+        {
+          "name": "gen-tailwind",
+          "edge": ["tailwind.css", ":", "styles.css"]
+        }
+      ]
+    }
+  ],
+  "generators": [
+    {
+      "name": "gen-tailwind",
+      "command": "tailwindcss build $in -o $out"
+    }
+  ]
+}
+```
+
+You might have to specify the path to tailwind.css
+
+```json
+{
+  "ppx-flags": [
+    ["@dylanirlbeck/tailwind-ppx/tailwind-ppx", "-path ./src/tailwind.css"]
+  ]
+}
+```
+
 ## Features
 **Current**
 * Invalid class names
