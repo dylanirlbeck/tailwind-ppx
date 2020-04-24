@@ -24,13 +24,11 @@ let findClosest = (className, acceptableNames) => {
     let distance = Levenshtein.distance(className, name);
     distance < bestMatch.distance ? {name, distance} : bestMatch;
   };
-  let {name, distance: _} =
-    List.fold_right(
-      testCloser,
-      acceptableNames,
-      {name: "", distance: max_int},
-    );
-  name;
+  List.fold_right(
+    testCloser,
+    acceptableNames,
+    {name: "", distance: max_int},
+  );
 };
 
 /********************** CSS PARSER HELPERS *************************/
@@ -124,7 +122,7 @@ let checkAcceptable = (classNames, loc, tailwindFile) => {
     Printf.sprintf(
       "Class name not found: %s. Did you mean %s?",
       invalidClassName,
-      closest,
+      closest.name,
     );
   };
   // TODO add a suggested className as part of the error message here
