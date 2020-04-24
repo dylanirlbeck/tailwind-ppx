@@ -1,0 +1,50 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - uses: actions/checkout@v2
+      - name: Install esy
+        run: npm install -g esy
+        
+      - name: Try to restore install cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.esy/source
+          key: source-${{ hashFiles('**/index.json') }}
+
+      - name: Install
+        run: esy install
+
+      - name: Print esy cache
+        id: print_esy_cache
+        run: node .github/workflows/print_esy_cache.js
+
+      - name: Try to restore build cache
+        id: deps-cache-macos
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.print_esy_cache.outputs.esy_cache }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: build-${{ matrix.os }}-
+
+      - name: Build
+        run: |
+          esy build
+          # Cleanup build cache in case dependencies have changed
+          esy cleanup .
+
+      - name: Run Native tests
+        run: esy test_native
+
+      # - name: Build docs
+      #   run: esy doc
