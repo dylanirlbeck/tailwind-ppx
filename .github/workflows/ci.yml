@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/setup-node@v1
         with:
@@ -56,13 +56,14 @@ jobs:
 
       - name: Export dependencies
         run: esy export-dependencies
+        if: matrix.os != 'windows-latest'
 
   test_bucklescript:
     name: Build and test bucklescript
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [12.x]
     steps:
       - uses: actions/checkout@v1
