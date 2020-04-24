@@ -15,6 +15,7 @@
   "esy": {
     "build": "dune build -p #{self.name}",
     "buildEnv": { "ODOC_SYNTAX": "re" },
+    "buildsInSource": "_build",
     "release": {
       "bin": ["Bin"]
     }
@@ -38,7 +39,7 @@
     "refmterr": "*"
   },
   "scripts": {
-    "test_native": "esy dune exec test/native/TestRunner.exe",
+    "test_native": "esy b dune exec test/native/TestRunner.exe",
     "test_bs": "cd test/bucklescript; esy yarn test",
     "all": "esy dune b @all",
     "clean": "esy dune clean",
