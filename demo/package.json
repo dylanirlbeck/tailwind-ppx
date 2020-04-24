@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "devDependencies": {
-    "@dylanirlbeck/tailwind-ppx": "^0.3.0",
+    "@dylanirlbeck/tailwind-ppx": "^0.4.0",
     "bs-platform": "7.0.1",
     "parcel-bundler": "^1.12.4",
     "tailwindcss": "^1.1.4"
