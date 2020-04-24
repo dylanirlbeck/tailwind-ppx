@@ -1,6 +1,11 @@
 open Css_types;
 module StringSet = Set.Make(String);
 
+/********************* GENERAL HELPERS ************************/
+/* Global ref to the acceptable class names. Using a ref so we don't parse on
+ * each re-compile */
+let acceptableNames = ref(None);
+
 // Remove all the backslashes from identifiers
 let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
@@ -8,7 +13,27 @@ let unescapeIdent = ident => {
 
 exception ParseError(string);
 
-// ********************** CSS PARSER HELPERS *************************
+type closestClassName = {
+  name: string,
+  distance: int,
+};
+
+// Finds the class name closest to the given
+let findClosest = (className, acceptableNames) => {
+  let testCloser = (name, bestMatch) => {
+    let distance = Levenshtein.distance(className, name);
+    distance < bestMatch.distance ? {name, distance} : bestMatch;
+  };
+  let {name, distance: _} =
+    List.fold_right(
+      testCloser,
+      acceptableNames,
+      {name: "", distance: max_int},
+    );
+  name;
+};
+
+/********************** CSS PARSER HELPERS *************************/
 let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
   try(
     Css_lexer.parse_string(
@@ -34,8 +59,6 @@ let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
     Css_parser.declaration_list,
   );
 };
-
-let acceptableNames = ref(None);
 
 let getAcceptableClassNames = css => {
   switch (acceptableNames^) {
@@ -73,8 +96,6 @@ let getAcceptableClassNames = css => {
   };
 };
 
-// **********************************************************************
-
 /********************  MAIN VALIDATION METHODS **************************/
 let checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);
@@ -93,14 +114,25 @@ let checkDuplicate = (classNames, loc) => {
 };
 
 let checkAcceptable = (classNames, loc, tailwindFile) => {
+  let errorMessage = invalidClassName => {
+    let closest =
+      findClosest(
+        invalidClassName,
+        StringSet.elements(Option.unsafe_unwrap(acceptableNames^)),
+      );
+
+    Printf.sprintf(
+      "Class name not found: %s. Did you mean %s?",
+      invalidClassName,
+      closest,
+    );
+  };
   // TODO add a suggested className as part of the error message here
   let isAcceptable = className => {
     StringSet.mem(className, getAcceptableClassNames(tailwindFile))
       ? ()
       : raise(
-          Location.Error(
-            Location.error(~loc, "Class name not found: " ++ className),
-          ),
+          Location.Error(Location.error(~loc, errorMessage(className))),
         );
   };
 

@@ -39,6 +39,14 @@ describe("Main testing module", ({test, _}) => {
     );
   });
 
+  test("levenshtein distance", ({expect, _}) => {
+    let acceptableNames = ["flex", "flex-row", "hover:bg-mono-100"];
+
+    expect.string(findClosest("bg-mono-100", acceptableNames)).toEqual(
+      "hover:bg-mono-100",
+    );
+  });
+
   test("parseStylesheet throws correctly", ({expect, _}) => {
     let tailwindCss = {|
 .flex {
