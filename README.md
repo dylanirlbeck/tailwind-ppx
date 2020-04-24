@@ -77,14 +77,13 @@ examples:
 
 ```reason
 // Example 1
-<Component className=[%tw "flex flex-row]> // This is ok!
-  ...
-</Component>
+<Component className=[%tw "flex flex-row"] /> // This is ok!
 
 // Example 2
-<Component className=[%tw "flex flex-ro]> // ERROR: Class name not found: flex-ro
-  ...
-</Component>
+<Component className=[%tw "flex flex-ro"] /> // ERROR: Class name not found: flex-ro
+
+// Example 3
+<Component className=[%tw "flex flex-row flex"] /> // ERROR: Duplicate class name: flex
 ```
 
 Note that this PPX requires your **generated** `tailwind.css` file to exist somewhere in the
@@ -94,17 +93,17 @@ path](#-path) to your `tailwind.css` file (relative to your project root).
 ### Moving or changing your `tailwind.css` file
 
 If your `tailwind.css` file changes (or you move it) you'll need to rebuild your
-project - for example, `yarn clean && yarn build` if in BuckleScript. At this
-time, `tailwind-ppx` does not automatically watch for changes, though this is on
+project - for example, `bsb -clean-world` and `bsb -make-world` if in BuckleScript. 
+At this time, `tailwind-ppx` does not automatically watch for changes, though this is on
 the roadmap.
 
 ## Features
 **Current**
 * Invalid class names
+* Duplicate class names
 * Always in-sync with your `tailwind.css` file (just make sure to re-build!)
 
 **Upcoming**
-* Duplicate class names
 * Redundant class names (like having both flex-row and flex-col)
 * Support for expressions inside the PPX (like `[%tw Cn.make(...)]`) to allow variables and function calls
 * Windows deployment
