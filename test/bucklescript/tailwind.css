@@ -6,4 +6,7 @@
   flex-direction: row;
 }
 
+.hover\:bg-current:hover {
+  background-color: currentColor;
+}
 
