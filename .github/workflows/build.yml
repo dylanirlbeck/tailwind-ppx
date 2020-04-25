@@ -1,6 +1,15 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'lib/**'
+      - 'test/**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build_and_test_native:
