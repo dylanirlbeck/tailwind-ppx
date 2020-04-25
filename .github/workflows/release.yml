@@ -11,8 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
 
@@ -167,11 +166,11 @@ jobs:
           name: macos-latest
           path: _release/platform-darwin-x64
 
-      # - name: Download windows artifacts
-      #   uses: actions/download-artifact@master
-      #   with:
-      #     name: windows-latest
-      #     path: _release/platform-windows-x64
+      - name: Download windows artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: windows-latest
+          path: _release/platform-windows-x64
 
       - name: Create archives for Github release
         run: |
@@ -183,9 +182,9 @@ jobs:
           zip -r ../../tailwind-ppx-linux-x64.zip .
           cd ../..
 
-          # cd _release/platform-windows-x64
-          # zip -r ../../tailwind-ppx-windows-x64.zip .
-          # cd ../..
+          cd _release/platform-windows-x64
+          zip -r ../../tailwind-ppx-windows-x64.zip .
+          cd ../..
       
       - name: Create GitHub release
         id: create_release
@@ -218,15 +217,15 @@ jobs:
           asset_name: tailwind-ppx-linux-x64.zip
           asset_content_type: application/gzip
 
-      # - name: Upload tailwind-ppx-windows-x64.zip to Github release 
-      #   uses: actions/upload-release-asset@v1.0.1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: tailwind-ppx-windows-x64.zip
-      #     asset_name: tailwind-ppx-windows-x64.zip
-      #     asset_content_type: application/gzip
+      - name: Upload tailwind-ppx-windows-x64.zip to Github release 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: tailwind-ppx-windows-x64.zip
+          asset_name: tailwind-ppx-windows-x64.zip
+          asset_content_type: application/gzip
 
       - name: Publish NPM package
         run: |
