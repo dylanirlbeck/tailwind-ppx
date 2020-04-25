@@ -3,7 +3,7 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  build:
+  build_and_test_native:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -47,7 +47,7 @@ jobs:
 
       # - name: Build docs
       #   run: esy doc
-  test_bucklescript:
+  build_and_test_bucklescript:
     name: Build and test bucklescript
     runs-on: ${{ matrix.os }}
     strategy:
