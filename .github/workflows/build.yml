@@ -45,8 +45,6 @@ jobs:
       - name: Run Native tests
         run: esy test_native
 
-      # - name: Build docs
-      #   run: esy doc
   build_and_test_bucklescript:
     name: Build and test bucklescript
     runs-on: ${{ matrix.os }}
