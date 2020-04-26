@@ -7,6 +7,7 @@ on:
     paths:
       - 'lib/**'
       - 'test/**'
+      - '.github/**'
   pull_request:
     branches:
       - master
