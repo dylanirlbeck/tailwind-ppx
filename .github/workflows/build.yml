@@ -54,7 +54,7 @@ jobs:
       - name: Run Native tests
         run: esy test_native
 
-     - name: Get yarn cache directory path
+      - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
