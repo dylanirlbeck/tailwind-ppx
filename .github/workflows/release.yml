@@ -6,8 +6,8 @@ on:
       - v*
 
 jobs:
-  native:
-    name: Build and test native
+  build_and_test:
+    name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -51,6 +51,13 @@ jobs:
       - name: Run Native tests
         run: esy test_native
 
+      - name: test-bucklescript
+        run: |
+          yarn
+          yarn build
+          yarn test
+        working-directory: ./test/bucklescript
+
       - name: Get binary path
         id: get_binary_path
         shell: bash
@@ -59,47 +66,19 @@ jobs:
           s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
           while [ "${d#$s/}" == "${d}" ]
           do s=$(dirname $s);b="../${b}"; done; 
-          BINARY_PATH=${b}${d#$s/}/tailwind-ppx
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            BINARY_PATH=${b}${d#$s/}/tailwind-ppx.exe
+          else
+            BINARY_PATH=${b}${d#$s/}/tailwind-ppx
+          fi
           echo "BINARY_PATH: $BINARY_PATH"
           echo "##[set-output name=path;]$BINARY_PATH"
 
-  bucklescript:
-    name: Build and test bucklescript
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        node-version: [12.x]
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Upload artifacts for ${{ matrix.os }}
+        uses: actions/upload-artifact@master
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Cache esy dependencies
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: _export
-          key: ${{ runner.OS }}-build-${{ hashFiles('esy.lock/index.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
-      - name: Install esy
-        run: npm install -g esy@latest
-
-      - name: Import dependencies
-        if: steps.cache.outputs.cache-hit == 'true'
-        run: esy import-build _export/*
-
-      - name: Install dependencies
-        run: esy install
-
-      - name: Build
-        run: esy build
+          name: ${{ matrix.os }}
+          path: ${{ steps.get_binary_path.outputs.path }}
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -112,28 +91,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-#     - name: Import dependencies
-#       if: steps.cache.outputs.cache-hit == 'true'
-#       run: esy import-build _export/*
-#       working-directory: ./test/bucklescript
-
-      - name: Install Yarn dependencies
-        run: yarn
-        working-directory: ./test/bucklescript
-
-      - name: Build
-        run: yarn build
-        working-directory: ./test/bucklescript
-
-      - name: Run tests
-        run: yarn test
-        working-directory: ./test/bucklescript
-      - name: Export dependencies
-        run: esy export-dependencies
-
 
   publish:
-    needs: [native, bucklescript]
+    needs: build_and_test
     name: Publish
     runs-on: ubuntu-latest
     steps:
