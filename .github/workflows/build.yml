@@ -8,6 +8,7 @@ on:
       - 'lib/**'
       - 'test/**'
       - '.github/**'
+
   pull_request:
     branches:
       - master
