@@ -6,7 +6,7 @@
 Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 
 ```reason
-<Component className=[%tw "flex flex-ro"]> // ERROR: Class name not found: flex-ro. Did you meana flex-row?
+<Component className=[%tw "flex flex-ro"]> // ERROR: Class name not found: flex-ro. Did you mean flex-row?
   ...
 </Component>
 ```
