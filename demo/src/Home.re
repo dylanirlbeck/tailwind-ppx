@@ -3,7 +3,7 @@ let logo: string = [%raw "require('./assets/logo.png')"];
 
 [@react.component]
 let make = () =>
-  <div className=[%tw "h-screen flex justify-center items-center"]>
+  <div className=[%tw "h-screen justify-center flex-row items-center"]>
     <div className=[%tw "max-w-sm rounded overflow-hidden shadow-lg p-4"]>
       <img className=[%tw "w-full"] src=logo alt="Sunset in the mountains" />
       <div className=[%tw "px-6 py-4"]>
