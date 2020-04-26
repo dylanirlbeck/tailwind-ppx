@@ -21,3 +21,5 @@ yarn dev # Starts the server
 > Note that `src/tailwind.css` is automatically generated from `src/index.css`.
 > If you modify `src/index.css` you need to run `yarn build:styles` to
 > re-generate your Tailwind CSS (and ensure `tailwind-ppx` is up-to-date).
+
+![alt text](https://github.com/dylanirlbeck/tailwind-ppx/blob/master/demo/LandingPage.png)

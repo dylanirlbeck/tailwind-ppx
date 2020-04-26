@@ -134,15 +134,13 @@ You might have to specify the path to tailwind.css
 
 ## Features
 **Current**
-* Invalid class names
+* Invalid class names (and suggestions for valid ones!)
 * Duplicate class names
 * Always in-sync with your `tailwind.css` file (just make sure to re-build!)
 
 **Upcoming**
 * Redundant class names (like having both flex-row and flex-col)
-* Support for expressions inside the PPX (like `[%tw Cn.make(...)]`) to allow variables and function calls
-* Windows deployment
-* Suggestions for invalid class names (i.e. 'Did you mean X?')
+* Automatic purging of unused class names
 
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
