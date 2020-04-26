@@ -63,13 +63,6 @@ jobs:
           echo "BINARY_PATH: $BINARY_PATH"
           echo "##[set-output name=path;]$BINARY_PATH"
 
-      - name: Upload artifacts for ${{ matrix.os }}
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ matrix.os }}
-          path: ${{ steps.get_binary_path.outputs.path }}
-
-  
   bucklescript:
     name: Build and test bucklescript
     runs-on: ${{ matrix.os }}
