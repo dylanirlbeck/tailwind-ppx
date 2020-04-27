@@ -7,7 +7,7 @@ const esy = require("../esy.json");
 
 console.log("Using esy.json:", esy);
 
-const filesToCopy = ["LICENSE", "README.md"];
+const filesToCopy = ["LICENSE", "README.md", "js/index.js"];
 
 function exec(cmd) {
   console.log(`exec: ${cmd}`);
@@ -58,6 +58,7 @@ const pkgJson = {
   homepage: esy.homepage,
   license: esy.license,
   repository: esy.repository,
+  main: "js/index.js",
   scripts: {
     postinstall: "node postinstall.js"
   },
@@ -69,6 +70,7 @@ const pkgJson = {
     "platform-linux-x64/",
     "platform-darwin-x64/",
     "postinstall.js",
+    "js",
     "tailwind-ppx.exe"
   ]
 };

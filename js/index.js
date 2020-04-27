@@ -1,0 +1,21 @@
+function extractor(content) {
+  const matchedContent = content.match(/(?<=\[%tw ").*(?=\"\])/g);
+
+  if (matchedContent) {
+    return matchedContent.reduce((acc, curr) => {
+      curr.split(" ").forEach((p) => {
+        const trimmed = p.trim();
+
+        if (trimmed !== "") {
+          acc.push(trimmed);
+        }
+      });
+
+      return acc;
+    }, []);
+  }
+
+  return [];
+}
+
+module.exports = { extractor };

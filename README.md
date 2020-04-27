@@ -132,6 +132,33 @@ You might have to specify the path to tailwind.css
 }
 ```
 
+### Getting ready for production
+
+As [outlined in the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/), when preparing for production you'll want to make sure that the only CSS from Tailwind that ends up in your bundle is CSS that you _actually use_ in your code.
+
+First, take a second to read the [section on setting up Purgecss from the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/#setting-up-purgecss). In order to help with the process outlined in the docs, this package ships with a default extractor function that'll take care of ensuring that any CSS from Tailwind that you aren't using with this PPX can be purged from your production CSS bundle. You enable it by slightly modifiying the official example of how to set up your `postcss.config.js`:
+
+```javascript
+// postcss.config.js
+const purgecss = require("@fullhuman/postcss-purgecss")({
+  // Specify the paths to all ReasonML code where you're using this PPX.
+  content: ["./src/**/*.re"],
+
+  // Include the extractor from this package
+  defaultExtractor: require("@dylanirlbeck/tailwind-ppx").extractor,
+});
+
+module.exports = {
+  plugins: [
+    require("tailwindcss"),
+    require("autoprefixer"),
+    ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
+  ],
+};
+```
+
+Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
+
 ## Features
 **Current**
 * Invalid class names (and suggestions for valid ones!)
