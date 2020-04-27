@@ -157,6 +157,12 @@ directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS 
 ],
 ```
 
+## Autocompletion (Neovim only)
+
+If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github.com/iamcco/coc-tailwindcss) extension to get class name autocompletion while using `tailwind-ppx` - just make sure to define a `tailwind.config.js` file. See the example below!
+
+<img src="./autocompletion.png" height="600" width="800">
+
 ## Developing
 
 ### Relevant commands
