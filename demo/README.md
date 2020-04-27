@@ -22,4 +22,4 @@ yarn dev # Starts the server
 > If you modify `src/index.css` you need to run `yarn build:styles` to
 > re-generate your Tailwind CSS (and ensure `tailwind-ppx` is up-to-date).
 
-![image info](./landing_page.png)
+![image info](./LandingPage.png)
