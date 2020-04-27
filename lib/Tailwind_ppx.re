@@ -15,7 +15,8 @@ let expr = (mapper, e) =>
             Pstr_eval(
               {
                 pexp_loc: loc,
-                pexp_desc: Pexp_constant(Pconst_string(classNames, _delim)),
+                // Force the PPX to only recognize strings inside quotations
+                pexp_desc: Pexp_constant(Pconst_string(classNames, None)),
                 _,
               },
               _,
