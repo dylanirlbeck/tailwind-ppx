@@ -2,23 +2,27 @@ open Css_types;
 module StringSet = Set.Make(String);
 
 /********************* GENERAL HELPERS ************************/
+
 /* Global ref to the acceptable class names. Using a ref so we don't parse on
  * each re-compile */
 let acceptableNames = ref(None);
 
-// Remove all the backslashes from identifiers
+/* Splits a string into the individual class names */
+let getSplitClassNames = classNames => {
+  List.filter(name => name != "", String.split_on_char(' ', classNames));
+};
+
+/* Remove all the backslashes from identifiers */
 let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
 };
-
-exception ParseError(string);
 
 type closestClassName = {
   name: string,
   distance: int,
 };
 
-// Finds the class name closest to the given
+/* Finds the acceptable class name closest to the given invalid one */
 let findClosest = (className, acceptableNames) => {
   let testCloser = (name, bestMatch) => {
     let distance = Levenshtein.distance(className, name);
@@ -32,6 +36,9 @@ let findClosest = (className, acceptableNames) => {
 };
 
 /********************** CSS PARSER HELPERS *************************/
+
+exception ParseError(string);
+
 let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
   try(
     Css_lexer.parse_string(
@@ -49,20 +56,13 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
     )
   };
 
-let parseDeclarationList = (~containerLnum=?, ~pos=?, css) => {
-  Css_lexer.parse_string(
-    ~container_lnum=?containerLnum,
-    ~pos?,
-    css,
-    Css_parser.declaration_list,
-  );
-};
-
+/* Parses out the valid class names from the given CSS */
 let getAcceptableClassNames = css => {
+  // See if we've "cached" the acceptable names before
   switch (acceptableNames^) {
   | Some(names) => names
   | None =>
-    let ast = parseStylesheet(css);
+    let (cssRules, _) = parseStylesheet(css);
 
     let gatherClassSelector = (existingClassNames, rule) => {
       switch (rule) {
@@ -72,8 +72,7 @@ let getAcceptableClassNames = css => {
         | [
             (Component_value.Delim(_), _),
             (Component_value.Ident(ident), _),
-          ] =>
-          existingClassNames @ [unescapeIdent(ident)]
+          ]
         | [
             (Component_value.Delim(_), _),
             (Component_value.Ident(ident), _),
@@ -81,20 +80,21 @@ let getAcceptableClassNames = css => {
             (Component_value.Ident("hover"), _),
           ] =>
           existingClassNames @ [unescapeIdent(ident)]
-        | _ => existingClassNames // TODO add support for other preludes (if nec.)
+        | _ => existingClassNames // Ignore other precludes
         };
-      | Rule.At_rule(_) => existingClassNames // TODO should we be skipping?
+      | Rule.At_rule(_) => existingClassNames // Skip at rules
       };
     };
 
     let names =
-      List.fold_left(gatherClassSelector, [], fst(ast)) |> StringSet.of_list;
+      List.fold_left(gatherClassSelector, [], cssRules) |> StringSet.of_list;
     acceptableNames := Some(names);
     names;
   };
 };
 
 /********************  MAIN VALIDATION METHODS **************************/
+
 let checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);
 
@@ -125,7 +125,7 @@ let checkAcceptable = (classNames, loc, tailwindFile) => {
       closest.name,
     );
   };
-  // TODO add a suggested className as part of the error message here
+
   let isAcceptable = className => {
     StringSet.mem(className, getAcceptableClassNames(tailwindFile))
       ? ()
@@ -137,11 +137,7 @@ let checkAcceptable = (classNames, loc, tailwindFile) => {
   List.iter(isAcceptable, classNames);
 };
 
-let getSplitClassNames = classNames => {
-  List.filter(name => name != "", String.split_on_char(' ', classNames));
-};
-
-let validate = (classNames, loc, tailwindFile) => {
+let validate = (~classNames, ~loc, ~tailwindFile) => {
   let splitClassNames = getSplitClassNames(classNames);
   checkAcceptable(splitClassNames, loc, tailwindFile);
   checkDuplicate(splitClassNames, loc);
