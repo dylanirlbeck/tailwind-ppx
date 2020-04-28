@@ -39,7 +39,7 @@ jobs:
 
       - name: Build
         run: |
-          esy build
+          esy build --release
           # Cleanup build cache in case dependencies have changed
           esy cleanup .
       - name: Run Native tests
