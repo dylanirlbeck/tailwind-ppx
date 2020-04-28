@@ -13,6 +13,8 @@ Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 
 ## Installation
 
+> For a new project, please check out the [demo](https://github.com/dylanirlbeck/tailwind-ppx-demo/blob/master/README.md) project. For integrating `tailwind-ppx` with existing projects, read on.
+
 The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript). To get started, we recommend cloning our [demo project](https://github.com/dylanirlbeck/tailwind-ppx/tree/master/demo).
 
 ### With `yarn` or `npm` on Bucklescript projects
