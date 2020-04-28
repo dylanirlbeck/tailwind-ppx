@@ -1,16 +1,9 @@
-// TODO should be using this custom exception
-//exception Tailwind_file_not_found;
-
-// TODO have a verbose logging flag
+/* Recursively look for file starting at the project root */
 let rec findFileTowardsRoot = (dir, file) => {
   let hereFile = Filename.concat(dir, file);
-  //print_endline("[read_tailwind][here_file] " ++ hereFile);
 
   if (Sys.file_exists(hereFile)) {
-    //let () = print_endline("[read_tailwind][found] " ++ hereFile);
-    Some(
-      hereFile,
-    );
+    Some(hereFile);
   } else if (Filename.dirname(dir) == dir) {
     None;
   } else {
@@ -18,7 +11,7 @@ let rec findFileTowardsRoot = (dir, file) => {
   };
 };
 
-// Reads the contents of a file
+/* Reads the contents of a file */
 let readFile = path => {
   let ch = open_in(path);
   let s = really_input_string(ch, in_channel_length(ch));

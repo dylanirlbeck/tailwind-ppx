@@ -2,11 +2,10 @@ open Migrate_parsetree;
 open Ast_406;
 open Ast_mapper;
 open Parsetree;
-open Tailwind_utils;
+open Utils;
 
 let expr = (mapper, e) =>
   switch (e.pexp_desc) {
-  /* If the expression is [%tw ""] */
   | Pexp_extension((
       {txt: "tw", _},
       PStr([
@@ -25,8 +24,7 @@ let expr = (mapper, e) =>
         },
       ]),
     )) =>
-    // TODO pull out `raise` calls into helper
-    // Raise an error if there' no `tailwind.css` file available
+    // Contents of tailwind.css file
     let tailwindFile =
       switch (Lazy.force(Read_tailwind.getTailwind())) {
       | Some(file) => file
@@ -41,10 +39,8 @@ let expr = (mapper, e) =>
         )
       };
 
-    // Main validation function for all the class names in the string
-    validate(classNames, loc, tailwindFile);
+    validate(~classNames, ~loc, ~tailwindFile);
 
-    // Use the same string provided to the PPX
     Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)
   };
