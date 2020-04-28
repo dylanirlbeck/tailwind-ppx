@@ -10,7 +10,7 @@ let {describe, describeSkip, describeOnly} =
        => testLifecycle |> beforeEach(() => acceptableNames := None))
   |> build;
 
-describe("Main testing module", ({test, _}) => {
+describe("Main methods", ({test, _}) => {
   test("Parser works for base tailwind file", ({expect, _}) => {
     let baseTailwindCss = Read_tailwind.readFile("test/tailwind.css");
     parseStylesheet(baseTailwindCss) |> ignore;
@@ -22,8 +22,8 @@ describe("Main testing module", ({test, _}) => {
     let className = "flex flex-row ";
 
     expect.list(getSplitClassNames(className)).toEqual([
-      "flex-row",
       "flex",
+      "flex-row",
     ]);
   });
 
