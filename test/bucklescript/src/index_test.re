@@ -1,6 +1,9 @@
 open Jest;
 open Expect;
 
+[@bs.module "../../../js/index"]
+external extractor: string => array(string) = "extractor";
+
 describe("Basic test", () => {
   test("basic", () => {
     let className = [%tw "flex-row flex"];
@@ -14,4 +17,31 @@ describe("Basic test", () => {
     // And we receive the same string in the output AST
     expect(className) |> toBe(" flex-row  flex ");
   });
+});
+
+describe("Extractor", () => {
+  test("it extracts the content of [%tw] tags properly", () => {
+    expect(
+      extractor(
+        {|
+        <!-- This should be included -->
+        <div className=[%tw "flex  flex-col bg-gray-200 hover:bg-gray-200"]></div>
+
+        <!-- These shouldn't be included -->
+        <div className="flex-row mx-auto mt-2"></div>
+
+        <!-- ...but these should -->
+        <div className=[%tw "mb-2 p-6"]></div>
+        |},
+      ),
+    )
+    |> toEqual([|
+         "flex",
+         "flex-col",
+         "bg-gray-200",
+         "hover:bg-gray-200",
+         "mb-2",
+         "p-6",
+       |])
+  })
 });
