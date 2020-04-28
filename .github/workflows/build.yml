@@ -70,10 +70,8 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: ./test/bucklescript
 
-      - name: Build
-        run: yarn build
-        working-directory: ./test/bucklescript
-
-      - name: Run tests
-        run: yarn test
+      - name: test-bucklescript
+        run: |
+          yarn build
+          yarn test
         working-directory: ./test/bucklescript
