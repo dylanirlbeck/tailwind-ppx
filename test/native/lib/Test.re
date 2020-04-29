@@ -216,4 +216,20 @@ describe(
       expectedClassNames,
     );
   });
+
+  test("Responsive utilities", ({expect, _}) => {
+    let tailwindCss = {|
+    @media (min-width: 640px) {
+      .sm\:text-5xl {
+        font-size: 3rem;
+      }
+    }
+    |};
+
+    let expectedClassNames = ["sm:text-5xl"];
+    expect.list(getAcceptableClassNames(tailwindCss) |> StringSet.elements).
+      toEqual(
+      expectedClassNames,
+    );
+  });
 });

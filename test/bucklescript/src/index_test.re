@@ -17,6 +17,12 @@ describe("Basic test", () => {
     // And we receive the same string in the output AST
     expect(className) |> toBe(" flex-row  flex ");
   });
+
+  test("Responsive utilities should work", () => {
+    let className = [%tw "sm:text-5xl"];
+
+    expect(className) |> toBe("sm:text-5xl");
+  });
 });
 
 describe("Extractor", () => {
