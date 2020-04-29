@@ -71,12 +71,13 @@ jobs:
         shell: bash
         run: |
           # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which styled-ppx));
+          s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
           while [ "${d#$s/}" == "${d}" ]
           do s=$(dirname $s);b="../${b}"; done;
-          ESY__BINARY_PATH=${b}${d#$s/}/styled-ppx
+          ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx
           echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
           echo "##[set-output name=path;]$ESY__BINARY_PATH"
+
       - name: Upload artifacts for ${{ matrix.os }}
         if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@master
