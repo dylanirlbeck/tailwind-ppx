@@ -64,7 +64,7 @@ let getAcceptableClassNames = css => {
   | None =>
     let (cssRules, _) = parseStylesheet(css);
 
-    let gatherClassSelector = (existingClassNames, rule) => {
+    let rec gatherClassSelector = (existingClassNames, rule) => {
       switch (rule) {
       | Rule.Style_rule(styleRule) =>
         let prelude = fst(styleRule.prelude);
@@ -82,7 +82,16 @@ let getAcceptableClassNames = css => {
           existingClassNames @ [unescapeIdent(ident)]
         | _ => existingClassNames // Ignore other precludes
         };
-      | Rule.At_rule(_) => existingClassNames // Skip at rules
+      | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
+        let atRuleClasses =
+          switch (block) {
+          | Stylesheet((rules, _)) =>
+            List.fold_left(gatherClassSelector, [], rules)
+          | _ => []
+          };
+        // Ignore prelude
+        List.concat([existingClassNames, atRuleClasses]);
+      | _ => existingClassNames
       };
     };
 
