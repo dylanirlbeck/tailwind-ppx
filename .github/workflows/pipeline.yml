@@ -65,29 +65,12 @@ jobs:
           yarn test
         working-directory: ./test/bucklescript
 
-      - name: Get binary path
-        id: get_binary_path
-        shell: bash
-        run: |
-          # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
-          while [ "${d#$s/}" == "${d}" ]
-          do s=$(dirname $s);b="../${b}"; done; 
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            BINARY_PATH=${b}${d#$s/}/tailwind-ppx.exe
-          else
-            BINARY_PATH=${b}${d#$s/}/tailwind-ppx
-          fi
-          echo "BINARY_PATH: $BINARY_PATH"
-          echo "##[set-output name=path;]$BINARY_PATH"
-
-
       - name: (only on release) Upload artifacts ${{ matrix.os }}
         if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _build/default/src/bin/Bin.exe
+          path: _build/default/bin/Bin.exe
 
   publish:
     needs: build_and_test
