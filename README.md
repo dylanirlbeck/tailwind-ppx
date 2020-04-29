@@ -166,10 +166,12 @@ Doing this will ensure that you only ship CSS from Tailwind to production that y
 * Invalid class names (and suggestions for valid ones!)
 * Duplicate class names
 * Always in-sync with your `tailwind.css` file (just make sure to re-build!)
+* Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
 
 **Upcoming**
 * Redundant class names (like having both flex-row and flex-col)
-* Automatic purging of unused class names
+* Class name dependencies (like having `flex-row` without `flex`)
+
 
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
