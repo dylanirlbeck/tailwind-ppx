@@ -74,7 +74,11 @@ jobs:
           s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
           while [ "${d#$s/}" == "${d}" ]
           do s=$(dirname $s);b="../${b}"; done;
-          ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx.exe
+          else
+            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx
+          fi
           echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
           echo "##[set-output name=path;]$ESY__BINARY_PATH"
 
