@@ -5,11 +5,7 @@
 
 Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 
-```reason
-<Component className=[%tw "flex flex-ro"]> // ERROR: Class name not found: flex-ro. Did you mean flex-row?
-  ...
-</Component>
-```
+<p align="center"><img src="assets/demo.gif?raw=true" /></p>
 
 ## Installation
 
@@ -95,7 +91,7 @@ path](#-path) to your `tailwind.css` file (relative to your project root).
 ### Moving or changing your `tailwind.css` file
 
 If your `tailwind.css` file changes (or you move it) you'll need to rebuild your
-project - for example, `bsb -clean-world` and `bsb -make-world` if in BuckleScript. 
+project - for example, `bsb -clean-world` and `bsb -make-world` if in BuckleScript.
 At this time, `tailwind-ppx` does not automatically watch for changes, though this is on
 the roadmap.
 
@@ -147,31 +143,33 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
   content: ["./src/**/*.re"],
 
   // Include the extractor from this package
-  defaultExtractor: require("@dylanirlbeck/tailwind-ppx").extractor,
+  defaultExtractor: require("@dylanirlbeck/tailwind-ppx").extractor
 });
 
 module.exports = {
   plugins: [
     require("tailwindcss"),
     require("autoprefixer"),
-    ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
-  ],
+    ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
+  ]
 };
 ```
 
 Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
 
 ## Features
+
 **Current**
-* Invalid class names (and suggestions for valid ones!)
-* Duplicate class names
-* Always in-sync with your `tailwind.css` file (just make sure to re-build!)
-* Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
+
+- Invalid class names (and suggestions for valid ones!)
+- Duplicate class names
+- Always in-sync with your `tailwind.css` file (just make sure to re-build!)
+- Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
 
 **Upcoming**
-* Redundant class names (like having both flex-row and flex-col)
-* Class name dependencies (like having `flex-row` without `flex`)
 
+- Redundant class names (like having both flex-row and flex-col)
+- Class name dependencies (like having `flex-row` without `flex`)
 
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
@@ -184,7 +182,7 @@ directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS 
 
 ```json
 "ppx-flags": [
-  ["@dylanirlbeck/tailwind-ppx", "-path ../path/to/tailwind.css",]
+  ["@dylanirlbeck/tailwind-ppx/tailwind-ppx", "-path ../path/to/tailwind.css",]
 ],
 ```
 
@@ -192,7 +190,7 @@ directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS 
 
 If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github.com/iamcco/coc-tailwindcss) extension to get class name autocompletion while using `tailwind-ppx` - just make sure to define a `tailwind.config.js` file. See the example below!
 
-<img src="./autocompletion.png" height="600" width="800">
+<img src="assets/autocompletion.png" height="600" width="800">
 
 ## Developing
 
@@ -207,15 +205,17 @@ If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github
 
 1. Bump the version of the ppx in `esy.json` on `master` (we use [semantic versioning](https://semver.org/))
 2. Create and push a new tag
-  ```
-  $ git checkout master
-  $ git tag vx.y.z
-  $ git push origin vx.y.z
-  ```
-3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub. 
+
+```
+$ git checkout master
+$ git tag vx.y.z
+$ git push origin vx.y.z
+```
+
+3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
 
 ## Background/Sources
 
-* [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
-* [styled-ppx](https://github.com/davesnx/styled-ppx)
-* [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
+- [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
+- [styled-ppx](https://github.com/davesnx/styled-ppx)
+- [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
