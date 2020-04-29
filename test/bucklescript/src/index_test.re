@@ -19,7 +19,7 @@ describe("Basic test", () => {
   });
 
   test("Responsive utilities should work", () => {
-    className = [%tw "sm:text-5xl"];
+    let className = [%tw "sm:text-5xl"];
 
     expect(className) |> toBe("sm:text-5xl");
   });
