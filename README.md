@@ -157,6 +157,26 @@ module.exports = {
 
 Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
 
+### Conditional including of classes
+
+This is not the scope of this ppx. Instead you can for example use `re-classnames`.
+
+Here is an example:
+
+```reason
+module SomeComponent = {
+  [@react.component]
+  let make = (~someBool) => {
+    let className =
+      Cn.make([
+        [%tw "text-blue-500"]->Cn.ifTrue(someBool),
+        [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
+      ]);
+    <div className />;
+  };
+};
+```
+
 ## Features
 
 **Current**
