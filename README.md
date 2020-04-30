@@ -159,7 +159,7 @@ Doing this will ensure that you only ship CSS from Tailwind to production that y
 
 ### Conditional including of classes
 
-This is not the scope of this ppx. Instead you can for example use `re-classnames`.
+This feature is out of scope for `tailwind-ppx`; instead, we recommend you  use [`re-classnames`](https://github.com/MinimaHQ/re-classnames). See the example below:
 
 Here is an example:
 
