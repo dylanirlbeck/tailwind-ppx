@@ -70,14 +70,9 @@ let getAcceptableClassNames = css => {
         let prelude = fst(styleRule.prelude);
         switch (prelude) {
         | [
-            (Component_value.Delim(_), _),
+            (Component_value.Delim("."), _),
             (Component_value.Ident(ident), _),
-          ]
-        | [
-            (Component_value.Delim(_), _),
-            (Component_value.Ident(ident), _),
-            (Component_value.Delim(_), _),
-            (Component_value.Ident("hover"), _),
+            ..._,
           ] =>
           existingClassNames @ [unescapeIdent(ident)]
         | _ => existingClassNames // Ignore other precludes

@@ -5,7 +5,7 @@
 
 Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
 
-<p align="center"><img height="600" src="assets/demo.gif?raw=true" /></p>
+<p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
 
 ## Installation
 
