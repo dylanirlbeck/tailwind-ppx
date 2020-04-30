@@ -120,6 +120,15 @@ Alternatively, you can add the following rules to you bsconfig.json to re-trigge
 }
 ```
 
+If you have a custom tailwind config file, you'll need to pass it to the tailwindcss command in this manner:
+
+```json
+{
+      "name": "gen-tailwind",
+      "command": "tailwindcss build $in -o $out -c ../../tailwind.config.js"
+}
+```
+
 You might have to specify the path to tailwind.css
 
 ```json
