@@ -120,6 +120,15 @@ Alternatively, you can add the following rules to you bsconfig.json to re-trigge
 }
 ```
 
+If you have a custom tailwind config file, you'll need to pass it to the tailwindcss command in this manner:
+
+```json
+{
+      "name": "gen-tailwind",
+      "command": "tailwindcss build $in -o $out -c ../../tailwind.config.js"
+}
+```
+
 You might have to specify the path to tailwind.css
 
 ```json
@@ -156,6 +165,26 @@ module.exports = {
 ```
 
 Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
+
+### Conditional including of classes
+
+This feature is out of scope for `tailwind-ppx`; instead, we recommend you  use [`re-classnames`](https://github.com/MinimaHQ/re-classnames). See the example below:
+
+Here is an example:
+
+```reason
+module SomeComponent = {
+  [@react.component]
+  let make = (~someBool) => {
+    let className =
+      Cn.make([
+        [%tw "text-blue-500"]->Cn.ifTrue(someBool),
+        [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
+      ]);
+    <div className />;
+  };
+};
+```
 
 ## Features
 
