@@ -2,6 +2,7 @@
   "name": "bucklescript",
   "version": "0.0.0",
   "scripts": {
+    "build:styles": "tailwind build index.css -o ../tailwind.css -c tailwind.config.js",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
     "clean": "bsb -clean-world",
@@ -22,5 +23,8 @@
     "testMatch": [
       "**/src/**/*_test.bs.js"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^1.4.1"
   }
 }

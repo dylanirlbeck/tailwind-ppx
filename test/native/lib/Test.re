@@ -232,4 +232,18 @@ describe(
       expectedClassNames,
     );
   });
+
+  test("Group hover", ({expect, _}) => {
+    let tailwindCss = {|
+    .group:hover .group-hover\:bg-transparent {
+      background-color: transparent !imporant;
+    }
+    |};
+
+    let expectedClassNames = ["group-hover:bg-transparent"];
+    expect.list(getAcceptableClassNames(tailwindCss) |> StringSet.elements).
+      toEqual(
+      expectedClassNames,
+    );
+  });
 });

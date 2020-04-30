@@ -71,6 +71,15 @@ let getAcceptableClassNames = css => {
         switch (prelude) {
         | [
             (Component_value.Delim("."), _),
+            (Component_value.Ident("group"), _),
+            (Component_value.Delim(":"), _),
+            (Component_value.Ident("hover"), _),
+            (Component_value.Delim("."), _),
+            (Component_value.Ident(ident), _),
+            ..._,
+          ]
+        | [
+            (Component_value.Delim("."), _),
             (Component_value.Ident(ident), _),
             ..._,
           ] =>
