@@ -1,6 +1,6 @@
 {
   "name": "tailwind-ppx",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Reason PPX that validates your Tailwind classes at compile-time",
   "author": "Dylan Irlbeck <dylanirlbeck@gmail.com>",
   "license": "MIT",
