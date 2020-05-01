@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/dylanirlbeck/tailwind-ppx/workflows/CI/badge.svg)](https://github.com/dylanirlbeck/tailwind-ppx/actions)
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
 
-Reason/OCaml PPX for writing compile-time validated Tailwind CSS classes.
+Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
 <p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
 
