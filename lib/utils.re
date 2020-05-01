@@ -9,7 +9,11 @@ let acceptableNames = ref(None);
 
 /* Splits a string into the individual class names */
 let getSplitClassNames = classNames => {
-  List.filter(name => name != "", String.split_on_char(' ', classNames));
+  List.filter(
+    name => String.trim(name) != "",
+    String.split_on_char(' ', classNames),
+  )
+  |> List.map(name => String.trim(name));
 };
 
 /* Remove all the backslashes from identifiers */
