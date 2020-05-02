@@ -60,6 +60,24 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
     )
   };
 
+/* Get all the classes from a given selector (prelude) */
+let getClassesFromSelector = selector => {
+    let rec get_classes = (classes, selector) => {
+      switch (selector) {
+      | [] => classes
+      | [
+          (Component_value.Delim("."), _),
+          (Component_value.Ident(ident), _),
+          ...rem,
+        ] =>
+        get_classes([ident, ...classes], rem)
+      | [_, ...rem] => get_classes(classes, rem)
+      };
+    };
+
+    get_classes([], selector); 
+}
+
 /* Parses out the valid class names from the given CSS */
 let getAcceptableClassNames = css => {
   // See if we've "cached" the acceptable names before
@@ -75,20 +93,13 @@ let getAcceptableClassNames = css => {
         switch (prelude) {
         | [
             (Component_value.Delim("."), _),
-            (Component_value.Ident("group"), _),
-            (Component_value.Delim(":"), _),
-            (Component_value.Ident("hover"), _),
-            (Component_value.Delim("."), _),
-            (Component_value.Ident(ident), _),
-            ..._,
-          ]
-        | [
-            (Component_value.Delim("."), _),
-            (Component_value.Ident(ident), _),
+            (Component_value.Ident(_), _),
             ..._,
           ] =>
-          existingClassNames @ [unescapeIdent(ident)]
-        | _ => existingClassNames // Ignore other precludes
+          existingClassNames
+          @ List.map(unescapeIdent, getClassesFromSelector(prelude))
+        | _ =>
+          existingClassNames; // Ignore other precludes
         };
       | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
         let atRuleClasses =

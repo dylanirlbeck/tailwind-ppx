@@ -199,6 +199,45 @@ describe("Main methods", ({test, _}) => {
 });
 
 describe(
+    "getClassesFromSelector gets all classes in a given selector", ({test, _}) => {
+        test("Basic selectors", ({expect, _})=> {
+            let flex = [
+                (Component_value.Delim("."), Location.none),
+                    (Component_value.Ident("flex"), Location.none)];
+            let expectedClassNames = ["flex"];
+            expect.list(getClassesFromSelector(flex)).
+                toEqual(expectedClassNames);
+        });
+
+        test("Hover selector", ({expect, _})=> {
+            let hover = [
+                (Component_value.Delim("."), Location.none),
+            (Component_value.Ident("hover\\:bg-white"), Location.none),
+            (Component_value.Delim(":"), Location.none),
+            (Component_value.Ident("hover"), Location.none),
+            ];
+            let expectedClassNames = ["hover\\:bg-white"];
+            expect.list(getClassesFromSelector(hover)).
+                toEqual(expectedClassNames);
+        });
+
+
+        test("Multiple classnames with different pseudo classes", ({expect, _})=> {
+            let hover = [
+                (Component_value.Delim("."), Location.none),
+                    (Component_value.Ident("group"), Location.none),
+                    (Component_value.Delim(":"), Location.none),
+                    (Component_value.Ident("hover"), Location.none),
+                    (Component_value.Delim("."), Location.none),
+                    (Component_value.Ident("group-hover\\:bg-transparent"), Location.none),
+            ];
+            let expectedClassNames = ["group-hover\\:bg-transparent", "group"];
+            expect.list(getClassesFromSelector(hover)).
+                toEqual(expectedClassNames);
+        });
+    });
+
+describe(
   "getAcceptableClassNames works for different CSS selectors", ({test, _}) => {
   test("Basic selectors", ({expect, _}) => {
     let tailwindCss = {|
@@ -255,7 +294,7 @@ describe(
     }
     |};
 
-    let expectedClassNames = ["group-hover:bg-transparent"];
+    let expectedClassNames = ["group", "group-hover:bg-transparent"];
     expect.list(getAcceptableClassNames(tailwindCss) |> StringSet.elements).
       toEqual(
       expectedClassNames,
