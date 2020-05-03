@@ -1,13 +1,15 @@
 open Css_types;
 module StringSet = Set.Make(String);
 
-/********************* GENERAL HELPERS ************************/
-
-/* Global ref to the acceptable class names. Using a ref so we don't parse on
- * each re-compile */
+/**
+ * Global ref to the acceptable class names. Using a ref so we don't parse on
+ * each re-compile
+ */
 let acceptableNames = ref(None);
 
-/* Splits a string on any whitespace into the individual class names */
+/**
+  * Splits a string on any whitespace into the individual class names
+ */
 let getSplitClassNames = classNames => {
   List.filter(
     name => String.trim(name) != "",
@@ -16,7 +18,7 @@ let getSplitClassNames = classNames => {
   |> List.map(name => String.trim(name));
 };
 
-/* Remove all the backslashes from identifiers */
+/** Remove all the backslashes from identifiers */
 let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
 };
@@ -26,7 +28,7 @@ type closestClassName = {
   distance: int,
 };
 
-/* Finds the acceptable class name closest to the given invalid one */
+/** Finds the acceptable class name closest to the given invalid one */
 let findClosest = (className, acceptableNames) => {
   let testCloser = (name, bestMatch) => {
     let distance = Levenshtein.distance(className, name);
@@ -38,8 +40,6 @@ let findClosest = (className, acceptableNames) => {
     {name: "", distance: max_int},
   );
 };
-
-/********************** CSS PARSER HELPERS *************************/
 
 exception ParseError(string);
 
@@ -60,7 +60,7 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
     )
   };
 
-/* Get all the classes from a given selector (prelude) */
+/** Get all the classes from a given selector (prelude) */
 let getClassesFromSelector = selector => {
   let rec getClasses = (classes, selector) => {
     switch (selector) {
@@ -78,7 +78,7 @@ let getClassesFromSelector = selector => {
   getClasses([], selector);
 };
 
-/* Parses out the valid class names from the given CSS */
+/** Parses out the valid class names from the given CSS */
 let getAcceptableClassNames = css => {
   // See if we've "cached" the acceptable names before
   switch (acceptableNames^) {
@@ -102,7 +102,7 @@ let getAcceptableClassNames = css => {
             existingClassNames,
             getClassesFromSelector(prelude),
           )
-        | _ => existingClassNames // Ignore other precludes
+        | _ => existingClassNames // Ignore other preludes
         };
       | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
         switch (block) {
@@ -110,7 +110,7 @@ let getAcceptableClassNames = css => {
           List.fold_left(gatherClassSelector, existingClassNames, rules)
         | _ => []
         }
-      // Ignore prelude
+      // Ignore other prelude
       | _ => existingClassNames
       };
     };
@@ -121,8 +121,6 @@ let getAcceptableClassNames = css => {
     names;
   };
 };
-
-/********************  MAIN VALIDATION METHODS **************************/
 
 let checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);

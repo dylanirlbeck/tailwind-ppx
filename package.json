@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2"
+  },
+  "lint-staged": {
+    "*.{re,rei}": [
+      "esy refmt"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
