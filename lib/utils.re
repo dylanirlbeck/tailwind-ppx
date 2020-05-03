@@ -19,7 +19,6 @@ let getSplitClassNames = classNames => {
 };
 
 /** Remove all the backslashes from identifiers */
-
 let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
 };
