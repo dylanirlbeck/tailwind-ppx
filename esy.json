@@ -5,9 +5,7 @@
   "author": "Dylan Irlbeck <dylanirlbeck@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/dylanirlbeck/tailwind-ppx",
-  "bugs": {
-    "url": "https://github.com/dylanirlbeck/tailwind-ppx/issues"
-  },
+  "bugs": { "url": "https://github.com/dylanirlbeck/tailwind-ppx/issues" },
   "repository": {
     "type": "git",
     "url": "https://github.com/dylanirlbeck/tailwind-ppx.git"
@@ -16,9 +14,7 @@
     "build": "dune build -p #{self.name}",
     "buildEnv": { "ODOC_SYNTAX": "re" },
     "buildsInSource": "_build",
-    "release": {
-      "bin": ["Bin"]
-    }
+    "release": { "bin": ["Bin"] }
   },
   "dependencies": {
     "@opam/dune": "1.11.4",
@@ -36,6 +32,8 @@
     "@opam/odoc": "*",
     "@opam/utop": "*",
     "@reason-native/rely": "*",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "refmterr": "*"
   },
   "scripts": {
@@ -47,5 +45,7 @@
     "watch": "esy dune build @all -p #{self.name} --watch",
     "release": "./script/release.sh",
     "postinstall": "node postinstall.js"
-  }
+  },
+  "lint-staged": { "*.{re,rei}": ["esy refmt", "git add"] },
+  "husky": { "hooks": { "pre-commit": "lint-staged" } }
 }
