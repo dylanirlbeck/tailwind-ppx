@@ -37,7 +37,7 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/index.json') }}
 
       - name: Build
-        run: esy build
+        run: esy b
 
       - name: Run Native tests
         run: esy test_native
