@@ -49,8 +49,6 @@ jobs:
 
       - name: Run Native tests
         run: esy test_native
-        env:
-          CI: true
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -71,9 +69,6 @@ jobs:
           yarn build
           yarn test
         working-directory: ./test/bucklescript
-        env:
-          CI: true
-
       
       - name: Get Esy binary path
         id: esy_binary_path
