@@ -1,6 +1,12 @@
 name: tailwind-ppx pipeline
 
-on: [pull_request, push]
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build_and_test:
@@ -15,35 +21,36 @@ jobs:
           node-version: 12
       - name: Install esy
         run: npm install -g esy@0.6.2
-
-      - name: Try to restore install cache
+          
+      - name: Get esy store path
+        id: esy_cache_path
+        shell: bash
+        run: |
+          # COMPUTE THE ESY INSTALL CACHE LOCATION AHEAD OF TIME
+          DESIRED_LEN="86"
+          HOME_ESY3="$HOME/.esy/3"
+          HOME_ESY3_LEN=${#HOME_ESY3}
+          NUM_UNDERS=$(echo "$(($DESIRED_LEN-$HOME_ESY3_LEN))")
+          UNDERS=$(printf "%-${NUM_UNDERS}s" "_")
+          UNDERS="${UNDERS// /_}"
+          THE_ESY__CACHE_INSTALL_PATH=${HOME_ESY3}${UNDERS}/i  
+          echo "THE_ESY__CACHE_INSTALL_PATH: $THE_ESY__CACHE_INSTALL_PATH"
+          echo "##[set-output name=path;]$THE_ESY__CACHE_INSTALL_PATH"
+      - name: Restore esy cache
         uses: actions/cache@v1
         with:
-          path: ~/.esy/source
-          key: source-${{ hashFiles('**/index.json') }}
+          path: ${{ steps.esy_cache_path.outputs.path }}
+          key: v1-esy-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: |
+            v1-esy-${{ matrix.os }}-
 
       - name: Install
         run: esy install
 
-      - name: Print esy cache
-        id: print_esy_cache
-        run: node .github/workflows/print_esy_cache.js
-
-      - name: Try to restore build cache
-        id: deps-cache-macos
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
-          restore-keys: build-${{ matrix.os }}-
-
-      - name: Build
-        run: |
-          esy build --release
-          # Cleanup build cache in case dependencies have changed
-          esy cleanup .
       - name: Run Native tests
         run: esy test_native
+        env:
+          CI: true
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -64,6 +71,8 @@ jobs:
           yarn build
           yarn test
         working-directory: ./test/bucklescript
+        env:
+          CI: true
 
       
       - name: Get Esy binary path
