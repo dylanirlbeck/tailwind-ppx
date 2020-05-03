@@ -1,22 +1,17 @@
 open Css_types;
-module StringSet = Set.Make(String);
+module StringSet = Set.Make(String) /* Global ref to the acceptable class names. Using a ref so we don't parse on
+ * each re-compile */ /********************* GENERAL HELPERS ************************/;
 
-/********************* GENERAL HELPERS ************************/
+let acceptableNames = ref(None) /* Splits a string on any whitespace into the individual class names */;
 
-/* Global ref to the acceptable class names. Using a ref so we don't parse on
- * each re-compile */
-let acceptableNames = ref(None);
-
-/* Splits a string on any whitespace into the individual class names */
 let getSplitClassNames = classNames => {
   List.filter(
     name => String.trim(name) != "",
     Str.split(Str.regexp("[ \n\r\x0c\t]+"), classNames),
   )
   |> List.map(name => String.trim(name));
-};
+} /* Remove all the backslashes from identifiers */;
 
-/* Remove all the backslashes from identifiers */
 let unescapeIdent = ident => {
   Str.global_replace(Str.regexp({|\\|}), "", ident);
 };
@@ -24,9 +19,8 @@ let unescapeIdent = ident => {
 type closestClassName = {
   name: string,
   distance: int,
-};
+} /* Finds the acceptable class name closest to the given invalid one */;
 
-/* Finds the acceptable class name closest to the given invalid one */
 let findClosest = (className, acceptableNames) => {
   let testCloser = (name, bestMatch) => {
     let distance = Levenshtein.distance(className, name);
@@ -37,9 +31,7 @@ let findClosest = (className, acceptableNames) => {
     acceptableNames,
     {name: "", distance: max_int},
   );
-};
-
-/********************** CSS PARSER HELPERS *************************/
+} /********************** CSS PARSER HELPERS *************************/;
 
 exception ParseError(string);
 
@@ -58,9 +50,8 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
         "Your Tailwind CSS file could not be parsed. Please double-check to make sure it's valid CSS.",
       ),
     )
-  };
+  } /* Get all the classes from a given selector (prelude) */;
 
-/* Get all the classes from a given selector (prelude) */
 let getClassesFromSelector = selector => {
   let rec getClasses = (classes, selector) => {
     switch (selector) {
@@ -76,9 +67,8 @@ let getClassesFromSelector = selector => {
   };
 
   getClasses([], selector);
-};
+} /* Parses out the valid class names from the given CSS */;
 
-/* Parses out the valid class names from the given CSS */
 let getAcceptableClassNames = css => {
   // See if we've "cached" the acceptable names before
   switch (acceptableNames^) {
@@ -120,9 +110,7 @@ let getAcceptableClassNames = css => {
     acceptableNames := Some(names);
     names;
   };
-};
-
-/********************  MAIN VALIDATION METHODS **************************/
+} /********************  MAIN VALIDATION METHODS **************************/;
 
 let checkDuplicate = (classNames, loc) => {
   let classNamesSet = ref(StringSet.empty);
