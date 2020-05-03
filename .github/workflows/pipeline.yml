@@ -1,6 +1,12 @@
 name: tailwind-ppx pipeline
 
-on: [pull_request, push]
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build_and_test:
@@ -16,12 +22,6 @@ jobs:
       - name: Install esy
         run: npm install -g esy@0.6.2
 
-      - name: Try to restore install cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.esy/source
-          key: source-${{ hashFiles('**/index.json') }}
-
       - name: Install
         run: esy install
 
@@ -29,19 +29,16 @@ jobs:
         id: print_esy_cache
         run: node .github/workflows/print_esy_cache.js
 
-      - name: Try to restore build cache
+      - name: Try to restore dependencies cache
         id: deps-cache-macos
         uses: actions/cache@v1
         with:
           path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
-          restore-keys: build-${{ matrix.os }}-
+          key: ${{ matrix.os }}-${{ hashFiles('**/index.json') }}
 
       - name: Build
-        run: |
-          esy build --release
-          # Cleanup build cache in case dependencies have changed
-          esy cleanup .
+        run: esy build
+
       - name: Run Native tests
         run: esy test_native
 
@@ -64,7 +61,6 @@ jobs:
           yarn build
           yarn test
         working-directory: ./test/bucklescript
-
       
       - name: Get Esy binary path
         id: esy_binary_path
