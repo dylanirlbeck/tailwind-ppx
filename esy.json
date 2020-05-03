@@ -32,8 +32,6 @@
     "@opam/odoc": "*",
     "@opam/utop": "*",
     "@reason-native/rely": "*",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.2",
     "refmterr": "*"
   },
   "scripts": {
@@ -45,7 +43,5 @@
     "watch": "esy dune build @all -p #{self.name} --watch",
     "release": "./script/release.sh",
     "postinstall": "node postinstall.js"
-  },
-  "lint-staged": { "*.{re,rei}": ["esy refmt", "git add"] },
-  "husky": { "hooks": { "pre-commit": "lint-staged" } }
+  }
 }
