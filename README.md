@@ -124,8 +124,8 @@ If you have a custom tailwind config file, you'll need to pass it to the tailwin
 
 ```json
 {
-      "name": "gen-tailwind",
-      "command": "tailwindcss build $in -o $out -c ../../tailwind.config.js"
+  "name": "gen-tailwind",
+  "command": "tailwindcss build $in -o $out -c ../../tailwind.config.js"
 }
 ```
 
@@ -168,7 +168,7 @@ Doing this will ensure that you only ship CSS from Tailwind to production that y
 
 ### Conditional including of classes
 
-This feature is out of scope for `tailwind-ppx`; instead, we recommend you  use [`re-classnames`](https://github.com/MinimaHQ/re-classnames). See the example below:
+This feature is out of scope for `tailwind-ppx`; instead, we recommend you use [`re-classnames`](https://github.com/MinimaHQ/re-classnames). See the example below:
 
 Here is an example:
 
@@ -222,6 +222,10 @@ If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github
 <img src="assets/autocompletion.png" height="600" width="800">
 
 ## Developing
+
+After cloning the repository, you should run both `esy` and `yarn` to install
+dependencies. `tailwind-ppx` uses `esy` for managing the important dependencies,
+and `yarn` is used solely for pre-commit linting/formatting of Reason files.
 
 ### Relevant commands
 

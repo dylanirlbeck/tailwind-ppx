@@ -36,10 +36,8 @@
   },
   "scripts": {
     "test_native": "esy #{os == 'windows' ? 'b' : ''} dune exec test/native/TestRunner.exe",
-    "test_bs": "cd test/bucklescript; esy yarn test",
-    "all": "esy dune b @all",
+    "build_all": "esy dune b @all",
     "clean": "esy dune clean",
-    "format": "esy dune build @fmt --auto-promote",
     "watch": "esy dune build @all -p #{self.name} --watch",
     "release": "./script/release.sh",
     "postinstall": "node postinstall.js"
