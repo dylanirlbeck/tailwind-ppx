@@ -62,21 +62,21 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
 
 /* Get all the classes from a given selector (prelude) */
 let getClassesFromSelector = selector => {
-    let rec getClasses = (classes, selector) => {
-      switch (selector) {
-      | [] => classes
-      | [
-          (Component_value.Delim("."), _),
-          (Component_value.Ident(ident), _),
-          ...rem,
-        ] =>
-        getClasses([ident, ...classes], rem)
-      | [_, ...rem] => getClasses(classes, rem)
-      };
+  let rec getClasses = (classes, selector) => {
+    switch (selector) {
+    | [] => classes
+    | [
+        (Component_value.Delim("."), _),
+        (Component_value.Ident(ident), _),
+        ...rem,
+      ] =>
+      getClasses([ident, ...classes], rem)
+    | [_, ...rem] => getClasses(classes, rem)
     };
+  };
 
-    getClasses([], selector); 
-}
+  getClasses([], selector);
+};
 
 /* Parses out the valid class names from the given CSS */
 let getAcceptableClassNames = css => {
@@ -96,20 +96,21 @@ let getAcceptableClassNames = css => {
             (Component_value.Ident(_), _),
             ..._,
           ] =>
-          existingClassNames
-          @ List.map(unescapeIdent, getClassesFromSelector(prelude))
-        | _ =>
-          existingClassNames; // Ignore other precludes
+          List.fold_left(
+            (classNames, classNameFromSelector) =>
+              [unescapeIdent(classNameFromSelector), ...classNames],
+            existingClassNames,
+            getClassesFromSelector(prelude),
+          )
+        | _ => existingClassNames // Ignore other precludes
         };
       | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
-        let atRuleClasses =
-          switch (block) {
-          | Stylesheet((rules, _)) =>
-            List.fold_left(gatherClassSelector, [], rules)
-          | _ => []
-          };
-        // Ignore prelude
-        List.concat([existingClassNames, atRuleClasses]);
+        switch (block) {
+        | Stylesheet((rules, _)) =>
+          List.fold_left(gatherClassSelector, existingClassNames, rules)
+        | _ => []
+        }
+      // Ignore prelude
       | _ => existingClassNames
       };
     };
@@ -170,5 +171,3 @@ let validate = (~classNames, ~loc, ~tailwindFile) => {
   checkAcceptable(splitClassNames, loc, tailwindFile);
   checkDuplicate(splitClassNames, loc);
 };
-
-// ********************************************************************
