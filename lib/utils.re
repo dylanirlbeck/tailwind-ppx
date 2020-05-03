@@ -102,7 +102,7 @@ let getAcceptableClassNames = css => {
             existingClassNames,
             getClassesFromSelector(prelude),
           )
-        | _ => existingClassNames // Ignore other precludes
+        | _ => existingClassNames // Ignore other preludes
         };
       | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
         switch (block) {
@@ -110,7 +110,7 @@ let getAcceptableClassNames = css => {
           List.fold_left(gatherClassSelector, existingClassNames, rules)
         | _ => []
         }
-      // Ignore prelude
+      // Ignore other prelude
       | _ => existingClassNames
       };
     };
