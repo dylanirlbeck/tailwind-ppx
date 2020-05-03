@@ -42,7 +42,7 @@ jobs:
           echo "THE_ESY__CACHE_INSTALL_PATH: $THE_ESY__CACHE_INSTALL_PATH"
           echo "##[set-output name=path;]$THE_ESY__CACHE_INSTALL_PATH"
             
-     - name: Restore esy cache
+      - name: Restore esy cache
         uses: actions/cache@v1
         with:
           path: ${{ steps.esy_cache_path.outputs.path }}
