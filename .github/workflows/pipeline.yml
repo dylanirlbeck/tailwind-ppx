@@ -51,9 +51,7 @@ jobs:
             v1-esy-${{ matrix.os }}-
 
       - name: Install and build
-        run: |
-          esy install
-          esy build
+        run: esy 
 
       - name: Run Native tests
         run: esy test_native
