@@ -62,7 +62,7 @@ let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
 
 /* Get all the classes from a given selector (prelude) */
 let getClassesFromSelector = selector => {
-    let rec get_classes = (classes, selector) => {
+    let rec getClasses = (classes, selector) => {
       switch (selector) {
       | [] => classes
       | [
@@ -70,12 +70,12 @@ let getClassesFromSelector = selector => {
           (Component_value.Ident(ident), _),
           ...rem,
         ] =>
-        get_classes([ident, ...classes], rem)
-      | [_, ...rem] => get_classes(classes, rem)
+        getClasses([ident, ...classes], rem)
+      | [_, ...rem] => getClasses(classes, rem)
       };
     };
 
-    get_classes([], selector); 
+    getClasses([], selector); 
 }
 
 /* Parses out the valid class names from the given CSS */
