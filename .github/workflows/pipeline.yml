@@ -50,8 +50,10 @@ jobs:
           restore-keys: |
             v1-esy-${{ matrix.os }}-
 
-      - name: Install
-        run: esy install
+      - name: Install and build
+        run: |
+          esy install
+          esy build
 
       - name: Run Native tests
         run: esy test_native
