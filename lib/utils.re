@@ -7,11 +7,11 @@ module StringSet = Set.Make(String);
  * each re-compile */
 let acceptableNames = ref(None);
 
-/* Splits a string into the individual class names */
+/* Splits a string on any whitespace into the individual class names */
 let getSplitClassNames = classNames => {
   List.filter(
     name => String.trim(name) != "",
-    String.split_on_char(' ', classNames),
+    Str.split(Str.regexp("[ \n\r\x0c\t]+"), classNames),
   )
   |> List.map(name => String.trim(name));
 };

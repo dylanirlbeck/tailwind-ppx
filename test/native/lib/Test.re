@@ -42,6 +42,15 @@ describe("Main methods", ({test, _}) => {
     ]);
   });
 
+  test("splitClassNames works with whitespace", ({expect, _}) => {
+    let className = "justify-center\nitems-center";
+
+    expect.list(getSplitClassNames(className)).toEqual([
+      "justify-center",
+      "items-center",
+    ]);
+  });
+
   test("checkDuplicate throws correctly", ({expect, _}) => {
     let classNames = ["flex", "flex"];
 
