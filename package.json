@@ -1,0 +1,30 @@
+{
+  "name": "tailwind-ppx",
+  "version": "0.6.4",
+  "description": "Reason PPX that validates your Tailwind classes at compile-time",
+  "author": "Dylan Irlbeck <dylanirlbeck@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/dylanirlbeck/tailwind-ppx",
+  "bugs": {
+    "url": "https://github.com/dylanirlbeck/tailwind-ppx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dylanirlbeck/tailwind-ppx.git"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2"
+  },
+  "lint-staged": {
+    "*.{re,rei}": [
+      "esy refmt",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
