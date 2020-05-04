@@ -2,12 +2,6 @@ open Css_types;
 module StringSet = Set.Make(String);
 
 /**
- * Global ref to the acceptable class names. Using a ref so we don't parse on
- * each re-compile
- */
-let acceptableNames = ref(None);
-
-/**
   * Splits a string on any whitespace into the individual class names
  */
 let getSplitClassNames = classNames => {
@@ -79,47 +73,37 @@ let getClassesFromSelector = selector => {
 };
 
 /** Parses out the valid class names from the given CSS */
-let getAcceptableClassNames = css => {
-  // See if we've "cached" the acceptable names before
-  switch (acceptableNames^) {
-  | Some(names) => names
-  | None =>
-    let (cssRules, _) = parseStylesheet(css);
-
-    let rec gatherClassSelector = (existingClassNames, rule) => {
-      switch (rule) {
-      | Rule.Style_rule(styleRule) =>
-        let prelude = fst(styleRule.prelude);
-        switch (prelude) {
-        | [
-            (Component_value.Delim("."), _),
-            (Component_value.Ident(_), _),
-            ..._,
-          ] =>
-          List.fold_left(
-            (classNames, classNameFromSelector) =>
-              [unescapeIdent(classNameFromSelector), ...classNames],
-            existingClassNames,
-            getClassesFromSelector(prelude),
-          )
-        | _ => existingClassNames // Ignore other preludes
-        };
-      | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
-        switch (block) {
-        | Stylesheet((rules, _)) =>
-          List.fold_left(gatherClassSelector, existingClassNames, rules)
-        | _ => []
-        }
-      // Ignore other prelude
-      | _ => existingClassNames
+let getAcceptableClassNames = (cssRules, css) => {
+  let rec gatherClassSelector = (existingClassNames, rule) => {
+    switch (rule) {
+    | Rule.Style_rule(styleRule) =>
+      let prelude = fst(styleRule.prelude);
+      switch (prelude) {
+      | [
+          (Component_value.Delim("."), _),
+          (Component_value.Ident(_), _),
+          ..._,
+        ] =>
+        List.fold_left(
+          (classNames, classNameFromSelector) =>
+            [unescapeIdent(classNameFromSelector), ...classNames],
+          existingClassNames,
+          getClassesFromSelector(prelude),
+        )
+      | _ => existingClassNames // Ignore other preludes
       };
+    | Rule.At_rule({At_rule.name: ("media", _), At_rule.block, _}) =>
+      switch (block) {
+      | Stylesheet((rules, _)) =>
+        List.fold_left(gatherClassSelector, existingClassNames, rules)
+      | _ => []
+      }
+    // Ignore other prelude
+    | _ => existingClassNames
     };
-
-    let names =
-      List.fold_left(gatherClassSelector, [], cssRules) |> StringSet.of_list;
-    acceptableNames := Some(names);
-    names;
   };
+
+  List.fold_left(gatherClassSelector, [], cssRules) |> StringSet.of_list;
 };
 
 let checkDuplicate = (classNames, loc) => {
@@ -138,13 +122,10 @@ let checkDuplicate = (classNames, loc) => {
   List.iter(isDuplicate, classNames);
 };
 
-let checkAcceptable = (classNames, loc, tailwindFile) => {
+let checkAcceptable = (classNames, loc, acceptableNames) => {
   let errorMessage = invalidClassName => {
     let closest =
-      findClosest(
-        invalidClassName,
-        StringSet.elements(Option.unsafe_unwrap(acceptableNames^)),
-      );
+      findClosest(invalidClassName, StringSet.elements(acceptableNames));
 
     Printf.sprintf(
       "Class name not found: %s. Did you mean %s?",
@@ -154,7 +135,7 @@ let checkAcceptable = (classNames, loc, tailwindFile) => {
   };
 
   let isAcceptable = className => {
-    StringSet.mem(className, getAcceptableClassNames(tailwindFile))
+    StringSet.mem(className, acceptableNames)
       ? ()
       : raise(
           Location.Error(Location.error(~loc, errorMessage(className))),
@@ -164,8 +145,57 @@ let checkAcceptable = (classNames, loc, tailwindFile) => {
   List.iter(isAcceptable, classNames);
 };
 
-let validate = (~classNames, ~loc, ~tailwindFile) => {
+type cachedAcceptableClassNames = {
+  tailwindCssHash: string,
+  acceptableClassNames: StringSet.t,
+};
+
+let getCachedAcceptaleClassNames = (~filename, ~tailwindFileContent) =>
+  switch (Pervasives.open_in(filename)) {
+  | input =>
+    print_endline("read from file cached");
+    let fileContent: cachedAcceptableClassNames =
+      Pervasives.input_value(input);
+    Pervasives.close_in(input);
+    if (Digest.string(tailwindFileContent) == fileContent.tailwindCssHash) {
+      Some(fileContent.acceptableClassNames);
+    } else {
+      None;
+    };
+  | exception _ => None
+  };
+
+let acceptableClassNames = ref(None);
+let validate = (~classNames, ~loc, ~tailwindFileContent) => {
+  let filename = "activeClassNames.bin";
+
+  let acceptableClassNames =
+    switch (acceptableClassNames^) {
+    | Some(value) => value
+    | None =>
+      switch (getCachedAcceptaleClassNames(~filename, ~tailwindFileContent)) {
+      | Some(cachedAcceptableClassNames) =>
+        acceptableClassNames := Some(cachedAcceptableClassNames);
+        cachedAcceptableClassNames;
+      | None =>
+        let (cssRules, _) = parseStylesheet(tailwindFileContent);
+        let calculatedAcceptableClassNames =
+          getAcceptableClassNames(cssRules, tailwindFileContent);
+        let output = Pervasives.open_out(filename);
+        Pervasives.output_value(
+          output,
+          {
+            tailwindCssHash: Digest.string(tailwindFileContent),
+            acceptableClassNames: calculatedAcceptableClassNames,
+          },
+        );
+        Pervasives.close_out(output);
+        acceptableClassNames := Some(calculatedAcceptableClassNames);
+        calculatedAcceptableClassNames;
+      }
+    };
+
   let splitClassNames = getSplitClassNames(classNames);
-  checkAcceptable(splitClassNames, loc, tailwindFile);
+  checkAcceptable(splitClassNames, loc, acceptableClassNames);
   checkDuplicate(splitClassNames, loc);
 };
