@@ -26,7 +26,7 @@ let expr = (mapper, e) =>
     )) =>
     // Contents of tailwind.css file
     let tailwindFile =
-      switch (Lazy.force(Read_tailwind.getTailwind())) {
+      switch (Lazy.force(Read_tailwind.getTailwind)) {
       | Some(file) => file
       | None =>
         raise(

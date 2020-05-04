@@ -20,7 +20,7 @@ let readFile = path => {
 };
 
 /* lazily read tailwind and check if talwind.css file exists */
-let getTailwind = () =>
+let getTailwind =
   lazy(
     switch (
       findFileTowardsRoot(
