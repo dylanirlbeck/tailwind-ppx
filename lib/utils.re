@@ -146,7 +146,7 @@ let checkAcceptable = (classNames, loc, acceptableNames) => {
 };
 
 type cachedAcceptableClassNames = {
-  tailwindCssHash: string,
+  tailwindCssHash: Digest.t,
   acceptableClassNames: StringSet.t,
 };
 
@@ -157,11 +157,16 @@ let getCachedAcceptaleClassNames = (~filename, ~tailwindFileContent) =>
     let fileContent: cachedAcceptableClassNames =
       Pervasives.input_value(input);
     Pervasives.close_in(input);
-    if (Digest.string(tailwindFileContent) == fileContent.tailwindCssHash) {
-      Some(fileContent.acceptableClassNames);
-    } else {
-      None;
+    switch (
+      Digest.compare(
+        Digest.string(tailwindFileContent),
+        fileContent.tailwindCssHash,
+      )
+    ) {
+    | 0 => Some(fileContent.acceptableClassNames)
+    | _ => None
     };
+
   | exception _ => None
   };
 
