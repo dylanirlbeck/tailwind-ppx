@@ -31,29 +31,6 @@ And add the PPX in your `bsconfig.json` file:
 }
 ```
 
-You can also use `esy` to install the PPX inside your BuckleScript project.
-
-Create an `esy.json` file with the content:
-
-```json
-{
-  "name": "test_bs",
-  "version": "0.0.0",
-  "dependencies": {
-    "@opam/tailwind-ppx": "*",
-    "ocaml": "~4.6.1000"
-  }
-}
-```
-
-And add the PPX in your `bsconfig.json` file:
-
-```json
-{
-  "ppx-flags": ["esy x tailwind-ppx"]
-}
-```
-
 ## Usage
 
 `tailwind_ppx` implements a ppx that validates your Tailwind CSS classes at compile time.
