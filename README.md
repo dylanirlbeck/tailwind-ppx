@@ -73,6 +73,12 @@ Note that this PPX requires your **generated** `tailwind.css` file to exist some
 project hierarchy. Though not required, it's recommended that you [configure the
 path](#-path) to your `tailwind.css` file (relative to your project root).
 
+### Ignore `.tailwind_ppx_cache` in your version control
+
+`tailwind-ppx` will generate a `.tailwind_ppx_cache` folder in your project root
+to optimize the validation performance. If you're using a version control
+system, you don't need to check it in.
+
 ### Moving or changing your `tailwind.css` file
 
 If your `tailwind.css` file changes (or you move it) you'll need to rebuild your
@@ -223,6 +229,15 @@ $ git push origin vx.y.z
 ```
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
+
+## Collaborators
+
+`tailwind-ppx` would not be possible without the contributions of the following
+individuals. Thank you all!
+
+- @tatchi - For implementing the caching functionality and Windows build.
+- @zth - For creating the custom PurgeCSS extractor function and documentation.
+- @akzane - For meaningful code improvements, feedback, and documentation.
 
 ## Background/Sources
 

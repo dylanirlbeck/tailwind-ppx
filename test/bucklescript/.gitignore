@@ -9,3 +9,4 @@ dist/
 esy.lock
 .cache
 _esy
+.tailwind_ppx_cache
