@@ -13,7 +13,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript). To get started, we recommend cloning our [demo project](https://github.com/dylanirlbeck/tailwind-ppx/tree/master/demo).
 
-### With `yarn` or `npm` on Bucklescript projects
+### With `yarn` or `npm` on Bucklescript projects (recommended)
 
 Install the PPX with `yarn` or `npm`
 
@@ -31,27 +31,12 @@ And add the PPX in your `bsconfig.json` file:
 }
 ```
 
-You can also use `esy` to install the PPX inside your BuckleScript project.
+### With `esy` (not recommended)
 
-Create an `esy.json` file with the content:
+You can also install the PPX with `esy`
 
-```json
-{
-  "name": "test_bs",
-  "version": "0.0.0",
-  "dependencies": {
-    "@opam/tailwind-ppx": "*",
-    "ocaml": "~4.6.1000"
-  }
-}
-```
-
-And add the PPX in your `bsconfig.json` file:
-
-```json
-{
-  "ppx-flags": ["esy x tailwind-ppx"]
-}
+```bash
+esy add @dylanirlbeck/tailwind-ppx
 ```
 
 ## Usage
@@ -120,7 +105,7 @@ Alternatively, you can add the following rules to you bsconfig.json to re-trigge
 }
 ```
 
-If you have a custom tailwind config file, you'll need to pass it to the tailwindcss command in this manner:
+If you have a custom tailwind config file, you'll need to pass it to the tailwindcss command:
 
 ```json
 {
@@ -129,21 +114,13 @@ If you have a custom tailwind config file, you'll need to pass it to the tailwin
 }
 ```
 
-You might have to specify the path to tailwind.css
-
-```json
-{
-  "ppx-flags": [
-    ["@dylanirlbeck/tailwind-ppx/tailwind-ppx", "-path ./src/tailwind.css"]
-  ]
-}
-```
+You might have to [specify the path to `tailwind.css`](#-path).
 
 ### Getting ready for production
 
 As [outlined in the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/), when preparing for production you'll want to make sure that the only CSS from Tailwind that ends up in your bundle is CSS that you _actually use_ in your code.
 
-First, take a second to read the [section on setting up Purgecss from the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/#setting-up-purgecss). In order to help with the process outlined in the docs, this package ships with a default extractor function that'll take care of ensuring that any CSS from Tailwind that you aren't using with this PPX can be purged from your production CSS bundle. You enable it by slightly modifiying the official example of how to set up your `postcss.config.js`:
+First, take a second to read the [section on setting up Purgecss from the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/#setting-up-purgecss). In order to help with the process outlined in the docs, this package ships with a default extractor function that'll take care of ensuring that any CSS from Tailwind that you aren't using with this PPX can be purged from your production CSS bundle. You enable it by slightly modifying the official example of how to set up your `postcss.config.js`:
 
 ```javascript
 // postcss.config.js
