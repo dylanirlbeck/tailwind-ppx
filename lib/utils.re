@@ -73,7 +73,8 @@ let getClassesFromSelector = selector => {
 };
 
 /** Parses out the valid class names from the given CSS */
-let getAcceptableClassNames = (cssRules, css) => {
+let getAcceptableClassNames = css => {
+  let (cssRules, _) = parseStylesheet(css);
   let rec gatherClassSelector = (existingClassNames, rule) => {
     switch (rule) {
     | Rule.Style_rule(styleRule) =>
@@ -145,15 +146,37 @@ let checkAcceptable = (classNames, loc, acceptableNames) => {
   List.iter(isAcceptable, classNames);
 };
 
+exception Ppx_cache_dir_is_not_dir;
+
+// Source: https://github.com/reasonml-community/graphql_ppx/blob/master/src/base/read_schema.re#L301
+let create_dir_if_not_exist = abs_path =>
+  if (Sys.file_exists(abs_path)) {
+    let file_stat = Unix.stat(abs_path);
+    Unix.(
+      switch (file_stat.st_kind) {
+      | S_DIR => ()
+      | _ => raise(Ppx_cache_dir_is_not_dir)
+      }
+    );
+  } else {
+    switch (Unix.mkdir(abs_path, 493)) {
+    | () => ()
+    | exception (Unix.Unix_error(error, cmd, msg)) =>
+      switch (error) {
+      | Unix.EEXIST => () /* It's Ok since the build tool e.g. BuckleScript could be multi-threading */
+      | error => raise(Unix.Unix_error(error, cmd, msg))
+      }
+    };
+  };
+
 type cachedAcceptableClassNames = {
   tailwindCssHash: Digest.t,
   acceptableClassNames: StringSet.t,
 };
 
-let getCachedAcceptaleClassNames = (~filename, ~tailwindFileContent) =>
-  switch (Pervasives.open_in(filename)) {
+let getCachedAcceptaleClassNames = (~filePath, ~tailwindFileContent) =>
+  switch (Pervasives.open_in_bin(filePath)) {
   | input =>
-    print_endline("read from file cached");
     let fileContent: cachedAcceptableClassNames =
       Pervasives.input_value(input);
     Pervasives.close_in(input);
@@ -172,21 +195,31 @@ let getCachedAcceptaleClassNames = (~filename, ~tailwindFileContent) =>
 
 let acceptableClassNames = ref(None);
 let validate = (~classNames, ~loc, ~tailwindFileContent) => {
-  let filename = "activeClassNames.bin";
+  let cacheDirectory =
+    Filename.concat(Sys.getcwd(), "../../.tailwind_ppx_cache/");
+  let cacheFilePath =
+    Filename.concat(cacheDirectory, "active_classnames.marshaled");
 
   let acceptableClassNames =
     switch (acceptableClassNames^) {
     | Some(value) => value
     | None =>
-      switch (getCachedAcceptaleClassNames(~filename, ~tailwindFileContent)) {
+      switch (
+        getCachedAcceptaleClassNames(
+          ~filePath=cacheFilePath,
+          ~tailwindFileContent,
+        )
+      ) {
       | Some(cachedAcceptableClassNames) =>
         acceptableClassNames := Some(cachedAcceptableClassNames);
         cachedAcceptableClassNames;
       | None =>
-        let (cssRules, _) = parseStylesheet(tailwindFileContent);
         let calculatedAcceptableClassNames =
-          getAcceptableClassNames(cssRules, tailwindFileContent);
-        let output = Pervasives.open_out(filename);
+          getAcceptableClassNames(tailwindFileContent);
+
+        create_dir_if_not_exist(cacheDirectory);
+
+        let output = Pervasives.open_out_bin(cacheFilePath);
         Pervasives.output_value(
           output,
           {
