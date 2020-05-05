@@ -174,7 +174,7 @@ type cachedAcceptableClassNames = {
   acceptableClassNames: StringSet.t,
 };
 
-let getCachedAcceptaleClassNames = (~filePath, ~tailwindFileContent) =>
+let getCachedAcceptableClassNames = (~filePath, ~tailwindFileContent) =>
   switch (Pervasives.open_in_bin(filePath)) {
   | input =>
     let fileContent: cachedAcceptableClassNames =
@@ -205,7 +205,7 @@ let validate = (~classNames, ~loc, ~tailwindFileContent) => {
     | Some(value) => value
     | None =>
       switch (
-        getCachedAcceptaleClassNames(
+        getCachedAcceptableClassNames(
           ~filePath=cacheFilePath,
           ~tailwindFileContent,
         )
