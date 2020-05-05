@@ -149,7 +149,7 @@ let checkAcceptable = (classNames, loc, acceptableNames) => {
 exception Ppx_cache_dir_is_not_dir;
 
 // Source: https://github.com/reasonml-community/graphql_ppx/blob/master/src/base/read_schema.re#L301
-let create_dir_if_not_exist = abs_path =>
+let createDirIfNotExist = abs_path =>
   if (Sys.file_exists(abs_path)) {
     let file_stat = Unix.stat(abs_path);
     Unix.(
@@ -180,15 +180,11 @@ let getCachedAcceptableClassNames = (~filePath, ~tailwindFileContent) =>
     let fileContent: cachedAcceptableClassNames =
       Pervasives.input_value(input);
     Pervasives.close_in(input);
-    switch (
-      Digest.compare(
-        Digest.string(tailwindFileContent),
-        fileContent.tailwindCssHash,
-      )
-    ) {
-    | 0 => Some(fileContent.acceptableClassNames)
-    | _ => None
-    };
+    Digest.equal(
+      Digest.string(tailwindFileContent),
+      fileContent.tailwindCssHash,
+    )
+      ? Some(fileContent.acceptableClassNames) : None;
 
   | exception _ => None
   };
@@ -217,7 +213,7 @@ let validate = (~classNames, ~loc, ~tailwindFileContent) => {
         let calculatedAcceptableClassNames =
           getAcceptableClassNames(tailwindFileContent);
 
-        create_dir_if_not_exist(cacheDirectory);
+        createDirIfNotExist(cacheDirectory);
 
         let output = Pervasives.open_out_bin(cacheFilePath);
         Pervasives.output_value(
