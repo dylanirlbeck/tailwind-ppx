@@ -25,8 +25,8 @@ let expr = (mapper, e) =>
       ]),
     )) =>
     // Contents of tailwind.css file
-    let tailwindFile =
-      switch (Lazy.force(Read_tailwind.getTailwind())) {
+    let tailwindFileContent =
+      switch (Lazy.force(Read_tailwind.getTailwind)) {
       | Some(file) => file
       | None =>
         raise(
@@ -39,7 +39,7 @@ let expr = (mapper, e) =>
         )
       };
 
-    validate(~classNames, ~loc, ~tailwindFile);
+    validate(~classNames, ~loc, ~tailwindFileContent);
 
     Ast_helper.Exp.constant(Pconst_string(classNames, None));
   | _ => default_mapper.expr(mapper, e)

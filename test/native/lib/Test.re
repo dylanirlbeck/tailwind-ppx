@@ -3,13 +3,6 @@ open Utils;
 open Css_types;
 open Helpers;
 
-let {describe, describeSkip, describeOnly} =
-  describeConfig
-  |> withLifecycle(testLifecycle
-       // Reset acceptable names before each run
-       => testLifecycle |> beforeEach(() => acceptableNames := None))
-  |> build;
-
 describe("Main methods", ({test, _}) => {
   test("Parser works for base tailwind file", ({expect, _}) => {
     let baseTailwindCss = Read_tailwind.readFile("test/tailwind.css");
