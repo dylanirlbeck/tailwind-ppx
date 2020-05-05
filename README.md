@@ -13,7 +13,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript). To get started, we recommend cloning our [demo project](https://github.com/dylanirlbeck/tailwind-ppx/tree/master/demo).
 
-### With `yarn` or `npm` on Bucklescript projects
+### With `yarn` or `npm` on Bucklescript projects (recommended)
 
 Install the PPX with `yarn` or `npm`
 
@@ -29,6 +29,14 @@ And add the PPX in your `bsconfig.json` file:
 {
   "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
 }
+```
+
+### With `esy` (not recommended)
+
+You can also install the PPX with `esy`
+
+```bash
+esy add @dylanirlbeck/tailwind-ppx
 ```
 
 ## Usage
