@@ -235,9 +235,9 @@ $ git push origin vx.y.z
 `tailwind-ppx` would not be possible without the contributions of the following
 individuals. Thank you all!
 
-- @tatchi - For implementing the caching functionality and Windows build.
-- @zth - For creating the custom PurgeCSS extractor function and documentation.
-- @akzane - For meaningful code improvements, feedback, and documentation.
+- [tatchi](https://github.com/tatchi) - For implementing the caching functionality and Windows build.
+- [zth](https://github.com/zth) - For creating the custom PurgeCSS extractor function and documentation.
+- [akzane](https://github.com/akzane) - For meaningful code improvements, feedback, and documentation.
 
 ## Background/Sources
 
