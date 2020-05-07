@@ -17,21 +17,20 @@
     "release": { "bin": ["Bin"] }
   },
   "dependencies": {
-    "@opam/dune": "1.11.4",
+    "@opam/dune": "^2.4.0",
     "@opam/fmt": "0.8.8",
-    "@opam/menhir": "20190924",
-    "@opam/ocaml-migrate-parsetree": "1.5.0",
-    "@opam/reason": "3.5.2",
-    "@opam/sedlex": "2.1",
+    "@opam/menhir": "*",
+    "@opam/ocaml-migrate-parsetree": "^1.7.0",
+    "@esy-ocaml/reason": "~3.6.0",
+    "@opam/css-parser": "^0.2.2",
     "@reason-native/rely": "^3.2.1"
   },
   "devDependencies": {
-    "ocaml": "4.6.1000",
-    "@opam/dune-release": "*",
+    "ocaml": "~4.8.1",
     "@opam/merlin": "*",
-    "@opam/odoc": "*",
     "@opam/utop": "*",
     "@reason-native/rely": "*",
+    "@opam/ocamlformat": "*",
     "refmterr": "*"
   },
   "scripts": {

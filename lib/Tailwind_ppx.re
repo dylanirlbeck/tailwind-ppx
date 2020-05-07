@@ -1,5 +1,5 @@
 open Migrate_parsetree;
-open Ast_406;
+open Ast_408;
 open Ast_mapper;
 open Parsetree;
 open Utils;
@@ -65,4 +65,4 @@ let args = [
 let mapper = (_, _) => {...default_mapper, expr};
 
 let () =
-  Driver.register(~name="tailwind_ppx", ~args, Versions.ocaml_406, mapper);
+  Driver.register(~name="tailwind_ppx", ~args, Versions.ocaml_408, mapper);

@@ -1,6 +1,6 @@
 open Setup;
 open Utils;
-open Css_types;
+open Css.Types;
 open Helpers;
 
 describe("Main methods", ({test, _}) => {

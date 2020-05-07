@@ -1,4 +1,4 @@
-open Css_types
+open Css.Types
 
 let rec zip xs ys =
   match (xs, ys) with
