@@ -19,7 +19,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 ## Usage
 
-`tailwind_ppx` implements a ppx that validates your Tailwind CSS classes at compile time.
+`tailwind_ppx` implements a ppx (`%tw`) that validates your Tailwind CSS classes at compile time.
 
 For example, for the following (condensed) `tailwind.css` file:
 
