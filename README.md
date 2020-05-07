@@ -7,37 +7,15 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 <p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
 
-## Installation
+## Table of Contents
 
-> For a new project, please check out the [demo](https://github.com/dylanirlbeck/tailwind-ppx-demo/) project. For integrating `tailwind-ppx` with existing projects, read on.
-
-The most likely use case for `tailwind-ppx` is inside ReasonReact projects (using BuckleScript). To get started, we recommend cloning our [demo project](https://github.com/dylanirlbeck/tailwind-ppx/tree/master/demo).
-
-### With `yarn` or `npm` on Bucklescript projects (recommended)
-
-Install the PPX with `yarn` or `npm`
-
-```bash
-yarn add --dev @dylanirlbeck/tailwind-ppx
-# Or
-npm install --dev @dylanirlbeck/tailwind-ppx
-```
-
-And add the PPX in your `bsconfig.json` file:
-
-```json
-{
-  "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
-}
-```
-
-### With `esy` (not recommended)
-
-You can also install the PPX with `esy`
-
-```bash
-esy add @dylanirlbeck/tailwind-ppx
-```
+- [Usage](#usage)
+- [Features (Current and Upcoming)](#features)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Frequently Asked Questions (FAQ)](#faq)
+- [Developing](#developing)
+- [Examples, Collaborators, and Related Projects](#other)
 
 ## Usage
 
@@ -73,11 +51,32 @@ Note that this PPX requires your **generated** `tailwind.css` file to exist some
 project hierarchy. Though not required, it's recommended that you [configure the
 path](#-path) to your `tailwind.css` file (relative to your project root).
 
-### Ignore `.tailwind_ppx_cache` in your version control
+### Getting ready for production
 
-`tailwind-ppx` will generate a `.tailwind_ppx_cache` folder in your project root
-to optimize the validation performance. If you're using a version control
-system, you don't need to check it in.
+As [outlined in the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/), when preparing for production you'll want to make sure that the only CSS from Tailwind that ends up in your bundle is CSS that you _actually use_ in your code.
+
+First, take a second to read the [section on setting up Purgecss from the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/#setting-up-purgecss). In order to help with the process outlined in the docs, this package ships with a default extractor function that'll take care of ensuring that any CSS from Tailwind that you aren't using with this PPX can be purged from your production CSS bundle. You enable it by slightly modifying the official example of how to set up your `postcss.config.js`:
+
+```javascript
+// postcss.config.js
+const purgecss = require("@fullhuman/postcss-purgecss")({
+  // Specify the paths to all ReasonML code where you're using this PPX.
+  content: ["./src/**/*.re"],
+
+  // Include the extractor from this package
+  defaultExtractor: require("@dylanirlbeck/tailwind-ppx").extractor
+});
+
+module.exports = {
+  plugins: [
+    require("tailwindcss"),
+    require("autoprefixer"),
+    ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
+  ]
+};
+```
+
+Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
 
 ### Moving or changing your `tailwind.css` file
 
@@ -122,64 +121,30 @@ If you have a custom tailwind config file, you'll need to pass it to the tailwin
 
 You might have to [specify the path to `tailwind.css`](#-path).
 
-### Getting ready for production
+### Autocompletion (Neovim only)
 
-As [outlined in the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/), when preparing for production you'll want to make sure that the only CSS from Tailwind that ends up in your bundle is CSS that you _actually use_ in your code.
+If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github.com/iamcco/coc-tailwindcss) extension to get class name autocompletion while using `tailwind-ppx` - just make sure to define a `tailwind.config.js` file. See the example below!
 
-First, take a second to read the [section on setting up Purgecss from the Tailwind docs](https://tailwindcss.com/docs/controlling-file-size/#setting-up-purgecss). In order to help with the process outlined in the docs, this package ships with a default extractor function that'll take care of ensuring that any CSS from Tailwind that you aren't using with this PPX can be purged from your production CSS bundle. You enable it by slightly modifying the official example of how to set up your `postcss.config.js`:
+<img src="assets/autocompletion.png" height="600" width="800">
 
-```javascript
-// postcss.config.js
-const purgecss = require("@fullhuman/postcss-purgecss")({
-  // Specify the paths to all ReasonML code where you're using this PPX.
-  content: ["./src/**/*.re"],
+### Ignore `.tailwind_ppx_cache` in your version control
 
-  // Include the extractor from this package
-  defaultExtractor: require("@dylanirlbeck/tailwind-ppx").extractor
-});
-
-module.exports = {
-  plugins: [
-    require("tailwindcss"),
-    require("autoprefixer"),
-    ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
-  ]
-};
-```
-
-Doing this will ensure that you only ship CSS from Tailwind to production that you're actually using with this PPX.
-
-### Conditional including of classes
-
-This feature is out of scope for `tailwind-ppx`; instead, we recommend you use [`re-classnames`](https://github.com/MinimaHQ/re-classnames). See the example below:
-
-Here is an example:
-
-```reason
-module SomeComponent = {
-  [@react.component]
-  let make = (~someBool) => {
-    let className =
-      Cn.make([
-        [%tw "text-blue-500"]->Cn.ifTrue(someBool),
-        [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
-      ]);
-    <div className />;
-  };
-};
-```
+`tailwind-ppx` will generate a `.tailwind_ppx_cache` folder in your project root
+to optimize the validation performance. If you're using a version control
+system, you don't need to check it in.
 
 ## Features
 
 **Current**
 
-- Invalid class names (and suggestions for valid ones!)
-- Duplicate class names
+- Checks for invalid class names (and suggestions for valid ones!)
+- Checks for duplicate class names
 - Always in-sync with your `tailwind.css` file (just make sure to re-build!)
 - Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
 
 **Upcoming**
 
+- [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
 - Redundant class names (like having both flex-row and flex-col)
 - Class name dependencies (like having `flex-row` without `flex`)
 
@@ -198,11 +163,59 @@ directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS 
 ],
 ```
 
-## Autocompletion (Neovim only)
+## Installation
 
-If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github.com/iamcco/coc-tailwindcss) extension to get class name autocompletion while using `tailwind-ppx` - just make sure to define a `tailwind.config.js` file. See the example below!
+The most likely use case for `tailwind-ppx` is inside ReasonReact projects
+(using BuckleScript). To get started, we recommend cloning our [demo
+project](https://github.com/dylanirlbeck/tailwind-ppx-demo).
 
-<img src="assets/autocompletion.png" height="600" width="800">
+### With `yarn` or `npm` on Bucklescript projects (recommended)
+
+Install the PPX with `yarn` or `npm`
+
+```bash
+yarn add --dev @dylanirlbeck/tailwind-ppx
+# Or
+npm install --dev @dylanirlbeck/tailwind-ppx
+```
+
+And add the PPX in your `bsconfig.json` file:
+
+```json
+{
+  "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
+}
+```
+
+### With `esy` (not recommended)
+
+You can also install the PPX with `esy`
+
+```bash
+esy add @dylanirlbeck/tailwind-ppx
+```
+
+## FAQ
+
+- **How can I conditionally add classes?**
+
+  This feature is out of scope for `tailwind-ppx`; instead, we recommend you use
+  [`re-classnames`](https://github.com/MinimaHQ/re-classnames) in combination
+  with `tailwind-ppx`. See the example below:
+
+  ```reason
+  module SomeComponent = {
+    [@react.component]
+    let make = (~someBool) => {
+      let className =
+        Cn.make([
+          [%tw "text-blue-500"]->Cn.ifTrue(someBool),
+          [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
+        ]);
+      <div className />;
+    };
+  };
+  ```
 
 ## Developing
 
@@ -230,7 +243,15 @@ $ git push origin vx.y.z
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
 
-## Collaborators
+## Other
+
+### Examples
+
+These projects are using `tailwind-ppx` throughout the code base:
+
+- [my-first-pr](https://github.com/dylanirlbeck/my-first-pr)
+
+### Collaborators
 
 `tailwind-ppx` would not be possible without the contributions of the following
 individuals. Thank you all!
@@ -239,7 +260,9 @@ individuals. Thank you all!
 - [zth](https://github.com/zth) - For creating the custom PurgeCSS extractor function and documentation.
 - [akzane](https://github.com/akzane) - For meaningful code improvements, feedback, and documentation.
 
-## Background/Sources
+### Related Projects
+
+The following amazing projects provided a lot of inspiration for `tailwind-ppx`. I recommend you check them out!
 
 - [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
 - [styled-ppx](https://github.com/davesnx/styled-ppx)
