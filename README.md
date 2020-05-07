@@ -10,8 +10,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 ## Table of Contents
 
 - [Usage](#usage)
-- [Configuration](#configuration)
 - [Features (Current and Upcoming)](#features)
+- [Configuration](#configuration)
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
