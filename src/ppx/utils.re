@@ -1,4 +1,4 @@
-open Css_types;
+open Css.Types;
 module StringSet = Set.Make(String);
 
 /**
@@ -38,14 +38,7 @@ let findClosest = (className, acceptableNames) => {
 exception ParseError(string);
 
 let parseStylesheet = (~containerLnum=?, ~pos=?, css) =>
-  try(
-    Css_lexer.parse_string(
-      ~container_lnum=?containerLnum,
-      ~pos?,
-      css,
-      Css_parser.stylesheet,
-    )
-  ) {
+  try(Css.Parser.parse_stylesheet(~container_lnum=?containerLnum, ~pos?, css)) {
   | _ =>
     raise(
       ParseError(
@@ -175,11 +168,10 @@ type cachedAcceptableClassNames = {
 };
 
 let getCachedAcceptableClassNames = (~filePath, ~tailwindFileContent) =>
-  switch (Pervasives.open_in_bin(filePath)) {
+  switch (open_in_bin(filePath)) {
   | input =>
-    let fileContent: cachedAcceptableClassNames =
-      Pervasives.input_value(input);
-    Pervasives.close_in(input);
+    let fileContent: cachedAcceptableClassNames = input_value(input);
+    close_in(input);
     Digest.equal(
       Digest.string(tailwindFileContent),
       fileContent.tailwindCssHash,
@@ -215,15 +207,15 @@ let validate = (~classNames, ~loc, ~tailwindFileContent) => {
 
         createDirIfNotExist(cacheDirectory);
 
-        let output = Pervasives.open_out_bin(cacheFilePath);
-        Pervasives.output_value(
+        let output = open_out_bin(cacheFilePath);
+        output_value(
           output,
           {
             tailwindCssHash: Digest.string(tailwindFileContent),
             acceptableClassNames: calculatedAcceptableClassNames,
           },
         );
-        Pervasives.close_out(output);
+        close_out(output);
         acceptableClassNames := Some(calculatedAcceptableClassNames);
         calculatedAcceptableClassNames;
       }
