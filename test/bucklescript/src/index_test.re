@@ -34,7 +34,7 @@ describe("Extractor", () => {
         <div className=[%tw "flex  flex-col bg-gray-200 hover:bg-gray-200"]></div>
 
         <!-- These shouldn't be included -->
-        <div className="flex-row mx-auto mt-2"></div>
+        <div className=[%tw "[%tw "flex-row mx-auto mt-2"]"]></div>
 
         <!-- ...but these should -->
         <div className=[%tw "mb-2 p-6"]></div>

@@ -1,7 +1,19 @@
+(copy_files# ext/*.{ml,mli})
+
 (executable
   (name Bin)
+  (modules Bin)
   (public_name tailwind-ppx)
   (libraries tailwind-ppx.lib)
+  (ocamlopt_flags ( -linkall ))
+  (package tailwind-ppx)
+)
+
+(executable
+  (name UsePpx)
+  (modules UsePpx Paths Ext_json_types Ext_json_parse Ext_position)
+  (public_name use-tailwind-ppx)
+  (libraries str)
   (ocamlopt_flags ( -linkall ))
   (package tailwind-ppx)
 )

@@ -1,4 +1,4 @@
-/* Recursively look for file starting at the project root */
+/** Recursively look for file starting at the project root */
 let rec findFileTowardsRoot = (dir, file) => {
   let hereFile = Filename.concat(dir, file);
 
@@ -11,7 +11,7 @@ let rec findFileTowardsRoot = (dir, file) => {
   };
 };
 
-/* Reads the contents of a file */
+/** Reads the contents of a file */
 let readFile = path => {
   let ch = open_in(path);
   let s = really_input_string(ch, in_channel_length(ch));
@@ -19,7 +19,14 @@ let readFile = path => {
   s;
 };
 
-/* lazily read tailwind and check if talwind.css file exists */
+/** Writes the contents of a file */
+let writeFile = (path, newContents) => {
+  let ch = open_out(path);
+  output_string(ch, newContents);
+  close_out(ch);
+};
+
+/** lazily read tailwind and check if talwind.css file exists */
 let getTailwind =
   lazy(
     switch (
