@@ -1,4 +1,8 @@
-let minimum = (a, b, c) => min(a, min(b, c)) /* * Levenshtein distance * Translated from OCaml example in Rosetta Code * https://rosettacode.org/wiki/Levenshtein_distance#OCaml * https://en.wikipedia.org/wiki/Levenshtein_distance */;
+/**  Levenshtein distance
+   * Translated from OCaml example in Rosetta Code
+   * https://rosettacode.org/wiki/Levenshtein_distance#OCaml
+   * https://en.wikipedia.org/wiki/Levenshtein_distance */
+let minimum = (a, b, c) => min(a, min(b, c));
 
 let distance = (s, t) => {
   let first = String.length(s)
