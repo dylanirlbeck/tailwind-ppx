@@ -9,13 +9,30 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 ## Table of Contents
 
-- [Usage](#usage)
 - [Features (Current and Upcoming)](#features)
+- [Usage](#usage)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
 - [Examples, Collaborators, and Related Projects](#other)
+
+
+## Features
+
+**Current**
+
+- Checks for invalid class names (and suggestions for valid ones!)
+- Checks for duplicate class names
+- Always in-sync with your `tailwind.css` file (just make sure to re-build!)
+- Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
+
+**Upcoming**
+
+- [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
+- Integration script that converts all your existing `className="..."` to `className=[%tw "..."]`
+- Redundant class names (like having both flex-row and flex-col)
+- Class name dependencies (like having `flex-row` without `flex`)
 
 ## Usage
 
@@ -132,21 +149,6 @@ If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github
 `tailwind-ppx` will generate a `.tailwind_ppx_cache` folder in your project root
 to optimize the validation performance. If you're using a version control
 system, you don't need to check it in.
-
-## Features
-
-**Current**
-
-- Checks for invalid class names (and suggestions for valid ones!)
-- Checks for duplicate class names
-- Always in-sync with your `tailwind.css` file (just make sure to re-build!)
-- Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
-
-**Upcoming**
-
-- [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
-- Redundant class names (like having both flex-row and flex-col)
-- Class name dependencies (like having `flex-row` without `flex`)
 
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
