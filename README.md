@@ -31,7 +31,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 
 - [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
 - Integration script that converts all your existing `className="..."` to `className=[%tw "..."]`
-- Redundant class names (like having both flex-row and flex-col)
+- Redundant class names (like having both `flex-row` and `flex-col`)
 - Class name dependencies (like having `flex-row` without `flex`)
 
 ## Usage
