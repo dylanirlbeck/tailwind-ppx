@@ -9,17 +9,15 @@ let rec findFileTowardsRoot = (dir, file) => {
   } else {
     findFileTowardsRoot(Filename.dirname(dir), file);
   };
-};
+} /* Reads the contents of a file */;
 
-/* Reads the contents of a file */
 let readFile = path => {
   let ch = open_in(path);
   let s = really_input_string(ch, in_channel_length(ch));
   close_in(ch);
   s;
-};
+} /* lazily read tailwind and check if talwind.css file exists */;
 
-/* lazily read tailwind and check if talwind.css file exists */
 let getTailwind =
   lazy(
     switch (
