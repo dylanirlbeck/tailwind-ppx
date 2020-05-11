@@ -230,7 +230,7 @@ and `yarn` is used solely for pre-commit linting/formatting of Reason files.
 - `esy format` -> Formats the entire project with `ocamlformat` and `refmt`
 - `esy watch` -> Watches for changes to Reason/OCaml files in the entire project, including in the `/test` directory
 - `esy test_native` -> Runs the native tests (in `test/native`)
-- `esy test_bs` -> Runs the BuckleScript tests (in `test/bucklescript`)
+- `cd test/bucklescript && yarn test` -> Runs the BuckleScript tests (in `test/bucklescript`)
 
 > Note that if you pull requests are not formatted properly, or the `esy.lock`
 > is out-of-date, GitHub actions will automatically format your code by pushing
