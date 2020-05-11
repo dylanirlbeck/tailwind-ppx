@@ -48,9 +48,11 @@ on: [pull_request] jobs:
           git push origin HEAD:$GITHUB_HEAD_REF
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Display status should be clean
-        run: git status
         if: success()
+        run: git status
+
       - uses: actions/github-script@0.3.0
         if: failure()
         with:
