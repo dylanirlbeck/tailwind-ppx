@@ -1,0 +1,7 @@
+(copy_files# ext/*.{ml,mli})
+
+(library
+ (name integration_script)
+ (wrapped false)
+ (libraries str)
+ )

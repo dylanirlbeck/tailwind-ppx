@@ -19,42 +19,11 @@ let rec findProjectRoot = (~dir) =>
       findProjectRoot(~dir=parent);
     };
   };
+
 let setProjectRoot = () => {
   projectRoot := findProjectRoot(~dir=Sys.getcwd());
-  bsbProjectRoot :=
-    (
-      switch (Sys.getenv_opt("BSB_PROJECT_ROOT")) {
-      | None => projectRoot^
-      | Some(s) => s
-      }
-    );
+  bsbProjectRoot := projectRoot^;
 };
-
-/*
- * Handle namespaces in cmt files.
- * E.g. src/Module-Project.cmt becomes src/Module
- */
-let handleNamespace = cmt => {
-  let cutAfterDash = s =>
-    switch (String.index(s, '-')) {
-    | n =>
-      try(String.sub(s, 0, n)) {
-      | Invalid_argument(_) => s
-      }
-    | exception Not_found => s
-    };
-  let noDir = Filename.basename(cmt) == cmt;
-  if (noDir) {
-    cmt |> Filename.remove_extension |> cutAfterDash;
-  } else {
-    let dir = cmt |> Filename.dirname;
-    let base =
-      cmt |> Filename.basename |> Filename.remove_extension |> cutAfterDash;
-    Filename.concat(dir, base);
-  };
-};
-
-let getModuleName = cmt => cmt |> handleNamespace |> Filename.basename;
 
 let readDirsFromConfig = (~configSources) => {
   let dirs = ref([]);
@@ -137,9 +106,6 @@ let readSourceDirs = (~configSources) => {
     };
   } else {
     print_endline("Warning: can't find source dirs " ++ sourceDirs);
-    print_endline(
-      "Types for cross-references will not be found by genType.\n",
-    );
     dirs := readDirsFromConfig(~configSources);
   };
   dirs^;
