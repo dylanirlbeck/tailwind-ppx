@@ -24,7 +24,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - Checks for invalid class names (and suggestions for valid ones!)
 - Checks for duplicate class names
 - Always in-sync with your `tailwind.css` file (just make sure to re-build!)
-- Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
+- [Automatic purging of unused class names](#getting-ready-for-production) (with PurgeCSS and `tailwind-ppx`'s custom extractor function)
 
 **Upcoming**
 
@@ -32,6 +32,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - Integration script that converts all your existing `className="..."` to `className=[%tw "..."]`
 - Redundant class names (like having both `flex-row` and `flex-col`)
 - Class name dependencies (like having `flex-row` without `flex`)
+
+If you have ideas for new features, please [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
 ## Usage
 
