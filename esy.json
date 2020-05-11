@@ -28,6 +28,7 @@
   "devDependencies": {
     "ocaml": "4.6.1000",
     "@opam/dune-release": "*",
+    "@opam/ocamlformat": "*",
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
@@ -37,6 +38,7 @@
   "scripts": {
     "test_native": "esy #{os == 'windows' ? 'b' : ''} dune exec test/native/TestRunner.exe",
     "build_all": "esy dune b @all",
+    "format": "esy dune build @fmt --auto-promote",
     "clean": "esy dune clean",
     "watch": "esy dune build @all -p #{self.name} --watch",
     "release": "./script/release.sh",
