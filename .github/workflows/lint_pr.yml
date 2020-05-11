@@ -33,7 +33,7 @@ jobs:
       - name: format sources files
         run: |
           esy format
-          git add "*.re" "*.rei" "*.ml" "*.mli" "*.mly"
+          git add "*.re" "*.ml" "*.mly"
       - name: Check that lock directory are up-to-date.
         run: git diff --exit-code --cached
       - name: Push if it is not
