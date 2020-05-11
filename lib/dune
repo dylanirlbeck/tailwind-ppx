@@ -1,3 +1,5 @@
+(copy_files# css_parser/*.{re,ml,mly})
+
 (menhir
   (modules css_parser)
   (flags --explain)
