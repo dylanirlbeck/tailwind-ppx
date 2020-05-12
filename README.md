@@ -65,9 +65,19 @@ examples:
 <Component className=[%tw "flex flex-row flex"] /> // ERROR: Duplicate class name: flex
 ```
 
-Note that this PPX requires your **generated** `tailwind.css` file to exist somewhere in the
+Finally, `tailwind-ppx` requires your **generated** `tailwind.css` file to exist somewhere in the
 project hierarchy. Though not required, it's recommended that you [configure the
 path](#-path) to your `tailwind.css` file (relative to your project root).
+
+**Using custom CSS classes**
+
+`tailwind-ppx` directly parses your generated `tailwind.css` file, which means that **all** CSS classes will be validated by the PPX, including custom class names defined in your base `index.css/styles.css` file (in addition to the base Tailwind utility classes). In short, if the class is in your `tailwind.css` file, it will be validated correctly by the ppx. 
+
+Example:
+
+```reason
+<Component className=[%tw "flex flex-row customLayou"] /> // ERROR: Class name not found: customLayou. Did you mean customLayout?
+```
 
 ### Getting ready for production
 
