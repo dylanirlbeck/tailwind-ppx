@@ -5,7 +5,7 @@
 
 Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
-<p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
+<p align="center"><img src="assets/demo.gif?raw=true" /></p>
 
 ## Table of Contents
 
