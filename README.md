@@ -5,7 +5,7 @@
 
 Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
-<p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
+<p align="center"><img src="assets/demo.png" /></p>
 
 ## Table of Contents
 
@@ -219,13 +219,13 @@ esy add @dylanirlbeck/tailwind-ppx
     };
   };
   ```
-  
+
 - **How can I use custom CSS classes?**
 
-  `tailwind-ppx` directly parses your generated `tailwind.css` file, which means 
-  that **all** CSS classes will be validated by the PPX, including custom class 
-  names defined in your base `index.css/styles.css` file. In short, if the class 
-  is in your `tailwind.css` file, it will be validated correctly by the ppx. 
+  `tailwind-ppx` directly parses your generated `tailwind.css` file, which means
+  that **all** CSS classes will be validated by the PPX, including custom class
+  names defined in your base `index.css/styles.css` file. In short, if the class
+  is in your `tailwind.css` file, it will be validated correctly by the ppx.
 
   Example:
 
