@@ -29,12 +29,12 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: macOS-latest-4.09-${{ hashFiles('**/index.json') }}
+          key: ${{ matrix.os }}-${{ hashFiles('**/index.json')}}
 
       - name: format sources files
         run: |
           esy format
-          git add "*.re" ".ml" ".mly"
+          git add "*.re" "*.ml" "*.mly"
 
       - name: Check that lock directory are up-to-date.
         run: git diff --exit-code --cached
