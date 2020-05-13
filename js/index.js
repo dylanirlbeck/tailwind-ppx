@@ -1,9 +1,9 @@
 function extractor(content) {
-  const matchedContent = content.match(/(?<=\[%tw ").*(?=\"\])/g);
+  const matchedContent = content.match(/(?<=\[%tw ")[^\"]*(?=\"\])/g);
 
   if (matchedContent) {
     return matchedContent.reduce((acc, curr) => {
-      curr.split(" ").forEach((p) => {
+      curr.split(" ").forEach(p => {
         const trimmed = p.trim();
 
         if (trimmed !== "") {
