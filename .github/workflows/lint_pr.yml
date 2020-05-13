@@ -33,7 +33,7 @@ jobs:
 
       - name: format sources files
         run: |
-          esy dune build @fmt
+          esy format
           git add "*.re" ".ml" ".mly"
 
       - name: Check that lock directory are up-to-date.
