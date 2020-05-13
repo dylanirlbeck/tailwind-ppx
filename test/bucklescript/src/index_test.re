@@ -37,7 +37,7 @@ describe("Extractor", () => {
         <div className="flex-row mx-auto mt-2"></div>
 
         <!-- ...but these should -->
-        <div className=[%tw "mb-2 p-6"]></div>
+        <div className=[%tw "mb-2 p-6"]></div> <div className=[%tw "mt-8 bg-blue-200"]></div>
         |},
       ),
     )
@@ -48,6 +48,8 @@ describe("Extractor", () => {
          "hover:bg-gray-200",
          "mb-2",
          "p-6",
+         "mt-8",
+         "bg-blue-200",
        |])
   })
 });
