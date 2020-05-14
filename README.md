@@ -277,9 +277,10 @@ These projects are using `tailwind-ppx` throughout the code base:
 `tailwind-ppx` would not be possible without the contributions of the following
 individuals. Thank you all!
 
-- [tatchi](https://github.com/tatchi) - For implementing the caching functionality and Windows build.
-- [zth](https://github.com/zth) - For creating the custom PurgeCSS extractor function and documentation.
-- [akzane](https://github.com/akzane) - For meaningful code improvements, feedback, and documentation.
+- [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
+- [@zth](https://github.com/zth) - Created the custom PurgeCSS extractor function and documentation.
+- [@akzane](https://github.com/akzane) - Meaningful code improvements, feedback, and documentation.
+- [@peterpme](https://github.com/peterpme) - Original inspiration for `tailwind-ppx`
 
 ### Related Projects
 
