@@ -1,6 +1,6 @@
 (copy_files# ext/*.{ml,mli})
 
 (library
- (name integration_script)
+ (name use_ppx_lib)
  (wrapped false)
  (libraries str))

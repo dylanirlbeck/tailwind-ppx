@@ -10,6 +10,6 @@
  (name UsePpx)
  (modules UsePpx)
  (public_name use-tailwind-ppx)
- (libraries str integration_script)
+ (libraries str use_ppx_lib)
  (ocamlopt_flags (-linkall))
  (package tailwind-ppx))
