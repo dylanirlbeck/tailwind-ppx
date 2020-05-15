@@ -3,5 +3,4 @@
 (library
  (name integration_script)
  (wrapped false)
- (libraries str)
- )
+ (libraries str))
