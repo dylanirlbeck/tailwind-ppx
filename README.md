@@ -213,6 +213,10 @@ project (just make sure you've installed the NPM package):
 ./node_modules/@dylanirlbeck/tailwind-ppx/use-tailwind-ppx.exe
 ```
 
+> Note that you'll need both a `bsconfig.json` to exist in the project hierarchy
+> and compiled project with `bsb -make-world` (so the `lib/` directory exists in
+> the project root) for the script to work properly.
+
 ## FAQ
 
 - **How can I conditionally add classes?**
