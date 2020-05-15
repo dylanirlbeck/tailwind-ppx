@@ -274,7 +274,7 @@ These projects are using `tailwind-ppx` throughout the code base:
 
 ### Collaborators
 
-`tailwind-ppx` would not be possible without the contributions of the following
+This project would not be possible without the contributions of the following
 individuals. Thank you all!
 
 - [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
@@ -284,7 +284,7 @@ individuals. Thank you all!
 
 ### Related Projects
 
-The following amazing projects provided a lot of inspiration for `tailwind-ppx`. I recommend you check them out!
+The following amazing projects provided a lot of inspiration; I recommend you check them out!
 
 - [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
 - [styled-ppx](https://github.com/davesnx/styled-ppx)
