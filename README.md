@@ -191,14 +191,6 @@ And add the PPX in your `bsconfig.json` file:
 }
 ```
 
-### With `esy` (not recommended)
-
-You can also install the PPX with `esy`
-
-```bash
-esy add @dylanirlbeck/tailwind-ppx
-```
-
 ### Integration script
 
 The `@dylanirlbeck/tailwind-ppx` NPM package ships with an executable that, when
