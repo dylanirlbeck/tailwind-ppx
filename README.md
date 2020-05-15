@@ -5,17 +5,35 @@
 
 Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
-<p align="center"><img height="800" src="assets/demo.gif?raw=true" /></p>
+<p align="center"><img src="assets/demo.png" /></p>
 
 ## Table of Contents
 
-- [Usage](#usage)
 - [Features (Current and Upcoming)](#features)
+- [Usage](#usage)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
 - [Examples, Collaborators, and Related Projects](#other)
+
+## Features
+
+**Current**
+
+- Checks for invalid class names (and suggestions for valid ones!)
+- Checks for duplicate class names
+- Always in-sync with your `tailwind.css` file (just make sure to re-build!)
+- [Automatic purging of unused class names](#getting-ready-for-production) (with PurgeCSS and `tailwind-ppx`'s custom extractor function)
+
+**Upcoming**
+
+- [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
+- Integration script that converts all your existing `className="..."` to `className=[%tw "..."]`
+- Redundant class names (like having both `flex-row` and `flex-col`)
+- Class name dependencies (like having `flex-row` without `flex`)
+
+If you have ideas for new features, please [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
 ## Usage
 
@@ -47,7 +65,7 @@ examples:
 <Component className=[%tw "flex flex-row flex"] /> // ERROR: Duplicate class name: flex
 ```
 
-Note that this PPX requires your **generated** `tailwind.css` file to exist somewhere in the
+Finally, `tailwind-ppx` requires your **generated** `tailwind.css` file to exist somewhere in the
 project hierarchy. Though not required, it's recommended that you [configure the
 path](#-path) to your `tailwind.css` file (relative to your project root).
 
@@ -133,21 +151,6 @@ If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github
 to optimize the validation performance. If you're using a version control
 system, you don't need to check it in.
 
-## Features
-
-**Current**
-
-- Checks for invalid class names (and suggestions for valid ones!)
-- Checks for duplicate class names
-- Always in-sync with your `tailwind.css` file (just make sure to re-build!)
-- Automatic purging of unused class names (with PurgeCSS and `tailwind-ppx`'s extractor function)
-
-**Upcoming**
-
-- [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
-- Redundant class names (like having both flex-row and flex-col)
-- Class name dependencies (like having `flex-row` without `flex`)
-
 Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
 ## Configuration
@@ -217,6 +220,19 @@ esy add @dylanirlbeck/tailwind-ppx
   };
   ```
 
+- **How can I use custom CSS classes?**
+
+  `tailwind-ppx` directly parses your generated `tailwind.css` file, which means
+  that **all** CSS classes will be validated by the PPX, including custom class
+  names defined in your base `index.css/styles.css` file. In short, if the class
+  is in your `tailwind.css` file, it will be validated correctly by the ppx.
+
+  Example:
+
+  ```reason
+  <Component className=[%tw "flex flex-row customLayou"] /> // ERROR: Class name not found: customLayou. Did you mean customLayout?
+  ```
+
 ## Developing
 
 After cloning the repository, you should run both `esy` and `yarn` to install
@@ -226,9 +242,14 @@ and `yarn` is used solely for pre-commit linting/formatting of Reason files.
 ### Relevant commands
 
 - `esy build` -> Builds the project
+- `esy format` -> Formats the entire project with `ocamlformat` and `refmt`
 - `esy watch` -> Watches for changes to Reason/OCaml files in the entire project, including in the `/test` directory
 - `esy test_native` -> Runs the native tests (in `test/native`)
-- `esy test_bs` -> Runs the BuckleScript tests (in `test/bucklescript`)
+- `cd test/bucklescript && yarn test` -> Runs the BuckleScript tests (in `test/bucklescript`)
+
+> Note that if you pull requests are not formatted properly, or the `esy.lock`
+> is out-of-date, GitHub actions will automatically format your code by pushing
+> up a new commit.
 
 ### Releasing
 
@@ -253,16 +274,17 @@ These projects are using `tailwind-ppx` throughout the code base:
 
 ### Collaborators
 
-`tailwind-ppx` would not be possible without the contributions of the following
+This project would not be possible without the contributions of the following
 individuals. Thank you all!
 
-- [tatchi](https://github.com/tatchi) - For implementing the caching functionality and Windows build.
-- [zth](https://github.com/zth) - For creating the custom PurgeCSS extractor function and documentation.
-- [akzane](https://github.com/akzane) - For meaningful code improvements, feedback, and documentation.
+- [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
+- [@zth](https://github.com/zth) - Created the custom PurgeCSS extractor function and documentation.
+- [@akzane](https://github.com/akzane) - Meaningful code improvements, feedback, and documentation.
+- [@peterpme](https://github.com/peterpme) - Original inspiration for `tailwind-ppx`
 
 ### Related Projects
 
-The following amazing projects provided a lot of inspiration for `tailwind-ppx`. I recommend you check them out!
+The following amazing projects provided a lot of inspiration; I recommend you check them out!
 
 - [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
 - [styled-ppx](https://github.com/davesnx/styled-ppx)
