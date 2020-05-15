@@ -25,8 +25,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - Checks for duplicate class names
 - Always in-sync with your `tailwind.css` file (just make sure to re-build!)
 - [Automatic purging of unused class names](#getting-ready-for-production) (with PurgeCSS and `tailwind-ppx`'s custom extractor function)
-- [Integration script](#integration-script) that converts all your existing
-  `className="..."` to `className=[%tw "..."]`
+- [Ships with an integration script](#integration-script) that converts all your
+  existing `className="..."` to `className=[%tw "..."]`
 
 **Upcoming**
 
