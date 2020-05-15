@@ -2,8 +2,7 @@
 let make = () => {
   <div
     className=[%tw
-      "w-full h-full bg-white flex flex-col justify-center
-      items-center"
+      "flex flex-col items-center justify-center w-full h-full bg-white"
     ]>
     <span> "Content"->React.string </span>
   </div>;

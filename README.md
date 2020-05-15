@@ -25,11 +25,12 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - Checks for duplicate class names
 - Always in-sync with your `tailwind.css` file (just make sure to re-build!)
 - [Automatic purging of unused class names](#getting-ready-for-production) (with PurgeCSS and `tailwind-ppx`'s custom extractor function)
+- [Ships with an integration script](#integration-script) that converts all your
+  existing `className="..."` to `className=[%tw "..."]`
 
 **Upcoming**
 
 - [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
-- Integration script that converts all your existing `className="..."` to `className=[%tw "..."]`
 - Redundant class names (like having both `flex-row` and `flex-col`)
 - Class name dependencies (like having `flex-row` without `flex`)
 
@@ -197,6 +198,24 @@ You can also install the PPX with `esy`
 ```bash
 esy add @dylanirlbeck/tailwind-ppx
 ```
+
+### Integration script
+
+The `@dylanirlbeck/tailwind-ppx` NPM package ships with an executable that, when
+run in a BuckleScript project, turns all instances of `className="..."` into
+`className=[%tw "..."]`. The script is designed to make it easy to immediately
+introduce `tailwind-ppx` into an existing codebase.
+
+You can use this script by running the following command from the root of your
+project (just make sure you've installed the NPM package):
+
+```
+./node_modules/@dylanirlbeck/tailwind-ppx/use-tailwind-ppx.exe
+```
+
+> Note that you'll need both a `bsconfig.json` to exist in the project hierarchy
+> and compiled project with `bsb -make-world` (so the `lib/` directory exists in
+> the project root) for the script to work properly.
 
 ## FAQ
 

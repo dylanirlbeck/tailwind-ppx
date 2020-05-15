@@ -1,6 +1,15 @@
 (executable
  (name Bin)
+ (modules Bin)
  (public_name tailwind-ppx)
  (libraries tailwind-ppx.lib)
+ (ocamlopt_flags (-linkall))
+ (package tailwind-ppx))
+
+(executable
+ (name UsePpx)
+ (modules UsePpx)
+ (public_name use-tailwind-ppx)
+ (libraries str use_ppx_lib)
  (ocamlopt_flags (-linkall))
  (package tailwind-ppx))

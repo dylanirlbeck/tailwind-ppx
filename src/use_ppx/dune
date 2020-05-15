@@ -1,0 +1,6 @@
+(copy_files# ext/*.{ml,mli})
+
+(library
+ (name use_ppx_lib)
+ (wrapped false)
+ (libraries str))
