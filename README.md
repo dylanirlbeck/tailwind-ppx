@@ -199,7 +199,17 @@ run in a BuckleScript project, turns all instances of `className="..."` into
 introduce `tailwind-ppx` into an existing codebase.
 
 You can use this script by running the following command from the root of your
-project (just make sure you've installed the NPM package):
+project (just make sure you've installed the NPM package).
+
+On MacOS/Linux:
+
+```
+yarn use-tailwind-ppx
+# Or
+npx use-tailwind-ppx
+```
+
+On Windows:
 
 ```
 ./node_modules/@dylanirlbeck/tailwind-ppx/use-tailwind-ppx.exe
