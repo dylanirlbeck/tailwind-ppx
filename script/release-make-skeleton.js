@@ -5,8 +5,6 @@ const fs = require("fs");
 const path = require("path");
 const esy = require("../esy.json");
 
-console.log("Using esy.json:", esy);
-
 const filesToCopy = ["LICENSE", "README.md", "js/index.js"];
 
 function exec(cmd) {
@@ -71,9 +69,9 @@ const pkgJson = {
     "platform-linux-x64/",
     "platform-darwin-x64/",
     "postinstall.js",
-    "js",
-    "tailwind-ppx.exe",
-    "use-tailwind-ppx.exe"
+    "tailwind-ppx",
+    "use-tailwind-ppx",
+    "js"
   ]
 };
 
