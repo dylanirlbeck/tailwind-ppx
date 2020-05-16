@@ -43,7 +43,7 @@ fs.copyFileSync(
   path.join(dst, "postinstall.js")
 );
 
-const filesToTouch = ["tailwind-ppx.exe"];
+const filesToTouch = ["tailwind-ppx.exe", "use-tailwind-ppx.exe"];
 
 for (const file of filesToTouch) {
   const p = path.join(dst, file);
@@ -63,7 +63,8 @@ const pkgJson = {
     postinstall: "node postinstall.js"
   },
   bin: {
-    "tailwind-ppx": "tailwind-ppx.exe"
+    "tailwind-ppx": "tailwind-ppx.exe",
+    "use-tailwind-ppx": "use-tailwind-ppx.exe"
   },
   files: [
     "platform-windows-x64/",
@@ -71,7 +72,8 @@ const pkgJson = {
     "platform-darwin-x64/",
     "postinstall.js",
     "js",
-    "tailwind-ppx.exe"
+    "tailwind-ppx.exe",
+    "use-tailwind-ppx.exe"
   ]
 };
 
