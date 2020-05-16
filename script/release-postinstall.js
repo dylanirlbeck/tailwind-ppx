@@ -61,6 +61,9 @@ const copyPlatformBinaries = platformPath => {
   const platformBuildPath = path.join(__dirname, platformPath);
 
   binariesToCopy.forEach(binaryPath => {
+    if (process.platform === "win32") {
+      binaryPath += ".exe";
+    }
     const sourcePath = path.join(platformBuildPath, binaryPath);
     const destPath = path.join(__dirname, binaryPath);
     if (fs.existsSync(destPath)) {
