@@ -152,8 +152,6 @@ If you're a Neovim user, you can download the [`coc-tailwindcss`](https://github
 to optimize the validation performance. If you're using a version control
 system, you don't need to check it in.
 
-Have feature requests? Feel free to [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
-
 ## Configuration
 
 ### -path
