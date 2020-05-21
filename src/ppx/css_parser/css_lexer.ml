@@ -150,7 +150,8 @@ let at_rule_without_body =
 
 let nested_at_rule =
   [%sedlex.regexp?
-    "@", ("document" | "keyframes" | "media" | "supports" | "scope")]
+    "@", ("document" | "keyframes" | "media" | "supports" | "scope" |
+    "-webkit-keyframes")]
 
 let _a = [%sedlex.regexp? 'A' | 'a']
 
