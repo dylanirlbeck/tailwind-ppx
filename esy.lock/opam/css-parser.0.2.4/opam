@@ -28,6 +28,6 @@ build: [
 ]
 dev-repo: "git+https://github.com/astrada/ocaml-css-parser.git"
 url {
-  src: "https://github.com/astrada/ocaml-css-parser/archive/v0.2.2.tar.gz"
-  checksum: "md5=6bdf8c715d252eca212a7803a26f67e0"
+  src: "https://github.com/astrada/ocaml-css-parser/archive/v0.2.4.tar.gz"
+  checksum: "md5=d437ecdab0138292b4a7081d404f833a"
 }

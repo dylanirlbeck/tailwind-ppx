@@ -1,5 +1,5 @@
 {
-  "checksum": "84a5cc632e4e3c34ffbda9ffe481137c",
+  "checksum": "962f98a15655a8386495e0a5a82c36e1",
   "root": "tailwind-ppx@link-dev:./esy.json",
   "node": {
     "tailwind-ppx@link-dev:./esy.json": {
@@ -12,7 +12,7 @@
         "@opam/ocaml-migrate-parsetree@opam:1.7.3@dbcf3b47",
         "@opam/menhir@opam:20200211@26571604",
         "@opam/fmt@opam:0.8.8@01c3a23c", "@opam/dune@opam:2.5.1@bf0da232",
-        "@opam/css-parser@opam:0.2.2@9ff33038",
+        "@opam/css-parser@opam:0.2.4@21f40328",
         "@esy-ocaml/reason@3.6.0@d41d8cd9"
       ],
       "devDependencies": [
@@ -1563,20 +1563,20 @@
         "@opam/base-threads@opam:base@36803084"
       ]
     },
-    "@opam/css-parser@opam:0.2.2@9ff33038": {
-      "id": "@opam/css-parser@opam:0.2.2@9ff33038",
+    "@opam/css-parser@opam:0.2.4@21f40328": {
+      "id": "@opam/css-parser@opam:0.2.4@21f40328",
       "name": "@opam/css-parser",
-      "version": "opam:0.2.2",
+      "version": "opam:0.2.4",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/6b/6bdf8c715d252eca212a7803a26f67e0#md5:6bdf8c715d252eca212a7803a26f67e0",
-          "archive:https://github.com/astrada/ocaml-css-parser/archive/v0.2.2.tar.gz#md5:6bdf8c715d252eca212a7803a26f67e0"
+          "archive:https://opam.ocaml.org/cache/md5/d4/d437ecdab0138292b4a7081d404f833a#md5:d437ecdab0138292b4a7081d404f833a",
+          "archive:https://github.com/astrada/ocaml-css-parser/archive/v0.2.4.tar.gz#md5:d437ecdab0138292b4a7081d404f833a"
         ],
         "opam": {
           "name": "css-parser",
-          "version": "0.2.2",
-          "path": "esy.lock/opam/css-parser.0.2.2"
+          "version": "0.2.4",
+          "path": "esy.lock/opam/css-parser.0.2.4"
         }
       },
       "overrides": [],
