@@ -17,7 +17,7 @@
     "release": { "bin": ["Bin", "UsePpx"] }
   },
   "dependencies": {
-    "@opam/dune": "^2.5.1",
+    "@opam/dune": "2.5.1",
     "@opam/fmt": "0.8.8",
     "@opam/menhir": "*",
     "@opam/ocaml-migrate-parsetree": "^1.7.0",
