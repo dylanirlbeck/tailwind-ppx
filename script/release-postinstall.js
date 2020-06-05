@@ -57,14 +57,12 @@ function copyFileSync(sourcePath, destPath) {
   fs.chmodSync(destPath, stat.mode);
 }
 
-const copyPlatformBinaries = platformPath => {
-  const platformBuildPath = path.join(__dirname, platformPath);
-
-  binariesToCopy.forEach(binaryPath => {
+const copyPlatformBinaries = (platformPath) => {
+  binariesToCopy.forEach((binaryPath) => {
     if (process.platform === "win32") {
       binaryPath += ".exe";
     }
-    const sourcePath = path.join(platformBuildPath, binaryPath);
+    const sourcePath = path.join(platformPath, binaryPath);
     const destPath = path.join(__dirname, binaryPath);
     if (fs.existsSync(destPath)) {
       fs.unlinkSync(destPath);
@@ -76,7 +74,13 @@ const copyPlatformBinaries = platformPath => {
 
 const arch = find_arch();
 
-const platformPath = "platform-" + platform + "-" + arch;
+const getPlatformFolderName = () => {
+  if (platform === "win32") {
+    return "platform-windows-" + arch;
+  }
+  return "platform-" + platform + "-" + arch;
+};
+const platformPath = path.join(__dirname, getPlatformFolderName());
 const supported = fs.existsSync(platformPath);
 
 if (!supported) {
