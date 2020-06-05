@@ -1,6 +1,6 @@
 name: tailwind-ppx pipeline
 
-on: 
+on:
   push:
     branches:
       - master
@@ -24,7 +24,13 @@ jobs:
       - name: Install esy
         run: npm install -g esy
 
-      - name: Install
+      - name: Try to restore install cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.esy/source
+          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      - name: Install dependencies
         run: esy install
 
       - name: Print esy cache
@@ -32,11 +38,12 @@ jobs:
         run: node .github/workflows/print_esy_cache.js
 
       - name: Try to restore dependencies cache
-        id: deps-cache-macos
-        uses: actions/cache@v1
+        id: deps-cache
+        uses: actions/cache@v2
         with:
           path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: ${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: build-${{ matrix.os }}-
 
       - name: Build
         run: esy build
@@ -63,54 +70,6 @@ jobs:
           yarn build
           yarn test
         working-directory: ./test/bucklescript
-      
-      - name: Get Esy binary path
-        id: esy_binary_path
-        shell: bash
-        run: |
-          # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
-          while [ "${d#$s/}" == "${d}" ]
-          do s=$(dirname $s);b="../${b}"; done;
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx.exe
-          else
-            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx
-          fi
-          echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
-          echo "##[set-output name=path;]$ESY__BINARY_PATH"
-
-      - name: Upload artifacts for ${{ matrix.os }}
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ matrix.os }}
-          path: ${{ steps.esy_binary_path.outputs.path }}
-
-
-      - name: Get Esy UsePpx binary path
-        id: esy_use_ppx_binary_path
-        shell: bash
-        run: |
-          # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which use-tailwind-ppx));
-          while [ "${d#$s/}" == "${d}" ]
-          do s=$(dirname $s);b="../${b}"; done;
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            ESY__BINARY_PATH=${b}${d#$s/}/use-tailwind-ppx.exe
-          else
-            ESY__BINARY_PATH=${b}${d#$s/}/use-tailwind-ppx
-          fi
-          echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
-          echo "##[set-output name=path;]$ESY__BINARY_PATH"
-
-      - name: Upload use-ppx artifacts for ${{ matrix.os }}
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ matrix.os }}
-          path: ${{ steps.esy_use_ppx_binary_path.outputs.path }}
-
 
   publish:
     needs: build_and_test
@@ -159,7 +118,7 @@ jobs:
           cd _release/platform-windows-x64
           zip -r ../../tailwind-ppx-windows-x64.zip .
           cd ../..
-      
+
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -170,8 +129,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-        
-      - name: Upload tailwind-ppx-darwin-x64.zip to Github release 
+
+      - name: Upload tailwind-ppx-darwin-x64.zip to Github release
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -181,7 +140,7 @@ jobs:
           asset_name: tailwind-ppx-darwin-x64.zip
           asset_content_type: application/gzip
 
-      - name: Upload tailwind-ppx-linux-x64.zip to Github release 
+      - name: Upload tailwind-ppx-linux-x64.zip to Github release
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -191,7 +150,7 @@ jobs:
           asset_name: tailwind-ppx-linux-x64.zip
           asset_content_type: application/gzip
 
-      - name: Upload tailwind-ppx-windows-x64.zip to Github release 
+      - name: Upload tailwind-ppx-windows-x64.zip to Github release
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
