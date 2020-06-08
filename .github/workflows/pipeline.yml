@@ -1,6 +1,6 @@
 name: tailwind-ppx pipeline
 
-on: 
+on:
   push:
     branches:
       - master
@@ -14,6 +14,7 @@ jobs:
   build_and_test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
@@ -24,7 +25,13 @@ jobs:
       - name: Install esy
         run: npm install -g esy
 
-      - name: Install
+      - name: Try to restore install cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.esy/source
+          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      - name: Install dependencies
         run: esy install
 
       - name: Print esy cache
@@ -32,13 +39,18 @@ jobs:
         run: node .github/workflows/print_esy_cache.js
 
       - name: Try to restore dependencies cache
-        id: deps-cache-macos
-        uses: actions/cache@v1
+        id: deps-cache
+        uses: actions/cache@v2
         with:
           path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: ${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: build-${{ matrix.os }}-
 
-      - name: Build
+      - name: Build dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy build-dependencies
+
+      - name: Build project
         run: esy build
 
       - name: Run Native tests
@@ -47,7 +59,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -63,57 +75,99 @@ jobs:
           yarn build
           yarn test
         working-directory: ./test/bucklescript
-      
-      - name: Get Esy binary path
-        id: esy_binary_path
-        shell: bash
-        run: |
-          # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which tailwind-ppx));
-          while [ "${d#$s/}" == "${d}" ]
-          do s=$(dirname $s);b="../${b}"; done;
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx.exe
-          else
-            ESY__BINARY_PATH=${b}${d#$s/}/tailwind-ppx
-          fi
-          echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
-          echo "##[set-output name=path;]$ESY__BINARY_PATH"
 
-      - name: Upload artifacts for ${{ matrix.os }}
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@master
+      # Create the NPM package for this platform
+      - name: Create npm package
+        run: esy npm-release
+      - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
-          path: ${{ steps.esy_binary_path.outputs.path }}
+          path: _release/
 
+      # Cleanup build cache if dependencies have changed
+      - name: Clean build cache
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy cleanup .
 
-      - name: Get Esy UsePpx binary path
-        id: esy_use_ppx_binary_path
-        shell: bash
-        run: |
-          # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which use-tailwind-ppx));
-          while [ "${d#$s/}" == "${d}" ]
-          do s=$(dirname $s);b="../${b}"; done;
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            ESY__BINARY_PATH=${b}${d#$s/}/use-tailwind-ppx.exe
-          else
-            ESY__BINARY_PATH=${b}${d#$s/}/use-tailwind-ppx
-          fi
-          echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
-          echo "##[set-output name=path;]$ESY__BINARY_PATH"
-
-      - name: Upload use-ppx artifacts for ${{ matrix.os }}
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@master
+  prepare-publish:
+    name: Prepare publish to npm
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
         with:
-          name: ${{ matrix.os }}
-          path: ${{ steps.esy_use_ppx_binary_path.outputs.path }}
+          node-version: 12
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref }}
+          submodules: true
+      # Download platform artifacts
+      - name: Download Linux release
+        uses: actions/download-artifact@v2
+        with:
+          name: ubuntu-latest
+          path: ubuntu-latest
+      - name: Download Windows release
+        uses: actions/download-artifact@v2
+        with:
+          name: windows-latest
+          path: windows-latest
+      - name: Download macOS release
+        uses: actions/download-artifact@v2
+        with:
+          name: macos-latest
+          path: macos-latest
+      # Move artifacts in place
+      - name: Move artifacts
+        run: |
+          mkdir -p _release/platform-linux
+          mkdir -p _release/platform-windows-x64
+          mkdir -p _release/platform-darwin
+          cp -a ubuntu-latest/. _release/platform-linux
+          cp -a windows-latest/. _release/platform-windows-x64
+          cp -a macos-latest/. _release/platform-darwin
+      - name: Prepare package
+        run: node .github/workflows/bundle-release.js
+      # Create a npm package that can easily be published and tested
+      - name: npm pack
+        run: npm pack .
+        working-directory: _release
+      - name: move package
+        run: mv _release/*.tgz tailwind-ppx.tgz
+      # Upload artifacts
+      - uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: _release/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: release-tarball
+          path: tailwind-ppx.tgz
 
+  test-platform:
+    name: Test installing ${{ matrix.os }}
+    needs: prepare-publish
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Download ${{ matrix.os }} release
+        uses: actions/download-artifact@v2
+        with:
+          name: release-tarball
+      - name: test install
+        run: npm -g install ./tailwind-ppx.tgz
+      - name: test binary
+        run: ppx --help
 
   publish:
-    needs: build_and_test
+    needs: prepare-publish
     if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
     name: (only on release) Publish
     runs-on: ubuntu-latest
@@ -125,44 +179,16 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Make NPM release skeleton
-        run: node script/release-make-skeleton.js
-
-      - name: Download linux artifacts
-        uses: actions/download-artifact@master
+      - name: Download release
+        uses: actions/download-artifact@v2
         with:
-          name: ubuntu-latest
-          path: _release/platform-linux-x64
-
-      - name: Download macOS artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: macos-latest
-          path: _release/platform-darwin-x64
-
-      - name: Download windows artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: windows-latest
-          path: _release/platform-windows-x64
-
-      - name: Create archives for Github release
-        run: |
-          cd _release/platform-darwin-x64
-          zip -r ../../tailwind-ppx-darwin-x64.zip .
-          cd ../..
-
-          cd _release/platform-linux-x64
-          zip -r ../../tailwind-ppx-linux-x64.zip .
-          cd ../..
-
-          cd _release/platform-windows-x64
-          zip -r ../../tailwind-ppx-windows-x64.zip .
-          cd ../..
-      
+          name: release
+          path: release
+      - name: Zip release folder
+        run: zip -r release.zip release
       - name: Create GitHub release
         id: create_release
-        uses: actions/create-release@v1.0.0
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
@@ -170,35 +196,15 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-        
-      - name: Upload tailwind-ppx-darwin-x64.zip to Github release 
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: tailwind-ppx-darwin-x64.zip
-          asset_name: tailwind-ppx-darwin-x64.zip
-          asset_content_type: application/gzip
 
-      - name: Upload tailwind-ppx-linux-x64.zip to Github release 
-        uses: actions/upload-release-asset@v1.0.1
+      - name: Upload ubuntu-latest to Github release
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: tailwind-ppx-linux-x64.zip
-          asset_name: tailwind-ppx-linux-x64.zip
-          asset_content_type: application/gzip
-
-      - name: Upload tailwind-ppx-windows-x64.zip to Github release 
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: tailwind-ppx-windows-x64.zip
-          asset_name: tailwind-ppx-windows-x64.zip
+          asset_path: release.zip
+          asset_name: release.zip
           asset_content_type: application/gzip
 
       - name: Publish NPM package
@@ -207,6 +213,6 @@ jobs:
           npm config set scope "@dylanirlbeck"
           npm config list
           npm publish --access public
-        working-directory: ./_release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+        working-directory: ./release

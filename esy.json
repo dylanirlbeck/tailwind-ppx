@@ -12,9 +12,8 @@
   },
   "esy": {
     "build": "dune build -p #{self.name}",
-    "buildEnv": { "ODOC_SYNTAX": "re" },
     "buildsInSource": "_build",
-    "release": { "bin": ["Bin", "UsePpx"] }
+    "release": { "bin": ["tailwind-ppx", "use-tailwind-ppx"] }
   },
   "dependencies": {
     "@opam/dune": "2.5.1",
