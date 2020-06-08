@@ -164,7 +164,7 @@ jobs:
       - name: test install
         run: npm -g install ./tailwind-ppx.tgz
       - name: test binary
-        run: ppx --help
+        run: tailwind-ppx --help
 
   publish:
     needs: prepare-publish
