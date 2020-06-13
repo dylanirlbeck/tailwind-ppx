@@ -230,10 +230,10 @@ On Windows:
     [@react.component]
     let make = (~someBool) => {
       let className =
-        Cn.make([
-          [%tw "text-blue-500"]->Cn.ifTrue(someBool),
-          [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
-        ]);
+        Cn.(
+          [%tw "text-blue-500"]->on(someBool)
+          + [%tw "text-gray-500"]->on(!someBool)
+        );
       <div className />;
     };
   };
