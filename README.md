@@ -18,7 +18,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
-- [Examples, Collaborators, and Related Projects](#other)
+- [Contributors](#contributors)
+- [Examples and Related Projects](#other)
 
 ## Features
 
@@ -286,32 +287,6 @@ $ git push origin vx.y.z
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
 
-## Other
-
-### Examples
-
-These projects are using `tailwind-ppx` throughout the code base:
-
-- [my-first-pr](https://github.com/dylanirlbeck/my-first-pr)
-
-### Collaborators
-
-This project would not be possible without the contributions of the following
-individuals. Thank you all!
-
-- [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
-- [@zth](https://github.com/zth) - Created the custom PurgeCSS extractor function and documentation.
-- [@akzane](https://github.com/akzane) - Meaningful code improvements, feedback, and documentation.
-- [@peterpme](https://github.com/peterpme) - Original inspiration for `tailwind-ppx`
-
-### Related Projects
-
-The following amazing projects provided a lot of inspiration; I recommend you check them out!
-
-- [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
-- [styled-ppx](https://github.com/davesnx/styled-ppx)
-- [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -330,3 +305,20 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Other
+
+### Examples
+
+These projects are using `tailwind-ppx` throughout the code base:
+
+- [my-first-pr](https://github.com/dylanirlbeck/my-first-pr)
+
+### Related Projects
+
+The following amazing projects provided a lot of inspiration; I recommend you check them out!
+
+- [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
+- [styled-ppx](https://github.com/davesnx/styled-ppx)
+- [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
+
