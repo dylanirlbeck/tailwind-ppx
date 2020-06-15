@@ -45,6 +45,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "tcoopman",
+      "name": "Thomas Coopman",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/45546?v=4",
+      "profile": "https://infinitetree.eu/",
+      "contributions": [
+        "bug",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
