@@ -98,10 +98,7 @@ jobs:
         with:
           node-version: 12
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-          ref: ${{ github.ref }}
-          submodules: true
+
       # Download platform artifacts
       - name: Download Linux release
         uses: actions/download-artifact@v2
