@@ -295,6 +295,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://dev.to/dylanirlbeck"><img src="https://avatars0.githubusercontent.com/u/35497479?v=4" width="100px;" alt=""/><br /><sub><b>Dylan Irlbeck </b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=dylanirlbeck" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=dylanirlbeck" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/tatchi"><img src="https://avatars2.githubusercontent.com/u/5595092?v=4" width="100px;" alt=""/><br /><sub><b>Corentin Leruth</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=tatchi" title="Code">💻</a> <a href="#ideas-tatchi" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-tatchi" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://twitter.com/___zth___"><img src="https://avatars2.githubusercontent.com/u/1457626?v=4" width="100px;" alt=""/><br /><sub><b>Gabriel Nordeborn</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=zth" title="Code">💻</a> <a href="#ideas-zth" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
