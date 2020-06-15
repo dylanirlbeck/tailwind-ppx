@@ -283,6 +283,8 @@ $ git push origin vx.y.z
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
 
+## Contributors
+
 ## Other
 
 ### Examples
@@ -291,15 +293,6 @@ These projects are using `tailwind-ppx` throughout the code base:
 
 - [my-first-pr](https://github.com/dylanirlbeck/my-first-pr)
 
-### Collaborators
-
-This project would not be possible without the contributions of the following
-individuals. Thank you all!
-
-- [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
-- [@zth](https://github.com/zth) - Created the custom PurgeCSS extractor function and documentation.
-- [@akzane](https://github.com/akzane) - Meaningful code improvements, feedback, and documentation.
-- [@peterpme](https://github.com/peterpme) - Original inspiration for `tailwind-ppx`
 
 ### Related Projects
 
