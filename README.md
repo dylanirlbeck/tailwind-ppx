@@ -299,6 +299,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/bdunn313"><img src="https://avatars3.githubusercontent.com/u/867683?v=4" width="100px;" alt=""/><br /><sub><b>Brad Dunn</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=bdunn313" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/issues?q=author%3Abdunn313" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://infinitetree.eu/"><img src="https://avatars3.githubusercontent.com/u/45546?v=4" width="100px;" alt=""/><br /><sub><b>Thomas Coopman</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/issues?q=author%3Atcoopman" title="Bug reports">🐛</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=tcoopman" title="Documentation">📖</a></td>
     <td align="center"><a href="http://prometheansacrifice.me/"><img src="https://avatars0.githubusercontent.com/u/3097018?v=4" width="100px;" alt=""/><br /><sub><b>Manas</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=prometheansacrifice" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://peterp.me"><img src="https://avatars0.githubusercontent.com/u/1211905?v=4" width="100px;" alt=""/><br /><sub><b>Peter Piekarczyk</b></sub></a><br /><a href="#ideas-peterpme" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
