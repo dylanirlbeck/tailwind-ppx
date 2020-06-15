@@ -35,6 +35,16 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "bdunn313",
+      "name": "Brad Dunn",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/867683?v=4",
+      "profile": "https://github.com/bdunn313",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
