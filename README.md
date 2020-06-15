@@ -1,10 +1,7 @@
 # tailwind-ppx
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 [![Actions Status](https://github.com/dylanirlbeck/tailwind-ppx/workflows/CI/badge.svg)](https://github.com/dylanirlbeck/tailwind-ppx/actions)
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
 Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
@@ -18,7 +15,7 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
-- [Contributors](#contributors)
+- [Contributors](#contributors-)
 - [Examples and Related Projects](#other)
 
 ## Features
