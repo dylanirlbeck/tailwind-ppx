@@ -301,6 +301,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://prometheansacrifice.me/"><img src="https://avatars0.githubusercontent.com/u/3097018?v=4" width="100px;" alt=""/><br /><sub><b>Manas</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=prometheansacrifice" title="Documentation">📖</a></td>
     <td align="center"><a href="https://peterp.me"><img src="https://avatars0.githubusercontent.com/u/1211905?v=4" width="100px;" alt=""/><br /><sub><b>Peter Piekarczyk</b></sub></a><br /><a href="#ideas-peterpme" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/pckilgore"><img src="https://avatars0.githubusercontent.com/u/2559043?v=4" width="100px;" alt=""/><br /><sub><b>Patrick Kilgore</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=pckilgore" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
