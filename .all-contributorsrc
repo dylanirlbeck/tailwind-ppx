@@ -102,6 +102,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "vdanchenkov",
+      "name": "Vladimir Danchenkov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2461813?v=4",
+      "profile": "https://twitter.com/_danchenkov",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
