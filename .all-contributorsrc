@@ -73,6 +73,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "pckilgore",
+      "name": "Patrick Kilgore",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2559043?v=4",
+      "profile": "https://github.com/pckilgore",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
