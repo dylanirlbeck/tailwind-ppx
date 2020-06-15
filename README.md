@@ -303,6 +303,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/pckilgore"><img src="https://avatars0.githubusercontent.com/u/2559043?v=4" width="100px;" alt=""/><br /><sub><b>Patrick Kilgore</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=pckilgore" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/azkane"><img src="https://avatars0.githubusercontent.com/u/3322582?v=4" width="100px;" alt=""/><br /><sub><b>ahzm</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Documentation">📖</a> <a href="#ideas-azkane" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
