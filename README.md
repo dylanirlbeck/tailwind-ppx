@@ -1,7 +1,7 @@
 # tailwind-ppx
-
 [![Actions Status](https://github.com/dylanirlbeck/tailwind-ppx/workflows/CI/badge.svg)](https://github.com/dylanirlbeck/tailwind-ppx/actions)
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
 Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
 
@@ -15,7 +15,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 - [Installation](#installation)
 - [Frequently Asked Questions (FAQ)](#faq)
 - [Developing](#developing)
-- [Examples, Collaborators, and Related Projects](#other)
+- [Contributors](#contributors-)
+- [Examples and Related Projects](#other)
 
 ## Features
 
@@ -230,10 +231,10 @@ On Windows:
     [@react.component]
     let make = (~someBool) => {
       let className =
-        Cn.make([
-          [%tw "text-blue-500"]->Cn.ifTrue(someBool),
-          [%tw "text-gray-500"]->Cn.ifTrue(!someBool),
-        ]);
+        Cn.(
+          [%tw "text-blue-500"]->on(someBool)
+          + [%tw "text-gray-500"]->on(!someBool)
+        );
       <div className />;
     };
   };
@@ -283,6 +284,37 @@ $ git push origin vx.y.z
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
 
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://dev.to/dylanirlbeck"><img src="https://avatars0.githubusercontent.com/u/35497479?v=4" width="100px;" alt=""/><br /><sub><b>Dylan Irlbeck </b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=dylanirlbeck" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=dylanirlbeck" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/tatchi"><img src="https://avatars2.githubusercontent.com/u/5595092?v=4" width="100px;" alt=""/><br /><sub><b>Corentin Leruth</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=tatchi" title="Code">💻</a> <a href="#ideas-tatchi" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-tatchi" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://twitter.com/___zth___"><img src="https://avatars2.githubusercontent.com/u/1457626?v=4" width="100px;" alt=""/><br /><sub><b>Gabriel Nordeborn</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=zth" title="Code">💻</a> <a href="#ideas-zth" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/bdunn313"><img src="https://avatars3.githubusercontent.com/u/867683?v=4" width="100px;" alt=""/><br /><sub><b>Brad Dunn</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=bdunn313" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/issues?q=author%3Abdunn313" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://infinitetree.eu/"><img src="https://avatars3.githubusercontent.com/u/45546?v=4" width="100px;" alt=""/><br /><sub><b>Thomas Coopman</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/issues?q=author%3Atcoopman" title="Bug reports">🐛</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=tcoopman" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://prometheansacrifice.me/"><img src="https://avatars0.githubusercontent.com/u/3097018?v=4" width="100px;" alt=""/><br /><sub><b>Manas</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=prometheansacrifice" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://peterp.me"><img src="https://avatars0.githubusercontent.com/u/1211905?v=4" width="100px;" alt=""/><br /><sub><b>Peter Piekarczyk</b></sub></a><br /><a href="#ideas-peterpme" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/pckilgore"><img src="https://avatars0.githubusercontent.com/u/2559043?v=4" width="100px;" alt=""/><br /><sub><b>Patrick Kilgore</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=pckilgore" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/azkane"><img src="https://avatars0.githubusercontent.com/u/3322582?v=4" width="100px;" alt=""/><br /><sub><b>ahzm</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Documentation">📖</a> <a href="#ideas-azkane" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/joprice"><img src="https://avatars1.githubusercontent.com/u/2175555?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Price</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=joprice" title="Code">💻</a></td>
+    <td align="center"><a href="https://twitter.com/_danchenkov"><img src="https://avatars2.githubusercontent.com/u/2461813?v=4" width="100px;" alt=""/><br /><sub><b>Vladimir Danchenkov</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=vdanchenkov" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
 ## Other
 
 ### Examples
@@ -291,16 +323,6 @@ These projects are using `tailwind-ppx` throughout the code base:
 
 - [my-first-pr](https://github.com/dylanirlbeck/my-first-pr)
 
-### Collaborators
-
-This project would not be possible without the contributions of the following
-individuals. Thank you all!
-
-- [@tatchi](https://github.com/tatchi) - Implemented the caching functionality and Windows build.
-- [@zth](https://github.com/zth) - Created the custom PurgeCSS extractor function and documentation.
-- [@akzane](https://github.com/akzane) - Meaningful code improvements, feedback, and documentation.
-- [@peterpme](https://github.com/peterpme) - Original inspiration for `tailwind-ppx`
-
 ### Related Projects
 
 The following amazing projects provided a lot of inspiration; I recommend you check them out!
@@ -308,3 +330,4 @@ The following amazing projects provided a lot of inspiration; I recommend you ch
 - [ocaml-css-parser](https://github.com/astrada/ocaml-css-parser)
 - [styled-ppx](https://github.com/davesnx/styled-ppx)
 - [graphql-ppx](https://github.com/reasonml-community/graphql_ppx)
+

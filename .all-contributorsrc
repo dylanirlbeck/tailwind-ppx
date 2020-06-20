@@ -1,0 +1,122 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "dylanirlbeck",
+      "name": "Dylan Irlbeck ",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/35497479?v=4",
+      "profile": "https://dev.to/dylanirlbeck",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "tatchi",
+      "name": "Corentin Leruth",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5595092?v=4",
+      "profile": "https://github.com/tatchi",
+      "contributions": [
+        "code",
+        "ideas",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "zth",
+      "name": "Gabriel Nordeborn",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1457626?v=4",
+      "profile": "https://twitter.com/___zth___",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "bdunn313",
+      "name": "Brad Dunn",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/867683?v=4",
+      "profile": "https://github.com/bdunn313",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "tcoopman",
+      "name": "Thomas Coopman",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/45546?v=4",
+      "profile": "https://infinitetree.eu/",
+      "contributions": [
+        "bug",
+        "doc"
+      ]
+    },
+    {
+      "login": "prometheansacrifice",
+      "name": "Manas",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3097018?v=4",
+      "profile": "http://prometheansacrifice.me/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "peterpme",
+      "name": "Peter Piekarczyk",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1211905?v=4",
+      "profile": "https://peterp.me",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "pckilgore",
+      "name": "Patrick Kilgore",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2559043?v=4",
+      "profile": "https://github.com/pckilgore",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "azkane",
+      "name": "ahzm",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3322582?v=4",
+      "profile": "https://github.com/azkane",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "joprice",
+      "name": "Joseph Price",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2175555?v=4",
+      "profile": "https://github.com/joprice",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vdanchenkov",
+      "name": "Vladimir Danchenkov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2461813?v=4",
+      "profile": "https://twitter.com/_danchenkov",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "tailwind-ppx",
+  "projectOwner": "dylanirlbeck",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
