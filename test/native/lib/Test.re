@@ -1,6 +1,6 @@
 open Setup;
 open Utils;
-open Css_types;
+open Css.Types;
 open Helpers;
 
 describe("Main methods", ({test, _}) => {
@@ -68,12 +68,7 @@ describe("Main methods", ({test, _}) => {
   test("checkDuplicate throws correctly", ({expect, _}) => {
     let classNames = ["flex", "flex"];
 
-    expect.fn(() => checkDuplicate(classNames, Location.none)).
-      toThrowException(
-      Location.Error(
-        Location.error(~loc=Location.none, "Duplicate class name: flex"),
-      ),
-    );
+    expect.fn(() => checkDuplicate(classNames, Location.none)).toThrow();
   });
 
   test("levenshtein distance", ({expect, _}) => {

@@ -1,14 +1,6 @@
-(copy_files# css_parser/*.{re,ml,mly})
-
-(menhir
- (modules css_parser)
- (flags --explain))
-
 (library
  (name tailwind_ppx)
  (wrapped false)
  (public_name tailwind-ppx.lib)
  (kind ppx_rewriter)
- (preprocess
-  (pps sedlex.ppx))
- (libraries str sedlex menhirLib ocaml-migrate-parsetree unix))
+ (libraries str ocaml-migrate-parsetree unix css-parser))
