@@ -6,8 +6,9 @@ bug-reports: "https://github.com/ocaml-ppx/ocamlformat/issues"
 dev-repo: "git+https://github.com/ocaml-ppx/ocamlformat.git"
 license: "MIT"
 build: [
-  ["ocaml" "tools/gen_version.mlt" "src/Version.ml" version] {pinned}
+  ["ocaml" "tools/gen_version.mlt" "lib/Version.ml" version] {pinned}
   ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
 depends: [
   "ocaml" {>= "4.06" & < "4.11"}
