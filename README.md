@@ -255,9 +255,7 @@ On Windows:
 
 ## Developing
 
-After cloning the repository, you should run both `esy` and `yarn` to install
-dependencies. `tailwind-ppx` uses `esy` for managing the important dependencies,
-and `yarn` is used solely for pre-commit linting/formatting of Reason files.
+After cloning the repository, you should run `esy` to install the project dependencies. After that, you should be good to start developing!
 
 ### Relevant commands
 
@@ -271,7 +269,7 @@ and `yarn` is used solely for pre-commit linting/formatting of Reason files.
 > is out-of-date, GitHub actions will automatically format your code by pushing
 > up a new commit.
 
-### Releasing
+### Releasing (for maintainers)
 
 1. Bump the version of the ppx in `esy.json` on `master` (we use [semantic versioning](https://semver.org/))
 2. Create and push a new tag
@@ -283,6 +281,7 @@ $ git push origin vx.y.z
 ```
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
+4. Make sure that for any merged pull requests/closed issues were noticed by the `all-contributors` bot -- see [this PR](https://github.com/dylanirlbeck/tailwind-ppx/pull/116#issuecomment-657551562) for an example of adding a new contributor who's PR was merged.
 
 ## Contributors ✨
 
