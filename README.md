@@ -32,8 +32,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 **Upcoming**
 
 - [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
-- Redundant class names (like having both `flex-row` and `flex-col`)
-- Class name dependencies (like having `flex-row` without `flex`)
+- Checks for redundant class names (like having both `flex-row` and `flex-col`)
+- Checks for class name dependencies (like having `flex-row` without `flex`)
 
 If you have ideas for new features, please [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
@@ -286,7 +286,7 @@ $ git push origin vx.y.z
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
