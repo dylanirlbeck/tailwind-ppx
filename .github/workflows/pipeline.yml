@@ -160,8 +160,10 @@ jobs:
           name: release-tarball
       - name: test install
         run: npm -g install ./tailwind-ppx.tgz
-      - name: test binary
+      - name: test tailwind-ppx binary
         run: tailwind-ppx --help
+      - name: test use-tailwind-ppx binary
+        run: use-tailwind-ppx
 
   publish:
     needs: prepare-publish
