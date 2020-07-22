@@ -172,6 +172,7 @@ jobs:
         run: tailwind-ppx --help
       - name: test use-tailwind-ppx binary
         run: use-tailwind-ppx
+        working-directory: ./test-tailwind-ppx
 
   publish:
     needs: prepare-publish
