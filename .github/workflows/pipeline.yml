@@ -159,7 +159,15 @@ jobs:
         with:
           name: release-tarball
       - name: test install
-        run: npm -g install ./tailwind-ppx.tgz
+        run: npm -g install ./tailwind-ppx.tgz bs-platform
+      - name: bootstrap test project
+        run: bsb -init test-tailwind-ppx -theme basic-reason
+      - name: install bs-platform locally
+        run: npm install bs-platform
+        working-directory: ./test-tailwind-ppx
+      - name: build project
+        run: npm run build
+        working-directory: ./test-tailwind-ppx
       - name: test tailwind-ppx binary
         run: tailwind-ppx --help
       - name: test use-tailwind-ppx binary
