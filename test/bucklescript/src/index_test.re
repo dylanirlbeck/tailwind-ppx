@@ -38,6 +38,27 @@ describe("Extractor", () => {
 
         <!-- ...but these should -->
         <div className=[%tw "mb-2 p-6"]></div> <div className=[%tw "mt-8 bg-blue-200"]></div>
+
+        <!-- ...and these -->
+        <div
+          className={
+            switch (test) {
+            | A =>
+              %tw
+              "bg-red-400"
+            | B =>
+              %tw
+              "bg-green-400"
+            }
+          }
+        />
+
+        <!-- ...and so should these -->
+        <div
+          className=[%tw
+            "bg-blue-400"
+          ]
+        />
         |},
       ),
     )
@@ -50,6 +71,9 @@ describe("Extractor", () => {
          "p-6",
          "mt-8",
          "bg-blue-200",
+         "bg-red-400",
+         "bg-green-400",
+         "bg-blue-400",
        |])
   })
 });

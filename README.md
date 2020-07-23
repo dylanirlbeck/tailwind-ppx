@@ -32,8 +32,8 @@ Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writi
 **Upcoming**
 
 - [Better integration with PostCSS](https://github.com/dylanirlbeck/tailwind-ppx/issues/62)
-- Redundant class names (like having both `flex-row` and `flex-col`)
-- Class name dependencies (like having `flex-row` without `flex`)
+- Checks for redundant class names (like having both `flex-row` and `flex-col`)
+- Checks for class name dependencies (like having `flex-row` without `flex`)
 
 If you have ideas for new features, please [open an issue](https://github.com/dylanirlbeck/tailwind-ppx/issues)!
 
@@ -255,9 +255,7 @@ On Windows:
 
 ## Developing
 
-After cloning the repository, you should run both `esy` and `yarn` to install
-dependencies. `tailwind-ppx` uses `esy` for managing the important dependencies,
-and `yarn` is used solely for pre-commit linting/formatting of Reason files.
+After cloning the repository, you should run `esy` to install the project dependencies. After that, you should be good to start developing!
 
 ### Relevant commands
 
@@ -271,7 +269,7 @@ and `yarn` is used solely for pre-commit linting/formatting of Reason files.
 > is out-of-date, GitHub actions will automatically format your code by pushing
 > up a new commit.
 
-### Releasing
+### Releasing (for maintainers)
 
 1. Bump the version of the ppx in `esy.json` on `master` (we use [semantic versioning](https://semver.org/))
 2. Create and push a new tag
@@ -283,10 +281,11 @@ $ git push origin vx.y.z
 ```
 
 3. [Create detailed release notes](https://github.com/dylanirlbeck/tailwind-ppx/releases) for the new version, following the `Added/Changed/Fixed/Removed` format. Note that the new version of the PPX will automatically be pushed to NPM and a release will be created on GitHub.
+4. Make sure that for any merged pull requests/closed issues were noticed by the `all-contributors` bot -- see [this PR](https://github.com/dylanirlbeck/tailwind-ppx/pull/116#issuecomment-657551562) for an example of adding a new contributor who's PR was merged.
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -306,6 +305,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/azkane"><img src="https://avatars0.githubusercontent.com/u/3322582?v=4" width="100px;" alt=""/><br /><sub><b>ahzm</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Code">💻</a> <a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=azkane" title="Documentation">📖</a> <a href="#ideas-azkane" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/joprice"><img src="https://avatars1.githubusercontent.com/u/2175555?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Price</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=joprice" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/_danchenkov"><img src="https://avatars2.githubusercontent.com/u/2461813?v=4" width="100px;" alt=""/><br /><sub><b>Vladimir Danchenkov</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=vdanchenkov" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://jonas.zeitler.se/"><img src="https://avatars0.githubusercontent.com/u/1719257?v=4" width="100px;" alt=""/><br /><sub><b>Jonas Zeitler</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=J-Zeitler" title="Code">💻</a></td>
   </tr>
 </table>
 
