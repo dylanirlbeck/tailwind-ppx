@@ -14,14 +14,12 @@ let rec findFileTowardsRoot = (dir, file) => {
 /** Reads the contents of a file */
 let readFile = path => {
   let ch = open_in(path);
-  let str = ref("");
-  Stream.from(_ =>
-    try(Some(input_line(ch))) {
-    | End_of_file => None
-    }
-  )
-  |> Stream.iter(line => str := str^ ++ line);
-  str^;
+  let s =
+    try(really_input_string(ch, in_channel_length(ch))) {
+    | End_of_file => ""
+    };
+  close_in(ch);
+  s;
 } /* lazily read tailwind and check if talwind.css file exists */;
 
 /** Writes the contents of a file */
