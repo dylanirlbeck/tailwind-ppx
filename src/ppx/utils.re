@@ -170,13 +170,20 @@ type cachedAcceptableClassNames = {
 let getCachedAcceptableClassNames = (~filePath, ~tailwindFileContent) =>
   switch (open_in_bin(filePath)) {
   | input =>
-    let fileContent: cachedAcceptableClassNames = input_value(input);
+    let maybeFileContent: option(cachedAcceptableClassNames) =
+      try(Some(input_value(input))) {
+      | _ => None
+      };
     close_in(input);
-    Digest.equal(
-      Digest.string(tailwindFileContent),
-      fileContent.tailwindCssHash,
-    )
-      ? Some(fileContent.acceptableClassNames) : None;
+
+    maybeFileContent
+    |> Option.flat_map(fileContent =>
+         Digest.equal(
+           Digest.string(tailwindFileContent),
+           fileContent.tailwindCssHash,
+         )
+           ? Some(fileContent.acceptableClassNames) : None
+       );
 
   | exception _ => None
   };
