@@ -1,5 +1,5 @@
 {
-  "name": "@dylanirlbeck/tailwind-ppx",
+  "name": "tailwind-ppx",
   "version": "0.8.0",
   "description": "Reason PPX that validates your Tailwind classes at compile-time",
   "author": "Dylan Irlbeck <dylanirlbeck@gmail.com>",
