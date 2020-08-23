@@ -41,6 +41,8 @@ const packageJson = JSON.stringify(
     license: mainPackageJson.license,
     description: mainPackageJson.description,
     repository: mainPackageJson.repository,
+    repository: mainPackageJson.repository,
+    main: "js/index.js",
     scripts: {
       postinstall: rewritePrefix
         ? "ESY_RELEASE_REWRITE_PREFIX=true node ./postinstall.js"
@@ -50,6 +52,7 @@ const packageJson = JSON.stringify(
     files: [
       "_export/",
       "bin/",
+      "js/",
       "postinstall.js",
       "esyInstallRelease.js",
       "platform-linux/",
@@ -89,6 +92,13 @@ console.log("Copying postinstall.js");
 fs.copyFileSync(
   path.join(__dirname, "release-postinstall.js"),
   path.join(__dirname, "..", "..", "_release", "postinstall.js")
+);
+
+console.log("Copying js folder");
+fs.mkdirSync(path.join(__dirname, "..", "..", "_release", "js"));
+fs.copyFileSync(
+  path.join(__dirname, "..", "..", "js", "index.js"),
+  path.join(__dirname, "..", "..", "_release", "js", "index.js")
 );
 
 console.log("Creating placeholder files");
