@@ -174,8 +174,6 @@ switch (platform) {
 }
 
 // By now, the binaries should all be located under `bin/`.
-// TODO cleanup the code below
-
 copyBinary("bin/tailwind-ppx", "ppx");
 copyBinary("bin/use-tailwind-ppx", "use-ppx");
 
