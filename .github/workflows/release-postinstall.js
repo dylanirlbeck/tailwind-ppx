@@ -190,12 +190,4 @@ function copyBinary(filename, destFilename) {
   }
 }
 
-function copyFileSync(source, dest) {
-  if (typeof fs.copyFileSync === "function") {
-    fs.copyFileSync(source, dest);
-  } else {
-    fs.writeFileSync(dest, fs.readFileSync(source));
-  }
-}
-
 require("./esyInstallRelease");
