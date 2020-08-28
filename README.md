@@ -162,7 +162,7 @@ directory. If `tailwind.css` lives elsewhere (or the name of your generated CSS 
 
 ```json
 "ppx-flags": [
-  ["@dylanirlbeck/tailwind-ppx/tailwind-ppx", "-path ../path/to/tailwind.css",]
+  ["tailwind-ppx", "-path ../path/to/tailwind.css",]
 ],
 ```
 
@@ -186,7 +186,7 @@ And add the PPX in your `bsconfig.json` file:
 
 ```json
 {
-  "ppx-flags": ["@dylanirlbeck/tailwind-ppx/tailwind-ppx"]
+  "ppx-flags": ["tailwind-ppx"]
 }
 ```
 
@@ -200,18 +200,10 @@ introduce `tailwind-ppx` into an existing codebase.
 You can use this script by running the following command from the root of your
 project (just make sure you've installed the NPM package).
 
-On MacOS/Linux:
-
 ```
 yarn use-tailwind-ppx
 # Or
 npx use-tailwind-ppx
-```
-
-On Windows:
-
-```
-./node_modules/@dylanirlbeck/tailwind-ppx/use-tailwind-ppx.exe
 ```
 
 > Note that you'll need both a `bsconfig.json` to exist in the project hierarchy
