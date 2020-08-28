@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 12
       - name: Install esy
-        run: npm install -g esy
+        run: npm install -g esy@0.6.4
 
       - name: Try to restore install cache
         uses: actions/cache@v2
@@ -169,9 +169,9 @@ jobs:
         run: npm run build
         working-directory: ./test-tailwind-ppx
       - name: test tailwind-ppx binary
-        run: tailwind-ppx --help
+        run: npx tailwind-ppx --help
       - name: test use-tailwind-ppx binary
-        run: use-tailwind-ppx
+        run: npx use-tailwind-ppx
         working-directory: ./test-tailwind-ppx
 
   publish:
