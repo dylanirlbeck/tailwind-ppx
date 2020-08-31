@@ -13,7 +13,10 @@
   "esy": {
     "build": "dune build -p #{self.name}",
     "buildsInSource": "_build",
-    "release": { "bin": ["tailwind-ppx", "use-tailwind-ppx"] }
+    "release": {
+      "bin": ["tailwind-ppx", "use-tailwind-ppx"],
+      "rewritePrefix": true
+    }
   },
   "dependencies": {
     "@opam/dune": "2.5.1",
