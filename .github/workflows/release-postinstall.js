@@ -85,7 +85,7 @@ function arch() {
       useEnv = !!(
         process.env.SYSTEMROOT && fs.statSync(process.env.SYSTEMROOT)
       );
-    } catch (err) { }
+    } catch (err) {}
 
     var sysRoot = useEnv ? process.env.SYSTEMROOT : 'C:\\Windows';
 
@@ -93,7 +93,7 @@ function arch() {
     var isWOW64 = false;
     try {
       isWOW64 = !!fs.statSync(path.join(sysRoot, 'sysnative'));
-    } catch (err) { }
+    } catch (err) {}
 
     return isWOW64 ? 'x64' : 'x86';
   }
