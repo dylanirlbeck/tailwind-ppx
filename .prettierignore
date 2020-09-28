@@ -1,0 +1,11 @@
+/assets
+/bin
+/esy.lock
+/script
+/script
+/test
+/_build
+/_esy
+*.yml
+*.json
+*.md
