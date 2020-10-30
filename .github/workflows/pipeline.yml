@@ -82,7 +82,7 @@ jobs:
 
       # Create the NPM package for this platform
       - name: Create npm package
-        run: esy npm-release
+        run: esy npm-release --ocaml-pkg-name ocaml --ocaml-version 4.9.1000
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
