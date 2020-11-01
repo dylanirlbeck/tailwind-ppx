@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 12
       - name: Install esy
-        run: npm install -g esy
+        run: npm install -g @esy-nightly/esy
 
       - name: Try to restore install cache
         uses: actions/cache@v2
