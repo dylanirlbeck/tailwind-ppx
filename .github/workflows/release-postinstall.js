@@ -149,10 +149,17 @@ var copyPlatformBinaries = (platformPath) => {
   });
 };
 
-try {
-  fs.mkdirSync('_export');
-} catch (e) {
-  console.log('Could not create _export folder');
+if (fs.existsSync('_export')) {
+  // remove previous binary
+  fs.readdirSync('_export').forEach((file) => {
+    fs.unlinkSync(`_export/${file}`);
+  });
+} else {
+  try {
+    fs.mkdirSync('_export');
+  } catch (e) {
+    console.log('Could not create _export folder');
+  }
 }
 
 switch (platform) {
