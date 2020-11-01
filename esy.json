@@ -15,7 +15,7 @@
     "buildsInSource": "_build",
     "release": {
       "bin": ["tailwind-ppx", "use-tailwind-ppx"],
-      "rewritePrefix": true
+      "rewritePrefix": false
     }
   },
   "dependencies": {
