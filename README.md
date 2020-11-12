@@ -3,7 +3,7 @@
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
-A Reason/OCaml [PPX](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) for writing compile-time validated Tailwind CSS classes.
+A Reason/OCaml [Pre-Processor eXtension (PPX)](https://blog.hackages.io/reasonml-ppx-8ecd663d5640) that validates your Tailwind classes at compile-time. 
 
 <p align="center"><img src="assets/demo.png" /></p>
 
