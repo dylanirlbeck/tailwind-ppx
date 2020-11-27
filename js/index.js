@@ -1,5 +1,5 @@
 function extractor(content) {
-  const matchedContent = content.match(/(?<=\%tw\s*")[^\"]*(?=\")/g);
+  const matchedContent = content.match(/(?<=\%tw(\s*|\()")[^\"]*(?=\")/g);
 
   if (matchedContent) {
     return matchedContent.reduce((acc, curr) => {
