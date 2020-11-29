@@ -298,6 +298,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/joprice"><img src="https://avatars1.githubusercontent.com/u/2175555?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Price</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=joprice" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/_danchenkov"><img src="https://avatars2.githubusercontent.com/u/2461813?v=4" width="100px;" alt=""/><br /><sub><b>Vladimir Danchenkov</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=vdanchenkov" title="Documentation">📖</a></td>
     <td align="center"><a href="https://jonas.zeitler.se/"><img src="https://avatars0.githubusercontent.com/u/1719257?v=4" width="100px;" alt=""/><br /><sub><b>Jonas Zeitler</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=J-Zeitler" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/lozlow"><img src="https://avatars2.githubusercontent.com/u/386319?v=4" width="100px;" alt=""/><br /><sub><b>Pete Shaw</b></sub></a><br /><a href="https://github.com/dylanirlbeck/tailwind-ppx/commits?author=lozlow" title="Code">💻</a></td>
   </tr>
 </table>
 
