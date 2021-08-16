@@ -1,3 +1,7 @@
+**Note: As of 08/16/2021, `tailwind-ppx` is now in archive-mode. I have been out of the Reason/ReScript community for some time now, but if anyone wants to take over as owner please let me know. Thank you to all involved for making this project successful.**
+
+---
+
 # tailwind-ppx
 [![Actions Status](https://github.com/dylanirlbeck/tailwind-ppx/workflows/CI/badge.svg)](https://github.com/dylanirlbeck/tailwind-ppx/actions)
 [![NPM Version](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx.svg)](https://badge.fury.io/js/%40dylanirlbeck%2Ftailwind-ppx)
