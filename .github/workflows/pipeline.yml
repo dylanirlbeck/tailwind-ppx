@@ -23,7 +23,11 @@ jobs:
         with:
           node-version: 12
       - name: Install esy
-        run: npm install -g esy@0.6.4
+        run: sudo npm install -g @esy-nightly/esy --prefix /usr/local --unsafe-perm
+        if: matrix.os != 'windows-latest'
+      - name: Install esy
+        run: npm install -g @esy-nightly/esy
+        if: matrix.os == 'windows-latest'
 
       - name: Try to restore install cache
         uses: actions/cache@v2
@@ -78,7 +82,7 @@ jobs:
 
       # Create the NPM package for this platform
       - name: Create npm package
-        run: esy npm-release
+        run: esy npm-release --ocaml-pkg-name ocaml --ocaml-version 4.9.1000
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
@@ -159,7 +163,7 @@ jobs:
         with:
           name: release-tarball
       - name: test install
-        run: npm -g install ./tailwind-ppx.tgz bs-platform
+        run: npm -g install ./tailwind-ppx.tgz bs-platform@7
       - name: bootstrap test project
         run: bsb -init test-tailwind-ppx -theme basic-reason
       - name: install bs-platform locally
