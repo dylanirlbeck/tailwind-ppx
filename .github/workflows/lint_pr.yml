@@ -11,6 +11,11 @@ jobs:
         with:
           node-version: 12
       - uses: actions/checkout@v1
+      
+      - name: format js files
+        run: |
+          npx prettier --write .
+          git add "*.js"
 
       - name: Install esy
         run: npm install -g esy
